@@ -1,4 +1,4 @@
-HTTP_SERVE_STATIC# Komponenta národního katalogu otevřených dat pro registrované aplikace 
+# Komponenta národního katalogu otevřených dat pro registrované aplikace 
 
 ## Konfigurace
 Konfiguraci je možné provést skrze proměnné prostředí, nebo soubor `.env` umístěný v `/opt/application-catalog/`;
