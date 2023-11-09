@@ -1,0 +1,96 @@
+<html>
+
+<head>
+  {{> head }}
+  <!-- Site specific. -->
+  <title>Poskytovatelé - Národní katalog otevřených dat (NKOD)</title>
+  <meta name="description" content="Portál otevřených dat a Národní katalog otevřených dat České republiky"/>
+  <!--  -->
+  <link rel="canonical" href="https://data.gov.cz/">  
+  <link rel="alternate" type="application/rss+xml" title="Portál otevřených dat České republiky" href="https://data.gov.cz/feed.xml">
+  <link rel="alternate" hreflang="cs" href="https://data.gov.cz/" />
+  <link rel="alternate" hreflang="en" href="https://data.gov.cz/english/" />
+</head>
+
+<body>
+  {{> navigation }}
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-12 col-md-3">
+        {{#each facets}}
+        <div class="mt-2">
+          <h3 class="p-lg-2">{{label}} ({{count}})</h3>
+          <ul class="list-group">
+            {{#each items}}
+            <li class="filter-button list-group-item-action list-group-item {{#if active}}active{{/if}}" style="overflow-wrap: break-word;">
+              <a href="{{href}}">
+                {{label}} ({{count}})
+              </a>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+        {{/each}}
+      </div>
+
+      <div class="col-12 col-md-9">
+        <div class="m-md-1">
+          {{#with search}}
+          <form style="padding: 0.5rem; margin-bottom: 1rem;" action="{{link}}" id="search">
+            <div id="search-box" class="input-group" style="gap: 5px;">
+              <span class="input-group-text">
+                <i class="bi-search"></i>
+              </span>
+              <div class="rbt" tabindex="-1" style="outline: none; position: relative; flex-grow: 1;">
+                <div style="display: flex; flex: 1 1 0%; height: 100%; position: relative;">
+                  <input autocomplete="off" type="text" aria-autocomplete="both" aria-expanded="false" class="rbt-input-main form-control rbt-input" value="{{value}}" name="{{name}}">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">
+                Vyhledat
+              </button>
+            </div>
+          </form>
+          {{/with}}
+        </div>
+
+        <div class="m-md-1">
+          <div class="row">
+            <div class="col-12 col-md-9">
+              <h4>Nalezeno {{applications.count}} aplikací.</h4>
+            </div>
+          </div>
+          <div>
+            {{#each applications.items}}
+            <div>
+              <a href="{{href}}">
+                <h4> {{title}} </h4>
+              </a>
+              <p style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
+                {{breaklines description}}
+              </p>
+              <div style="margin-top: 0.2em;">
+                {{#each themes}}
+                <span class="badge bg-info rounded-pill" style="margin-left: 1em; margin-bottom: 0.5em; font-size: 0.7em;">
+                  {{title}}
+                </span>
+                {{/each}}
+              </div>
+              <hr>
+            </div>
+            {{/each}}
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="./assets/js/application-list.js"></script>
+  {{> footer }}
+</body>
+
+</html>

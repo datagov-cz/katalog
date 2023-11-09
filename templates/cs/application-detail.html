@@ -1,0 +1,89 @@
+<html>
+
+<head>
+  {{> head }}
+  <!-- Site specific. -->
+  <title>Poskytovatelé - Národní katalog otevřených dat (NKOD)</title>
+</head>
+
+<body>
+  {{> navigation }}
+
+  <div class="container">
+    <h1>{{title}}</h1>
+    <h2>
+      <a href="{{author.iri}}">
+        {{author.label}}
+      </a>
+    </h2>
+    <p>
+      {{breaklines description}}
+    </p>
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-3">
+        <dl>
+          <dt>Stav</dt>
+          {{#each state}}
+          <dd>
+            <a href="{{href}}">
+              {{label}}
+            </a>
+            <a href="{{iri}}" title="Přejít na odkaz" rel="nofollow noopener noreferrer" target="_blank">
+              <i class="bi bi-arrow-up-right-square"></i>
+            </a>
+          </dd>
+          {{/each}}
+        </dl>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3">
+        <dl>
+          <dt>Téma</dt>
+          {{#each theme}}
+          <dd>
+            <a href="{{href}}">
+              {{label}}
+            </a>
+            <a href="{{iri}}" title="Přejít na odkaz" rel="nofollow noopener noreferrer" target="_blank">
+              <i class="bi bi-arrow-up-right-square"></i>
+            </a>
+          </dd>
+          {{/each}}
+        </dl>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3">
+        <dl>
+          <dt>Platforma</dt>
+          {{#each platform}}
+          <dd>
+            <a href="{{href}}">
+              {{label}}
+            </a>
+            <a href="{{iri}}" title="Přejít na odkaz" rel="nofollow noopener noreferrer" target="_blank">
+              <i class="bi bi-arrow-up-right-square"></i>
+            </a>
+          </dd>
+          {{/each}}
+        </dl>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3">
+        <dl>
+          <dt>Typ</dt>
+          {{#each type}}
+          <dd>
+            <a href="{{href}}">
+              {{label}}
+            </a>
+            <a href="{{iri}}" title="Přejít na odkaz" rel="nofollow noopener noreferrer" target="_blank">
+              <i class="bi bi-arrow-up-right-square"></i>
+            </a>
+          </dd>
+          {{/each}}
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  {{> footer }}
+</body>
+
+</html>
