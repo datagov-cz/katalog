@@ -8,7 +8,6 @@ import registerWebsiteRoutes from "./website/website-routes.mjs";
 
 (function main() {
   const server = createServer();
-  initializeTemplates();
   registerRoutes(server);
   startServer(server);
 })();
