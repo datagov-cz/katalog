@@ -3,9 +3,8 @@ import Fastify from "fastify";
 import configuration from "./configuration.mjs";
 import logger from "./logger.mjs";
 
-import { initializeTemplates } from "./templates-service.mjs";
-import registerApiRoutes from "./api-routes.mjs";
-import registerWebsiteRoutes from "./website-routes.mjs";
+import registerApiRoutes from "./api/api-routes.mjs";
+import registerWebsiteRoutes from "./website/website-routes.mjs";
 
 (function main() {
   const server = createServer();

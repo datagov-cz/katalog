@@ -1,7 +1,8 @@
-import {getTemplatesForLanguage} from "./templates-service.mjs";
-import applicationListHandler from "./website/application-list.mjs";
-import applicationDetailHandler from "./website/application-detail.mjs";
+import {initializeTemplates, getTemplatesForLanguage} from "./templates-service.mjs";
+import applicationListHandler from "./application-list.mjs";
+import applicationDetailHandler from "./application-detail.mjs";
 
+initializeTemplates();
 
 /**
  * Register routes for HTML websites.

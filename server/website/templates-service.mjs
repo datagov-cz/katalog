@@ -1,8 +1,8 @@
 import Handlebars from "handlebars";
 import fileSystem from "fs";
 
-import logger from "./logger.mjs";
-import configuration from "./configuration.mjs";
+import logger from "../logger.mjs";
+import configuration from "../configuration.mjs";
 
 const templatesCache = {};
 
