@@ -2,8 +2,10 @@
   "name": "application-catalog",
   "version": "1.0.0",
   "description": "Catalog of registered applications. Component of Nation Data Catalog.",
+  "type": "module",
   "scripts": {
-    "start": "node ./server/server.mjs"
+    "start": "node --import ./register-hooks.mjs ./server/server.mjs",
+    "typescript": "node --import ./register-hooks.mjs ./server/server.mjs"
   },
   "author": "Digitální a informační agentura",
   "license": "MIT",
