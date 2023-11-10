@@ -83,3 +83,11 @@ export async function fetchApplicationWithLabels(language, iri) {
     },    
   };
 }
+
+export async function fetchApplicationsWithDatasets(language, datasets) {
+  const solrData = await solr.fetchApplicationsForDatasets(language, datasets);
+  return {
+    "applications": solrData["response"]["docs"],
+  };
+}
+

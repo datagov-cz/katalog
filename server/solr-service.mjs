@@ -57,3 +57,14 @@ export async function fetchApplications(language, searchQuery, states, platforms
   };
   return await executeSolrQuery(query);
 }
+
+export async function fetchApplicationsForDatasets(language, datasets) {
+  const query = {
+    "fl": ["iri", "title_" + language, "description_" + language],
+    "fq": [
+      solr.prepareFieldQuery("dataset", datasets).join(" OR "),
+    ],
+    "q": "*:*",
+  };
+  return await executeSolrQuery(query);
+}
