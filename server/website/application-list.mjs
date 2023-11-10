@@ -80,7 +80,6 @@ function updateFacetsForHtml(buildUrl, urlQuery, facets) {
   const type = facets["type"];
   const state = facets["state"];
   const platform = facets["platform"];
-  const author = facets["author"];
   return [
     {
       "label": "Témata",
@@ -98,10 +97,6 @@ function updateFacetsForHtml(buildUrl, urlQuery, facets) {
       "label": "Platforma",
       "count": platform["items"].length,
       "items": updateWithSelected(buildUrl, "platform", urlQuery, platform["items"]),
-    }, {
-      "label": "Autor",
-      "count": author["items"].length,
-      "items": updateWithSelected(buildUrl, "author", urlQuery, author["items"]),
     },
   ]
 }
