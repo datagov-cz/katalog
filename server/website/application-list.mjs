@@ -1,7 +1,6 @@
 import * as querystring from "node:querystring";
 
 import { fetchApplicationsWithLabels } from "../data-service.mjs"
-import * as querystring from "node:querystring";
 
 const NO_DATASET_FILTER = [];
 
@@ -27,7 +26,6 @@ export default async function handleRequest(templates, request, reply) {
   };
   reply
     .code(200)
-    // .header("Content-Type", "text/json; charset=utf-8").send(templateData);
     .header("Content-Type", "text/html; charset=utf-8").send(templates["application-list"](templateData));
 }
 

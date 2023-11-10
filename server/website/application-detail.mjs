@@ -5,7 +5,6 @@ export default async function handleRequest(templates, request, reply) {
   const payload = await fetchApplicationWithLabels("cs", urlQuery["iri"]);
   reply
     .code(200)
-    // .header("Content-Type", "text/json; charset=utf-8").send(payload);
     .header("Content-Type", "text/html; charset=utf-8").send(templates["application-detail"](payload));
 }
 
