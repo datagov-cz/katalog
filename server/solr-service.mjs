@@ -3,13 +3,21 @@ import * as solr from "./solr-query.mjs";
 
 export async function fetchApplication(language, iri) {
   const query = {
-    "fl": ["iri", "title_" + language, "description_" + language, "state", "platform", "theme", "type", "author"],
+    "fl": applicationFields(language),
     "fq": [
       ...solr.prepareFieldQuery("iri", [iri]),
     ],
     "q": "*:*",
   };
-  return await executeSolrQuery(query);  
+  return await executeSolrQuery(query);
+}
+
+function applicationFields(language) {
+  return [
+    "iri",
+    "title_" + language, "description_" + language,
+    "state", "platform", "theme", "type", "author"
+  ];
 }
 
 async function executeSolrQuery(query) {
@@ -30,22 +38,22 @@ async function executeSolrQuery(query) {
   }
 }
 
-export async function fetchApplications(language, searchQuery, state, platform, theme, type, author, dataset) {
+export async function fetchApplications(language, searchQuery, states, platforms, themes, types, authors, datasets) {
   const query = {
     "facet.field": ["state", "platform", "theme", "type", "author", "dataset"],
-    "fl": ["iri", "title_" + language, "description_" + language, "state", "platform", "theme", "type", "author"],
+    "fl": applicationFields(language),
     "fq": [
-      ...solr.prepareFieldQuery("state", state),
-      ...solr.prepareFieldQuery("platform", platform),
-      ...solr.prepareFieldQuery("theme", theme),
-      ...solr.prepareFieldQuery("type", type),
-      ...solr.prepareFieldQuery("author", author),
-      ...solr.prepareFieldQuery("dataset", dataset),
+      ...solr.prepareFieldQuery("state", states),
+      ...solr.prepareFieldQuery("platform", platforms),
+      ...solr.prepareFieldQuery("theme", themes),
+      ...solr.prepareFieldQuery("type", types),
+      ...solr.prepareFieldQuery("author", authors),
+      ...solr.prepareFieldQuery("dataset", datasets),
     ],
     "facet": true,
     "facet.limit": -1,
     "facet.mincount": 1,
     "q": solr.prepareSolrTextQuery(language, searchQuery),
   };
-  return await executeSolrQuery(query);  
+  return await executeSolrQuery(query);
 }

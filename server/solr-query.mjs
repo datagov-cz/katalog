@@ -5,26 +5,19 @@ export function prepareFieldQuery(field, values) {
   return values.map(value => `${field}:"${value}"`);
 }
 
-function isEmpty(value) {
-  return value === undefined || value === null || value.length === 0;
-}
-
 /**
  * Prepare text query for Solr core. Ask for title_{language} and _text_.
  * When empty value is given return *:* as query for anything.
  */
 export function prepareSolrTextQuery(language, text) {
-  if (isEmpty(text)) {
+  if (text === undefined || text === null || text.length === 0) {
     return "*:*";
   }
-
   const escapedText = escapeSolrTextQuery(text);
-
   const tokens = splitString(escapedText);
   if (tokens.length === 0) {
     return "";
   }
-
   // We ask for title first to prioritize it before _text_.
   // As a result items with value in title are returned first.
   return "" +
@@ -37,15 +30,9 @@ export function prepareSolrTextQuery(language, text) {
  * Escape control sequences for Solr text query.
  */
 function escapeSolrTextQuery(text) {
-  if (isEmpty(text)) {
-    return "*:*";
-  }
-
   text = text.toLocaleLowerCase();
-
   const charactersToEscape = /([!*+=<>&|{}^~?[\]:"])/g;
   text = text.replace(charactersToEscape, "\\$1");
-
   // Escape control words: "and", "or", "not".
   text = text.replace("and", "\\and");
   text = text.replace("or", "\\or");
@@ -58,7 +45,7 @@ function escapeSolrTextQuery(text) {
  */
 function splitString(text) {
   return text.trim().split(" ")
-    .filter(item => !isEmpty(item))
+    .filter(item => item !== "")
     .filter(isSpecialCharacter);
 }
 
