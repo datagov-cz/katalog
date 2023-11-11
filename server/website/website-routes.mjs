@@ -12,19 +12,25 @@ export default function registerRoutes(server) {
   server.route({
     method: "GET",
     url: "/aplikace",
-    handler: async (request, reply) => {
-      const templates = getTemplatesForLanguage("cs");
-      await applicationListHandler(templates, request, reply);
-    }
+    handler: (request, reply) => applicationListHandler("cs", request, reply)
+  });
+
+  server.route({
+    method: "GET",
+    url: "/applications",
+    handler: (request, reply) => applicationListHandler("en", request, reply)
   });
 
   server.route({
     method: "GET",
     url: "/detail-aplikace",
-    handler: async (request, reply) => {
-      const templates = getTemplatesForLanguage("cs");
-      await applicationDetailHandler(templates, request, reply);
-    }
+    handler: (request, reply) => applicationDetailHandler("cs", request, reply)
+  });
+
+  server.route({
+    method: "GET",
+    url: "/application-detail",
+    handler: (request, reply) => applicationDetailHandler("en", request, reply)
   });
 
 };

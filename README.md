@@ -9,6 +9,7 @@ K dispozici jsou následující proměnné:
 - `HOST` - Adresa na kterém poslouchá HTTP server, není nutné nastavit pro Docker.
 - `SOLR_URL` - URL na Solr bez '/' na konci.
 - `COUCHDB_URL` - URL na CouchDB bez '/' na konci.
+- `DATASET_CATALOG_URL` - URL na katalog datových sad bez '/' na konci.
 - `HTTP_SERVE_STATIC` - Obslouží požadavky na statické zdroje z adresáře `assets`.
 
 ## Sestavení a spuštění pomocí
@@ -24,6 +25,7 @@ PORT = "3000"
 HOST = "127.0.0.1"
 SOLR_URL = "http://localhost:8983/solr/applications"
 COUCHDB_URL = "http://localhost:5984"
+DATASET_CATALOG_URL = "http://localhost:8030"
 HTTP_SERVE_STATIC = "1"
 ```
 

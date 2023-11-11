@@ -1,5 +1,7 @@
 import * as solr from "./solr-service.mjs";
-import {fetchLabel} from "./label-service.mjs";
+import { fetchLabel } from "./label-service.mjs";
+import { fetchDatasetTitle } from "./dataset-service.mjs";
+import configuration from "./configuration.mjs";
 
 export async function fetchApplicationsWithLabels(language, searchQuery, state, platform, theme, type, author, dataset) {
   const solrData = await solr.fetchApplications(language, searchQuery, state, platform, theme, type, author, dataset);
@@ -80,14 +82,45 @@ export async function fetchApplicationWithLabels(language, iri) {
     "author": {
       "iri": application["author"],
       "title": application["author" + language],
-    },    
+    },
+    "dataset": await updateArrayOfDatasets(language, application["dataset"]),
   };
 }
 
+async function updateArrayOfDatasets(language, iris) {
+  const result = [];
+  for (let iri of iris) {
+    result.push({
+      "title": await fetchDatasetTitle(language, iri),
+      "href": datasetCatalogLink(language, iri),
+      "iri": iri,
+    });
+  }
+  return result;
+}
+
+function datasetCatalogLink(language, dataset) {
+  let result = configuration.datasetCatalogLink;
+  if (language === "cs") {
+    result += "/datová-sada";
+  } else {
+    result += "/dataset";
+  }
+  result += "?iri=" + encodeURIComponent(dataset);
+  return result;
+}
+
 export async function fetchApplicationsWithDatasets(language, datasets) {
+  if (datasets.length === 0) {
+    return { "applications": [] };
+  }
   const solrData = await solr.fetchApplicationsForDatasets(language, datasets);
   return {
-    "applications": solrData["response"]["docs"],
+    "applications": solrData["response"]["docs"].map(application => ({
+      "iri": application["iri"],
+      "title": application["title_" + language],
+      "description": application["description_" + language],
+    })),
   };
 }
 

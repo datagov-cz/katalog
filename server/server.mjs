@@ -1,4 +1,5 @@
 import Fastify from "fastify";
+import cors from "@fastify/cors";
 
 import configuration from "./configuration.mjs";
 import logger from "./logger.mjs";
@@ -6,17 +7,21 @@ import logger from "./logger.mjs";
 import registerApiRoutes from "./api/api-routes.mjs";
 import registerWebsiteRoutes from "./website/website-routes.mjs";
 
-(function main() {
-  const server = createServer();
+(async function main() {
+  const server = await createServer();
   registerRoutes(server);
   startServer(server);
 })();
 
-function createServer() {
-  return Fastify({
+async function createServer() {
+  const application = Fastify({
     logger: logger,
     trustProxy: configuration.trustProxy,
   });
+  await application.register(cors, { 
+    "origin": true,
+  });
+  return application;
 }
 
 function registerRoutes(server) {

@@ -1,5 +1,5 @@
 
-import { fetchApplicationsWithDatasets } from "../data-service.mjs"
+import { fetchApplicationsWithDatasets } from "../../data-service.mjs"
 
 export default async function handleRequest(request, reply) {
   const urlQuery = decodeUrlQuery(request);
@@ -11,6 +11,16 @@ export default async function handleRequest(request, reply) {
 
 function decodeUrlQuery(request) {
   return {
-    "dataset": request.query["dataset"] ?? [],
+    "dataset": asArray(request.query["iri"]),
   };
+}
+
+function asArray(value) {
+  if (value === undefined || value === null) {
+    return [];
+  } else if (Array.isArray(value)) {
+    return value;
+  } else {
+    return [value];
+  }
 }

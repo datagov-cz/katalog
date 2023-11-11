@@ -8,12 +8,13 @@ const configuration = {
   trustProxy: false,
   solrUrl: stripTrailingSlash(process.env["SOLR_URL"]),
   couchDbUrl: stripTrailingSlash(process.env["COUCHDB_URL"]),
+  datasetCatalogLink: stripTrailingSlash(process.env["DATASET_CATALOG_URL"]),
   development: process.env.NODE_ENV === "development",
   serverAssets: process.env.NODE_ENV === "development" || process.env.HTTP_SERVE_STATIC === "1",
   reloadTemplates: process.env.NODE_ENV === "development",
 };
 
-console.log("Configuration: ", JSON.stringify(configuration, null, 2));
+console.log("{\"configuration\": " + JSON.stringify(configuration) + "}");
 
 function stripTrailingSlash(value) {
   return value.endsWith("/") ? value.slice(0, -1) : value;

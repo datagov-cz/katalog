@@ -1,131 +1,124 @@
-import * as querystring from "node:querystring";
+import { getTemplatesForLanguage } from "./templates-service.mjs";
+import { getQueryArgument, getQueryArgumentAsArray, createLink, createNavigationData } from "../localization-service.mjs";
 
 import { fetchApplicationsWithLabels } from "../data-service.mjs"
 
 const NO_DATASET_FILTER = [];
 
-export default async function handleRequest(templates, request, reply) {
-  const urlQuery = decodeUrlQuery(request);
-  const payload = await fetchApplicationsWithLabels(
-    "cs",
-    urlQuery["query"], urlQuery["state"], urlQuery["platform"],
-    urlQuery["theme"], urlQuery["type"], urlQuery["author"],
-    NO_DATASET_FILTER);
-  const templateData = {
-    "search": {
-      "value": urlQuery["query"],
-      "name": "dotaz",
-      "link": encodeUrlQuery("cs", { ...urlQuery, "query": undefined }),
-    },
-    "applications": {
-      "count": payload["applications"]["count"],
-      "items": updateApplicationsForHtml("cs", payload["applications"]["items"])
-    },
-    "facets": updateFacetsForHtml(
-      (query) => encodeUrlQuery("cs", query), urlQuery, payload["facets"]),
-  };
+const VIEW_NAME = "application-list";
+
+const APPLICATION_VIEW_NAME = "application-detail";
+
+export default async function handleRequest(language, request, reply) {
+  const templates = getTemplatesForLanguage(language);
+  const query = decodeUrlQuery(language, request);
+  const data = await fetchDataForTemplate(language, query);
+  const templateData = prepareTemplateData(language, query, data);
   reply
     .code(200)
-    .header("Content-Type", "text/html; charset=utf-8").send(templates["application-list"](templateData));
+    .header("Content-Type", "text/html; charset=utf-8")
+    .send(templates[VIEW_NAME](templateData));
 }
 
-function decodeUrlQuery(request) {
+function decodeUrlQuery(language, request) {
+  const query = request.query;
   return {
-    "query": request.query["dotaz"] ?? null,
-    "state": asArray(request.query["stav"]),
-    "platform": asArray(request.query["platforma"]),
-    "theme": asArray(request.query["téma"]),
-    "type": asArray(request.query["typ"]),
-    "author": asArray(request.query["author"]),
+    "query": getQueryArgument(VIEW_NAME, language, "query", query, null),
+    "state": getQueryArgumentAsArray(VIEW_NAME, language, "state", query),
+    "platform": getQueryArgumentAsArray(VIEW_NAME, language, "platform", query),
+    "theme": getQueryArgumentAsArray(VIEW_NAME, language, "theme", query),
+    "type": getQueryArgumentAsArray(VIEW_NAME, language, "type", query),
+    "author": getQueryArgumentAsArray(VIEW_NAME, language, "author", query),
   };
 }
 
-function asArray(value) {
-  if (value === undefined || value === null) {
-    return [];
-  } else if (Array.isArray(value)) {
-    return value;
-  } else {
-    return [value];
-  }
+async function fetchDataForTemplate(language, query) {
+  return await fetchApplicationsWithLabels(
+    language,
+    query["query"], query["state"], query["platform"],
+    query["theme"], query["type"], query["author"], NO_DATASET_FILTER);
 }
 
-function encodeUrlQuery(language, urlQuery) {
-  let localizedUrlQuery;
-  if (language === "cs") {
-    localizedUrlQuery = {
-      "dotaz": urlQuery["query"],
-      "stav": urlQuery["state"],
-      "platforma": urlQuery["platform"],
-      "téma": urlQuery["theme"],
-      "typ": urlQuery["type"],
-      "author": urlQuery["author"],
-    }
-  }
-  const nonEmpty = Object.fromEntries(Object.entries(localizedUrlQuery).filter(
-    ([key, value]) => value !== undefined && value !== ""
-  ));
-  return "?" + querystring.stringify(nonEmpty);
+function prepareTemplateData(language, query, data) {
+  console.log(createNavigationData(VIEW_NAME, query));
+  return {
+    "navigation": createNavigationData(VIEW_NAME, query),
+    "search": {
+      "value": query["query"],
+      "name": "dotaz",
+      "link": "",
+    },
+    "applications": {
+      "count": data["applications"]["count"],
+      "items": updateApplicationsForHtml(language, data["applications"]["items"])
+    },
+    "facets": updateFacetsForHtml(language, query, data["facets"]),
+  };
 }
 
 function updateApplicationsForHtml(language, applications) {
   return applications.map(application => ({
     ...application,
-    "href": "detail-aplikace?" + querystring.stringify({ "iri": application["iri"] }),
+    "href": createLink(APPLICATION_VIEW_NAME, language, { "iri": application["iri"] }),
   }));
 }
 
-function updateFacetsForHtml(buildUrl, urlQuery, facets) {
+function updateFacetsForHtml(language, query, facets) {
   const theme = facets["theme"];
   const type = facets["type"];
   const state = facets["state"];
-  const platform = facets["platform"];
+  const platform = facets["platform"]; 
   return [
     {
       "label": "Témata",
       "count": theme["items"].length,
-      "items": updateWithSelected(buildUrl, "theme", urlQuery, theme["items"]),
-    }, {
-      "label": "Dostupnost",
-      "count": type["items"].length,
-      "items": updateWithSelected(buildUrl, "type", urlQuery, type["items"]),
-    }, {
-      "label": "Stav",
-      "count": state["items"].length,
-      "items": updateWithSelected(buildUrl, "state", urlQuery, state["items"]),
-    }, {
-      "label": "Platforma",
-      "count": platform["items"].length,
-      "items": updateWithSelected(buildUrl, "platform", urlQuery, platform["items"]),
+      "items": updateWithSelected(language, "theme", query, theme["items"]),
+      }, {
+        "label": "Dostupnost",
+        "count": type["items"].length,
+        "items": updateWithSelected(language, "type", query, type["items"]),
+      }, {
+        "label": "Stav",
+        "count": state["items"].length,
+        "items": updateWithSelected(language, "state", query, state["items"]),
+      }, {
+        "label": "Platforma",
+        "count": platform["items"].length,
+        "items": updateWithSelected(language, "platform", query, platform["items"]),
     },
   ]
 }
 
-function updateWithSelected(buildUrl, name, urlQuery, values) {
-  const selected = urlQuery[name];
-  return values.map(item => {
-    const active = selected.includes(item["iri"]);
-    const href = buildUrl({
-      ...urlQuery,
-      [name]: active ? removeValue(urlQuery[name], item["iri"]) : addValue(urlQuery[name], item["iri"]),
-    });
+function updateWithSelected(language, name, query, facetItems) {
+  const selected = query[name];
+  return facetItems.map(item => {
+    const iri = item["iri"];
+    let active = selected.includes(iri);
+    const facetQuery = {
+      ...query,
+      [name]: active ? removeFromArray(selected, iri) : addToArray(selected, iri),
+    };
+    const href = createLink(VIEW_NAME, language, facetQuery);
     return { active, href, ...item };
   });
 }
 
-function addValue(values, value) {
-  if (values === undefined) {
+function addToArray(array, value) {
+  if (array === undefined) {
     return [value];
   } else {
-    return [...values, value];
+    return [...array, value];
   }
 }
 
-function removeValue(values, value) {
-  const index = values.indexOf(value);
+function removeFromArray(array, value) {
+  if (array === undefined) {
+    return [];
+  }
+  const index = array.indexOf(value);
   if (index === -1) {
-    return values;
+    return [...array];
   } else {
-    return [...values.splice(1, index), ...values.splice(index + 1)];
+    return [...array.slice(0, index), ...array.slice(index + 1)];
   }
 }

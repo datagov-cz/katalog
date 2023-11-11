@@ -3,13 +3,21 @@ import fileSystem from "fs";
 
 import logger from "../logger.mjs";
 import configuration from "../configuration.mjs";
+import {listLanguages} from "../localization-service.mjs";
 
 const templatesCache = {};
 
 export function initializeTemplates() {
+  for (let language of listLanguages()) {
+    templatesCache[language] = loadTemplatesForLanguage(language);
+  }
+}
+
+function loadTemplatesForLanguage(language) {
   const handlebars = Handlebars.create();
   registerHelpers(handlebars);  
-  templatesCache["cs"] = loadTemplates(handlebars, "./templates/cs/");
+  return loadTemplates(handlebars, "./templates/" + language + "/");
+
 }
 
 function registerHelpers(handlebars) {
