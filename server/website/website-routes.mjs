@@ -11,6 +11,12 @@ export default function registerRoutes(server) {
 
   server.route({
     method: "GET",
+    url: "/",
+    handler: (request, reply) => reply.redirect("/aplikace")
+  });
+
+  server.route({
+    method: "GET",
     url: "/aplikace",
     handler: (request, reply) => applicationListHandler("cs", request, reply)
   });
