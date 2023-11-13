@@ -1,5 +1,5 @@
 import { getTemplatesForLanguage } from "./templates-service.mjs";
-import { getQueryArgument, getQueryArgumentAsArray, createLink, createNavigationData } from "../localization-service.mjs";
+import { getQueryArgument, getQueryArgumentAsArray, createLink, createNavigationData, translate } from "../localization-service.mjs";
 
 import { fetchApplicationsWithLabels } from "../data-service.mjs"
 
@@ -40,16 +40,17 @@ async function fetchDataForTemplate(language, query) {
 }
 
 function prepareTemplateData(language, query, data) {
-  console.log(createNavigationData(VIEW_NAME, query));
   return {
     "navigation": createNavigationData(VIEW_NAME, query),
+    "message": {
+      "found": translate(language, "datasets-found", [data["applications"]["count"]]),
+    },
     "search": {
       "value": query["query"],
-      "name": "dotaz",
+      "name": translate(language, "query"),
       "link": "",
     },
     "applications": {
-      "count": data["applications"]["count"],
       "items": updateApplicationsForHtml(language, data["applications"]["items"])
     },
     "facets": updateFacetsForHtml(language, query, data["facets"]),

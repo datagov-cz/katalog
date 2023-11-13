@@ -16,4 +16,13 @@ export default {
     "application-detail": "detail-aplikace",
     "application-list": "aplikace",
   },
+  "translation": {
+    "datasets-found": [
+      [0, "Nebyla nalezena žádná aplikace."],
+      [1, "Nalezena jedna aplikace."],
+      [2, "Nalezeny {} aplikace."],
+      [5, "Nalezeno {} aplikací."],
+    ],
+    "query": "dotaz",
+  }
 };

@@ -16,4 +16,12 @@ export default {
     "application-detail": "application-detail",
     "application-list": "applications",
   },
+  "translation": {
+    "datasets-found": [
+      [0, "No application found."],
+      [1, "One application found."],
+      [2, "{} applications found"],
+    ],
+    "query": "query",
+  }
 };

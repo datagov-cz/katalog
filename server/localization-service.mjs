@@ -6,12 +6,17 @@ import en from "../templates/en/localization.mjs";
 const internalQueryToLocalized = {
   "cs": cs["query"],
   "en": en["query"],
-}
+};
 
 const internalPathToLocalized = {
   "cs": cs["path"],
   "en": en["path"],
-}
+};
+
+const translation = {
+  "cs": cs["translation"],
+  "en": en["translation"],
+};
 
 export function listLanguages() {
   return Object.keys(internalQueryToLocalized);
@@ -80,4 +85,17 @@ function isEmpty(value) {
 export function createNavigationData(viewName, query) {
   return Object.fromEntries(Object.keys(internalQueryToLocalized)
     .map(language => [language, createLink(viewName, language, query)]));
+}
+
+export function translate(language, message, args) {
+  let translationEntry = translation[language][message];
+  if (Array.isArray(translationEntry)) {
+    for (let [separator, localizedMessage] of translationEntry) {
+      if (separator >= args) {
+        translationEntry = localizedMessage;
+        break;
+      }
+    }
+  }
+  return translationEntry.replace("{}", args);
 }
