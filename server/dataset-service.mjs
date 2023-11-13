@@ -17,7 +17,7 @@ export async function fetchDatasetTitle(language, iri) {
   if (!Array.isArray(payload)) {
     return iri;
   }
-  return loadDatasetTitle(language, payload);
+  return loadDatasetTitle(language, iri, payload);
 }
 
 async function fetchDatasetDetail(iri) {
@@ -26,7 +26,7 @@ async function fetchDatasetDetail(iri) {
   return await response.json();
 }
 
-function loadDatasetTitle(language, resources) {
+function loadDatasetTitle(language, iri, resources) {
   let result = iri;
   for (let resource of resources) {
     if (resource["@id"] !== iri) {
