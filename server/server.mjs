@@ -35,7 +35,7 @@ function registerRoutes(server) {
 function registerAssetsRoutes(server) {
   server.register(import("@fastify/static"), {
     root: new URL("../assets", import.meta.url),
-    prefix: "/assets/"
+    prefix: "/aplikace/assets/"
   });
 }
 

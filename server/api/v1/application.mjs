@@ -2,8 +2,9 @@
 import { fetchApplicationsWithDatasets } from "../../data-service.mjs"
 
 export default async function handleRequest(request, reply) {
-  const urlQuery = decodeUrlQuery(request);
-  const payload = await fetchApplicationsWithDatasets("cs", urlQuery["dataset"]);
+  const query = decodeUrlQuery(request);
+  console.log(query);
+  const payload = await fetchApplicationsWithDatasets(query["language"], query["dataset"]);
   reply
     .code(200)
     .header("Content-Type", "text/json; charset=utf-8").send(payload);
@@ -12,6 +13,7 @@ export default async function handleRequest(request, reply) {
 function decodeUrlQuery(request) {
   return {
     "dataset": asArray(request.query["iri"]),
+    "language": asArray(request.query["language"] ?? "cs") ,
   };
 }
 
@@ -24,3 +26,4 @@ function asArray(value) {
     return [value];
   }
 }
+

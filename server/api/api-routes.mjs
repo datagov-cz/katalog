@@ -11,7 +11,7 @@ function registerV1(server) {
 
   server.route({
     method: "GET",
-    url: "/api/v1/applications-for-datasets",
+    url: "/api/aplikace/v1/applications-for-datasets",
     handler: async (request, reply) => await handleRequest(request, reply),
   });
 

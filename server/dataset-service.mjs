@@ -1,18 +1,34 @@
 import configuration from "./configuration.mjs";
+import logger from "./logger.mjs";
+
 /**
  * Fetch and return title for given dataset. Preferably return title in
  * given language. If there is no title returns given IRI.
  */
 export async function fetchDatasetTitle(language, iri) {
-  const url = configuration.datasetCatalogLink + "/api/v2/dataset/item?iri=" + encodeURIComponent(iri);
-  const response = await fetch(url);
-  const payload = await response.json();
+  let payload;
+  try {
+    payload = await fetchDatasetDetail(iri);
+  } catch (error) {
+    logger.error("Failed to fetch dataset '%s': %o", iri, error);
+    return iri;
+  }
   // We can get empty object as a response.
   if (!Array.isArray(payload)) {
     return iri;
   }
-  let title = iri;
-  for (let resource of payload) {    
+  return loadDatasetTitle(language, payload);
+}
+
+async function fetchDatasetDetail(iri) {
+  const url = configuration.datasetCatalogLink + "/api/v2/dataset/item?iri=" + encodeURIComponent(iri);
+  const response = await fetch(url);
+  return await response.json();
+}
+
+function loadDatasetTitle(language, resources) {
+  let result = iri;
+  for (let resource of resources) {
     if (resource["@id"] !== iri) {
       continue;
     }
@@ -21,12 +37,11 @@ export async function fetchDatasetTitle(language, iri) {
       if (item["@language"] === language) {
         return item["@value"];
       } else {
-        title = item["@value"];
+        result = item["@value"];
       }
     }
   }
-  return title;
+  return result;
 }
-
 
 
