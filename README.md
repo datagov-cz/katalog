@@ -12,7 +12,7 @@ K dispozici jsou následující proměnné:
 - `DATASET_CATALOG_URL` - URL na katalog datových sad bez '/' na konci.
 - `HTTP_SERVE_STATIC` - Obslouží požadavky na statické zdroje z adresáře `assets`.
 
-## Sestavení a spuštění pomocí
+## Sestavení a spuštění
 Po naklonování repozitáře je nejprve zapotřebí nainstalovat knihovny pomocí následujícího příkazu.
 ```bash
 npm ci
@@ -42,5 +42,5 @@ docker build -t ghcr.io/datagov-cz/nkod-application-catalog .
 
 Sestavený Docker image je možné pustit pomocí:
 ```bash
-docker run -p 3000:3000 -e "SOLR_URL={solr-url}" -e "COUCHDB_URL={couchdb-url}" -e "HTTP_SERVE_STATIC=1" ghcr.io/datagov-cz/nkod-application-catalog
+docker run -p 3000:3000 -e "SOLR_URL={solr-url}" -e "COUCHDB_URL={couchdb-url}" -e "HTTP_SERVE_STATIC=1" -e "DATASET_CATALOG_URL={catalog-url}" ghcr.io/datagov-cz/nkod-application-catalog
 ```
