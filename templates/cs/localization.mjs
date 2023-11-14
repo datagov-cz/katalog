@@ -24,5 +24,9 @@ export default {
       [5, "Nalezeno {} aplikací."],
     ],
     "query": "dotaz",
+    "theme": "Téma",
+    "type": "Dostupnost",
+    "state": "Stav",
+    "platform": "Platforma",
   }
 };

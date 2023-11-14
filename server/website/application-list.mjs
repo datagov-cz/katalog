@@ -71,19 +71,19 @@ function updateFacetsForHtml(language, query, facets) {
   const platform = facets["platform"]; 
   return [
     {
-      "label": "Témata",
+      "label": translate(language, "theme"),
       "count": theme["items"].length,
       "items": updateWithSelected(language, "theme", query, theme["items"]),
       }, {
-        "label": "Dostupnost",
+        "label": translate(language, "type"),
         "count": type["items"].length,
         "items": updateWithSelected(language, "type", query, type["items"]),
       }, {
-        "label": "Stav",
+        "label": translate(language, "state"),
         "count": state["items"].length,
         "items": updateWithSelected(language, "state", query, state["items"]),
       }, {
-        "label": "Platforma",
+        "label": translate(language, "platform"),
         "count": platform["items"].length,
         "items": updateWithSelected(language, "platform", query, platform["items"]),
     },

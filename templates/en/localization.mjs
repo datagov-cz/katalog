@@ -23,5 +23,9 @@ export default {
       [2, "{} applications found"],
     ],
     "query": "query",
+    "theme": "Theme",
+    "type": "Type",
+    "state": "State",
+    "platform": "Platform",
   }
 };
