@@ -20,7 +20,7 @@
 
       <div class="col-12 col-md-3">
         {{#each facets}}
-        <div class="mt-2">
+        <div class="mt-2 facet">
           <h3 class="p-lg-2">{{label}} ({{count}})</h3>
           <ul class="list-group">
             {{#each items}}
@@ -39,12 +39,12 @@
         <div class="m-md-1">
           {{#with search}}
           <form style="padding: 0.5rem; margin-bottom: 1rem;" action="{{link}}" id="search">
-            <div class="input-group" style="gap: 5px;">
+            <div class="input-group">
               <span class="input-group-text">
                 <i class="bi-search"></i>
               </span>
-              <div class="rbt" tabindex="-1" style="outline: none; position: relative; flex-grow: 1;">
-                <div style="display: flex; flex: 1 1 0%; height: 100%; position: relative;">
+              <div class="rbt" tabindex="-1">
+                <div>
                   <input autocomplete="off" type="text" aria-autocomplete="both" aria-expanded="false" class="rbt-input-main form-control rbt-input" value="{{value}}" name="{{name}}">
                 </div>
               </div>
@@ -63,7 +63,7 @@
           </div>
           <div>
             {{#each applications.items}}
-            <div>
+            <div class="application">
               <a href="{{href}}">
                 <h4>{{title}}</h4>
               </a>

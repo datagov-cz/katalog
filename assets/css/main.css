@@ -6,26 +6,26 @@
 	--color-text-accent: #057fa5;
 	--color-text-accent-inverted: black;
 	--color-base: #057fa5;
+	--color-border: rgba(0, 0, 0, 0.125);
+
+	--list-group-action-active: #111;
+	--list-group-action-active-bg: #e9ecef;
 }
 
 @media (prefers-color-scheme: dark) {
 	:root {
 		--color-background: #111;
 		--color-background-footer: #222;
-		--color-text-default: #ddd;
+		--color-text-default: white;
 		--color-text-inverted: #222;
 		--color-text-accent: #3bb5dc;
 		--color-text-accent-inverted: white;
 		--color-base: #057fa544;
+		--color-border: rgba(255, 255, 255, 0.125);
+
+		--list-group-action-active: #111;
+		--list-group-action-active-bg: #3bb5dc;
 	}
-}
-
-.alert a {
-	color: var(--color-text-inverted);
-}
-
-.alert a:hover {
-	color: var(--color-text-inverted);
 }
 
 a:hover {
@@ -70,21 +70,6 @@ hr {
 	border-color: gray;
 }
 
-
-.carousel-fade .active.carousel-item-start,
-.carousel-fade .active.carousel-item-next {
-	transition: .6s opacity ease;
-}
-
-/* Disable transitions for if reduced motion is enabled: */
-@media (prefers-reduced-motion:reduce) {
-
-	.carousel-fade .active.carousel-item-start,
-	.carousel-fade .active.carousel-item-next {
-		transition: none;
-	}
-}
-
 pre {
 	color: var(--color-text-accent);
 	background-color: var(--color-background-footer);
@@ -99,11 +84,6 @@ div.card {
 }
 
 input.form-control {
-	background-color: var(--color-background-footer);
-	color: var(--color-text-default);
-}
-
-span.input-group-text {
 	background-color: var(--color-background-footer);
 	color: var(--color-text-default);
 }
@@ -159,26 +139,6 @@ a.dropdown-item:hover {
 	color: var(--color-text-inverted);
 }
 
-.jumbotron {
-	background-color: var(--color-base);
-}
-
-@media (min-width: 768px) {
-	.jumbotron {
-		padding-top: 0;
-		padding-bottom: 0;
-	}
-
-	.jumbotron .container {
-		padding-top: 4rem;
-		padding-bottom: 4rem;
-		background-image: url(../images/cr.svg);
-		background-position: right center;
-		background-repeat: no-repeat;
-		background-size: 400px 230px;
-	}
-}
-
 ol>li>ol>li {
 	list-style-type: lower-alpha;
 }
@@ -193,4 +153,74 @@ ol>li>ol>li>ol>li {
 
 div.language-drop-down.dropdown-menu.lang-menu.show {
 	min-width: 0;
+}
+
+.facet h3 {
+	color: var(--color-text-default)
+}
+
+.facet li {
+	border-color: var(--color-border);
+	padding: 0;
+	display: flex;
+}
+
+.facet li a {
+	color: var(--color-text-default);
+	text-decoration: none;
+	padding: 8px 16px;
+	flex-grow: 1;
+}
+
+.facet li:hover{		
+	background-color: var(--list-group-action-active-bg);
+}
+
+.facet li:hover a {
+	color: var(--list-group-action-active);
+}
+
+.application>a {
+	text-decoration: none;
+}
+
+.application>a:hover {
+	text-decoration: underline;
+}
+
+#search .rbt {
+	outline: none;
+	position: relative;
+	flex-grow: 1;
+	margin-right: 1rem;
+}
+
+#search .rbt>div {
+	display: flex;
+	flex: 1 1 0%;
+	height: 100%;
+	position: relative;
+}
+
+#search input {
+	border-radius: 0;
+}
+
+
+#search  span.input-group-text {
+	font-weight: bold;
+}
+
+/* Detail. */
+
+.dataset {
+	margin-bottom: 1rem;
+}
+
+.dataset a {
+	text-decoration: none;
+}
+
+.dataset a:hover {
+	text-decoration: underline;
 }
