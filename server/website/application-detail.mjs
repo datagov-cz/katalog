@@ -13,8 +13,6 @@ export default async function handleRequest(language, request, reply) {
   const templateData = prepareTemplateData(language, query, data);
   reply
     .code(200)
-    // .header("Content-Type", "text/json; charset=utf-8")
-    // .send(templateData);
     .header("Content-Type", "text/html; charset=utf-8")
     .send(templates[VIEW_NAME](templateData));
 }
