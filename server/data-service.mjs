@@ -1,6 +1,6 @@
 import * as solr from "./solr-service.mjs";
 import { fetchLabel } from "./label-service.mjs";
-import { fetchDatasetTitle } from "./dataset-service.mjs";
+import { fetchDatasetDetail } from "./dataset-service.mjs";
 import configuration from "./configuration.mjs";
 
 export async function fetchApplicationsWithLabels(language, searchQuery, state, platform, theme, type, author, dataset) {
@@ -92,10 +92,12 @@ export async function fetchApplicationWithLabels(language, iri) {
 async function updateArrayOfDatasets(language, iris) {
   const result = [];
   for (let iri of iris) {
+    const detail = await fetchDatasetDetail(language, iri);
     result.push({
-      "title": await fetchDatasetTitle(language, iri),
-      "href": datasetCatalogLink(language, iri),
       "iri": iri,
+      "title": detail["title"],
+      "description": detail["description"],
+      "href": datasetCatalogLink(language, iri),
     });
   }
   return result;
