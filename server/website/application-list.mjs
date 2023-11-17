@@ -7,7 +7,7 @@ const NO_DATASET_FILTER = [];
 
 const VIEW_NAME = "application-list";
 
-const APPLICATION_VIEW_NAME = "application-detail";
+const APPLICATION_DETAIL_VIEW_NAME = "application-detail";
 
 export default async function handleRequest(language, request, reply) {
   const templates = getTemplatesForLanguage(language);
@@ -60,7 +60,7 @@ function prepareTemplateData(language, query, data) {
 function updateApplicationsForHtml(language, applications) {
   return applications.map(application => ({
     ...application,
-    "href": createLink(APPLICATION_VIEW_NAME, language, { "iri": application["iri"] }),
+    "href": createLink(APPLICATION_DETAIL_VIEW_NAME, language, { "iri": application["iri"] }),
   }));
 }
 
