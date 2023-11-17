@@ -3,7 +3,11 @@ import * as solr from "./solr-query.mjs";
 
 export async function fetchApplication(language, iri) {
   const query = {
-    "fl": [...applicationFields(language), "dataset"],
+    "fl": [
+      ...applicationFields(language),
+       "dataset", "modified", "published",
+       "author_" + language
+    ],
     "fq": [
       ...solr.prepareFieldQuery("iri", [iri]),
     ],

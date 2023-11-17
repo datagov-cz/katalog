@@ -81,9 +81,11 @@ export async function fetchApplicationWithLabels(language, iri) {
     "type": await updateArrayOfCodelist(language, [application["type"]]),
     "author": {
       "iri": application["author"],
-      "title": application["author" + language],
+      "title": application["author_" + language],
     },
     "dataset": await updateArrayOfDatasets(language, application["dataset"]),
+    "published": application["published"],
+    "modified": application["modified"],
   };
 }
 

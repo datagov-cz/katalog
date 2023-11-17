@@ -11,11 +11,14 @@
 
   <div class="container">
     <h1>{{title}}</h1>
-    <h2>
-      <a href="{{author.iri}}">
-        {{author.label}}
-      </a>
+    {{#with author}}
+    <h2>      
+      {{title}}
+      <a href="{{iri}}" title="Přejít na odkaz" rel="nofollow noopener noreferrer" target="_blank">
+        <i class="bi bi-arrow-up-right-square"></i>
+      </a>      
     </h2>
+    {{/with}}
     <p>
       {{breaklines description}}
     </p>
@@ -78,6 +81,20 @@
             </a>
           </dd>
           {{/each}}
+        </dl>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-3">
+        <dl>
+          <dt>Publication date</dt>
+          <dd>{{published}}</dd>
+        </dl>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3">
+        <dl>
+          <dt>Date last modified</dt>
+          <dd>{{modified}}</dd>
         </dl>
       </div>
     </div>

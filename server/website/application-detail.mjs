@@ -13,6 +13,8 @@ export default async function handleRequest(language, request, reply) {
   const templateData = prepareTemplateData(language, query, data);
   reply
     .code(200)
+    // .header("Content-Type", "text/json; charset=utf-8")
+    // .send(templateData);
     .header("Content-Type", "text/html; charset=utf-8")
     .send(templates[VIEW_NAME](templateData));
 }
@@ -31,6 +33,8 @@ function prepareTemplateData(language, query, data) {
     "theme": addHrefToFilters(language, data["theme"], "theme"),
     "platform": addHrefToFilters(language, data["platform"], "platform"),
     "type": addHrefToFilters(language, data["type"], "type"),
+    "published": formatDate(language, data["published"]),
+    "modified": formatDate(language, data["modified"]),
   };
 }
 
@@ -40,4 +44,9 @@ function addHrefToFilters(language, items, name) {
     "label": item["label"],
     "href": createLink(APPLICATION_LIST_VIEW_NAME, language, { [name]: item["iri"] })
   }));
+}
+
+function formatDate(language, value) {  
+    const date = new Date(value);
+    return date.toLocaleDateString(language);
 }
