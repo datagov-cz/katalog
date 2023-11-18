@@ -10,6 +10,16 @@ export default {
       "theme": "téma",
       "type": "typ",
       "author": "author",
+      "sort": "řazení",
+      "sort-direction": "směr-řazení",
+    },
+  },
+  "arguments": {
+    "application-list": {
+      "title": "název",
+      "modified": "data-úpravy",
+      "asc": "vzestupně",
+      "desc": "sestupně",
     },
   },
   "path": {
@@ -28,5 +38,9 @@ export default {
     "type": "Dostupnost",
     "state": "Stav",
     "platform": "Platforma",
+    "title": "Název",
+    "modified": "Data úpravy",
+    "asc": "vzestupně",
+    "desc": "sestupně",
   }
 };

@@ -18,6 +18,11 @@ const translation = {
   "en": en["translation"],
 };
 
+const internalArgumentsToLocalized = {
+  "cs": cs["arguments"],
+  "en": en["arguments"],
+}
+
 export function listLanguages() {
   return Object.keys(internalQueryToLocalized);
 }
@@ -98,4 +103,8 @@ export function translate(language, message, args) {
     }
   }
   return translationEntry.replace("{}", args);
+}
+
+export function translateArgument(viewName, language, value) {
+  return internalArgumentsToLocalized[language][viewName][value];
 }

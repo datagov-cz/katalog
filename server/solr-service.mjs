@@ -42,7 +42,7 @@ async function executeSolrQuery(query) {
   }
 }
 
-export async function fetchApplications(language, searchQuery, states, platforms, themes, types, authors, datasets) {
+export async function fetchApplications(language, searchQuery, states, platforms, themes, types, authors, datasets, sort, sortDirection) {
   const query = {
     "facet.field": ["state", "platform", "theme", "type", "author", "dataset"],
     "fl": applicationFields(language),
@@ -54,12 +54,23 @@ export async function fetchApplications(language, searchQuery, states, platforms
       ...solr.prepareFieldQuery("author", authors),
       ...solr.prepareFieldQuery("dataset", datasets),
     ],
+    "sort": prepareSort(language, sort, sortDirection),
     "facet": true,
     "facet.limit": -1,
     "facet.mincount": 1,
     "q": solr.prepareSolrTextQuery(language, searchQuery),
   };
   return await executeSolrQuery(query);
+}
+
+function prepareSort(language, sort, sortDirection) {
+  if (sort === null) {
+    return "";
+  }
+  if (sort === "title") {
+    return "title_" + language + "_sort " + sortDirection;
+  }
+  return sort + " " + sortDirection;
 }
 
 export async function fetchApplicationsForDatasets(language, datasets) {

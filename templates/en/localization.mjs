@@ -10,6 +10,16 @@ export default {
       "theme": "theme",
       "type": "type",
       "author": "author",
+      "sort": "sort",
+      "sort-direction": "sort-direction",
+    },
+  },
+  "arguments": {
+    "application-list": {
+      "title": "title",
+      "modified": "modified",
+      "asc": "ascending",
+      "desc": "descending",
     },
   },
   "path": {
@@ -27,5 +37,9 @@ export default {
     "type": "Type",
     "state": "State",
     "platform": "Platform",
+    "title": "Title",
+    "modified": "Modified",
+    "asc": "ascending",
+    "desc": "descending",    
   }
 };
