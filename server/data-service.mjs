@@ -70,6 +70,9 @@ async function updateFacetValues(language, values) {
 export async function fetchApplicationWithLabels(language, iri) {
   const solrData = await solr.fetchApplication(language, iri);
   const application = solrData["response"]["docs"][0];
+  if (application == undefined) {
+    return null;
+  }
   return {
     "iri": application["iri"],
     "title": application["title_" + language],

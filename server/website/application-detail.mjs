@@ -1,6 +1,6 @@
-import {getTemplatesForLanguage} from "./templates-service.mjs";
-import {getQueryArgument, createNavigationData, createLink} from "../localization-service.mjs";
-import {fetchApplicationWithLabels} from "../data-service.mjs"
+import { getTemplatesForLanguage } from "./templates-service.mjs";
+import { getQueryArgument, createNavigationData, createLink } from "../localization-service.mjs";
+import { fetchApplicationWithLabels } from "../data-service.mjs"
 
 const VIEW_NAME = "application-detail";
 
@@ -10,6 +10,12 @@ export default async function handleRequest(language, request, reply) {
   const templates = getTemplatesForLanguage(language);
   const query = decodeUrlQuery(language, request);
   const data = await fetchApplicationWithLabels(language, query["iri"]);
+  if (data == null) {
+    reply
+      .code(404)
+      .send();
+    return;
+  }
   const templateData = prepareTemplateData(language, query, data);
   reply
     .code(200)
@@ -44,7 +50,7 @@ function addHrefToFilters(language, items, name) {
   }));
 }
 
-function formatDate(language, value) {  
-    const date = new Date(value);
-    return date.toLocaleDateString(language);
+function formatDate(language, value) {
+  const date = new Date(value);
+  return date.toLocaleDateString(language);
 }
