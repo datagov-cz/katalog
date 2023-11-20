@@ -13,7 +13,7 @@ const configuration = {
   serverAssets: process.env.NODE_ENV === "development" || process.env.HTTP_SERVE_STATIC === "1",
   reloadTemplates: process.env.NODE_ENV === "development",
   client: {
-    applicationLinkForm: process.env["CLIENT_APPLICATION_URL"] ?? "",
+    applicationFormUrl: process.env["CLIENT_APPLICATION_FORM_URL"] ?? "",
   },
 };
 
