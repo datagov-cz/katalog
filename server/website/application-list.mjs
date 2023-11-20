@@ -1,7 +1,7 @@
 import { getTemplatesForLanguage } from "./templates-service.mjs";
 import { getQueryArgument, getQueryArgumentAsArray, createLink, createNavigationData, translate, translateArgument } from "../localization-service.mjs";
-
 import { fetchApplicationsWithLabels } from "../data-service.mjs"
+import { clientTemplateData } from "../configuration.mjs";
 
 const NO_DATASET_FILTER = [];
 
@@ -69,7 +69,9 @@ async function fetchDataForTemplate(language, query) {
 
 function prepareTemplateData(language, query, data) {
   return {
-    "navigation": createNavigationData(VIEW_NAME, query),
+    "client": clientTemplateData(),
+    "navigation": createNavigationData(VIEW_NAME, query),    
+    //
     "message": {
       "found": translate(language, "datasets-found", [data["applications"]["count"]]),
     },

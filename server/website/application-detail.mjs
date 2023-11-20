@@ -1,6 +1,7 @@
 import { getTemplatesForLanguage } from "./templates-service.mjs";
 import { getQueryArgument, createNavigationData, createLink } from "../localization-service.mjs";
-import { fetchApplicationWithLabels } from "../data-service.mjs"
+import { fetchApplicationWithLabels } from "../data-service.mjs";
+import { clientTemplateData } from "../configuration.mjs";
 
 const VIEW_NAME = "application-detail";
 
@@ -32,7 +33,9 @@ function decodeUrlQuery(language, request) {
 function prepareTemplateData(language, query, data) {
   return {
     ...data,
+    "client": clientTemplateData(),
     "navigation": createNavigationData(VIEW_NAME, query),
+    //
     "state": addHrefToFilters(language, data["state"], "state"),
     "theme": addHrefToFilters(language, data["theme"], "theme"),
     "platform": addHrefToFilters(language, data["platform"], "platform"),

@@ -12,6 +12,9 @@ const configuration = {
   development: process.env.NODE_ENV === "development",
   serverAssets: process.env.NODE_ENV === "development" || process.env.HTTP_SERVE_STATIC === "1",
   reloadTemplates: process.env.NODE_ENV === "development",
+  client: {
+    applicationLinkForm: process.env["CLIENT_APPLICATION_URL"] ?? "",
+  },
 };
 
 console.log("{\"configuration\": " + JSON.stringify(configuration) + "}");
@@ -21,3 +24,7 @@ function stripTrailingSlash(value) {
 }
 
 export default configuration;
+
+export function clientTemplateData() {
+  return configuration["client"];
+}
