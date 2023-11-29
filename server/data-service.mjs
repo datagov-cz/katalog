@@ -34,7 +34,7 @@ async function updateApplications(language, applications) {
 
 async function updateArrayOfCodelist(language, iris) {
   const result = [];
-  for (let iri of iris) {
+  for (let iri of (iris ?? [])) {
     result.push({
       "label": await fetchLabel(language, iri),
       "iri": iri,
@@ -94,7 +94,7 @@ export async function fetchApplicationWithLabels(language, iri) {
 
 async function updateArrayOfDatasets(language, iris) {
   const result = [];
-  for (let iri of iris) {
+  for (let iri of (iris ?? [])) {
     const detail = await fetchDatasetDetail(language, iri);
     result.push({
       "iri": iri,
