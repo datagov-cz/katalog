@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "node --import ./register-hooks.mjs ./server/server.mjs",
-    "typescript": "node --import ./register-hooks.mjs ./server/server.mjs"
+    "typescript": "node --import ./register-hooks.mjs ./server/server.mjs",
+    "test": "node --test"
   },
   "author": "Digitální a informační agentura",
   "license": "MIT",
