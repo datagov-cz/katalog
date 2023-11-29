@@ -93,16 +93,20 @@ export function createNavigationData(viewName, query) {
 }
 
 export function translate(language, message, args) {
+  let result;
   let translationEntry = translation[language][message];
   if (Array.isArray(translationEntry)) {
     for (let [separator, localizedMessage] of translationEntry) {
       if (separator >= args) {
-        translationEntry = localizedMessage;
         break;
+      } else {
+        result = localizedMessage;
       }
     }
+  } else {
+    result = translationEntry;
   }
-  return translationEntry.replace("{}", args);
+  return result.replace("{}", args);
 }
 
 export function translateArgument(viewName, language, value) {
