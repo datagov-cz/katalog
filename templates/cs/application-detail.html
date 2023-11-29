@@ -10,15 +10,22 @@
   {{> navigation }}
 
   <div class="container">
-    <h1>{{title}}</h1>
-    {{#with author}}
-    <h2>      
-      {{title}}
-      <a href="{{iri}}" title="Přejít na odkaz" rel="nofollow noopener noreferrer" target="_blank">
+    <div>
+      {{#if showAuthorTitle}}
+      <h1>{{title}}</h1>
+      <h2 class="inline">
+        {{author.title}}
+      </h2>
+      {{else}}
+      <h1 class="inline">{{title}}</h1>
+      {{/if}}
+      {{#if showAuthorIri}}
+      <a href="{{author.iri}}" title="Přejít na odkaz" rel="nofollow noopener noreferrer" target="_blank">
         <i class="bi bi-arrow-up-right-square"></i>
-      </a>      
-    </h2>
-    {{/with}}
+      </a>
+      {{/if}}
+    </div>
+    <br/>
     <p>
       {{breaklines description}}
     </p>
@@ -98,7 +105,13 @@
         </dl>
       </div>
     </div>
-    <hr>
+    <div class="d-grid gap-2">
+      <a class="btn btn-outline-success  btn-lg" href="{{link}}" rel="nofollow noopener noreferrer">
+        Přejít na aplikaci
+      </a>
+    </div>
+    <br/>
+    {{#if showDataset}}
     <h2>Využívané datové sady</h2>      
     <br/>
     <div>      
@@ -113,6 +126,7 @@
       </div>
       {{/each}}
     </div>
+    {{/if}}
   </div>
 
   {{> footer }}

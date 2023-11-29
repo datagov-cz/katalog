@@ -42,6 +42,9 @@ function prepareTemplateData(language, query, data) {
     "type": addHrefToFilters(language, data["type"], "type"),
     "published": formatDate(language, data["published"]),
     "modified": formatDate(language, data["modified"]),
+    "showDataset": data["dataset"].length > 0,
+    "showAuthorTitle": data["author"]["title"] !== null,
+    "showAuthorIri": data["author"]["iri"] !== null,
   };
 }
 

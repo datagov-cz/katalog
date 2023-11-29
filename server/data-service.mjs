@@ -75,21 +75,37 @@ export async function fetchApplicationWithLabels(language, iri) {
   }
   return {
     "iri": application["iri"],
+    "link": application["link"],
     "title": application["title_" + language],
     "description": application["description_" + language],
     "state": await updateArrayOfCodelist(language, application["state"]),
     "platform": await updateArrayOfCodelist(language, application["platform"]),
     "theme": await updateArrayOfCodelist(language, application["theme"]),
-    // TODO Check why type is a single value.
     "type": await updateArrayOfCodelist(language, [application["type"]]),
-    "author": {
-      "iri": application["author"],
-      "title": application["author_" + language],
-    },
+    "author": createAuthor(application, language),
     "dataset": await updateArrayOfDatasets(language, application["dataset"]),
     "published": application["published"],
     "modified": application["modified"],
   };
+}
+
+function createAuthor(application, language) {
+  let iri = application["author"];
+  if (isBlankOrEmpty(iri)) {
+    iri = null;
+  }
+  let title = application["author_" + language];
+  if (isBlankOrEmpty(title)) {
+    title = null;
+  }
+  return {
+    "iri": iri,
+    "title": title,
+  };
+}
+
+function isBlankOrEmpty(value) {
+  return value === undefined || value === null || value.trim() === "";
 }
 
 async function updateArrayOfDatasets(language, iris) {

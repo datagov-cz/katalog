@@ -224,3 +224,7 @@ div.language-drop-down.dropdown-menu.lang-menu.show {
 .dataset a:hover {
 	text-decoration: underline;
 }
+
+.inline {
+	display:inline;
+}

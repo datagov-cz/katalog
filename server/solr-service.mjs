@@ -4,9 +4,11 @@ import * as solr from "./solr-query.mjs";
 export async function fetchApplication(language, iri) {
   const query = {
     "fl": [
-      ...applicationFields(language),
-       "dataset", "modified", "published",
-       "author_" + language
+      "iri",
+      "title_" + language, "description_" + language,
+      "state", "platform", "theme", "type", "author", "link",
+      "dataset", "modified", "published",
+      "author_" + language
     ],
     "fq": [
       ...solr.prepareFieldQuery("iri", [iri]),
@@ -14,14 +16,6 @@ export async function fetchApplication(language, iri) {
     "q": "*:*",
   };
   return await executeSolrQuery(query);
-}
-
-function applicationFields(language) {
-  return [
-    "iri",
-    "title_" + language, "description_" + language,
-    "state", "platform", "theme", "type", "author"
-  ];
 }
 
 async function executeSolrQuery(query) {
@@ -45,7 +39,11 @@ async function executeSolrQuery(query) {
 export async function fetchApplications(language, searchQuery, states, platforms, themes, types, authors, datasets, sort, sortDirection) {
   const query = {
     "facet.field": ["state", "platform", "theme", "type", "author", "dataset"],
-    "fl": applicationFields(language),
+    "fl": [
+      "iri",
+      "title_" + language, "description_" + language,
+      "state", "platform", "theme", "type", "author",
+    ],
     "fq": [
       ...solr.prepareFieldQuery("state", states),
       ...solr.prepareFieldQuery("platform", platforms),
