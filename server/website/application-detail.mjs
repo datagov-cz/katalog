@@ -1,7 +1,8 @@
 import { getTemplatesForLanguage } from "./templates-service.mjs";
-import { getQueryArgument, createNavigationData, createLink } from "../localization-service.mjs";
+import { getLocalization } from "../localization-service.mjs";
 import { fetchApplicationWithLabels } from "../data-service.mjs";
 import { clientTemplateData } from "../configuration.mjs";
+import { createNavigationData } from "../navigation-service.mjs";
 
 const VIEW_NAME = "application-detail";
 
@@ -9,50 +10,63 @@ const APPLICATION_LIST_VIEW_NAME = "application-list";
 
 export default async function handleRequest(language, request, reply) {
   const templates = getTemplatesForLanguage(language);
-  const query = decodeUrlQuery(language, request);
-  const data = await fetchApplicationWithLabels(language, query["iri"]);
+  const localization = getLocalization(language).view(VIEW_NAME);
+  const serverQuery = parseClientQuery(localization, request.query);
+  const data = await fetchApplicationWithLabels(language, serverQuery["iri"]);
   if (data == null) {
-    reply
-      .code(404)
-      .send();
+    handleMissing(reply);
     return;
   }
-  const templateData = prepareTemplateData(language, query, data);
+  const templateData = prepareTemplateData(localization, serverQuery, data);
   reply
     .code(200)
     .header("Content-Type", "text/html; charset=utf-8")
     .send(templates[VIEW_NAME](templateData));
 }
 
-function decodeUrlQuery(language, request) {
+function parseClientQuery(localization, query) {
   return {
-    "iri": getQueryArgument(VIEW_NAME, language, "iri", request.query, null),
+    "iri": localization.queryArgumentFromClient(query, "iri"),
   };
 }
 
-function prepareTemplateData(language, query, data) {
+function handleMissing(reply) {
+  reply
+    .code(404)
+    .send();
+}
+
+function prepareTemplateData(localization, query, data) {
+  const listLocalization = localization.parent.view(APPLICATION_LIST_VIEW_NAME);
   return {
     ...data,
     "client": clientTemplateData(),
-    "navigation": createNavigationData(VIEW_NAME, query),
+    "navigation": {
+      ...createNavigationData(VIEW_NAME, query),
+      "showApplicationLink": true,
+    },
     //
-    "state": addHrefToFilters(language, data["state"], "state"),
-    "theme": addHrefToFilters(language, data["theme"], "theme"),
-    "platform": addHrefToFilters(language, data["platform"], "platform"),
-    "type": addHrefToFilters(language, data["type"], "type"),
-    "published": formatDate(language, data["published"]),
-    "modified": formatDate(language, data["modified"]),
+    "state": addLinksToFilters(
+      listLocalization, data["state"], "state"),
+    "theme": addLinksToFilters(listLocalization,
+      data["theme"], "theme"),
+    "platform": addLinksToFilters(
+      listLocalization, data["platform"], "platform"),
+    "type": addLinksToFilters(
+      listLocalization, data["type"], "type"),
+    "published": formatDate(localization.language, data["published"]),
+    "modified": formatDate(localization.language, data["modified"]),
     "showDataset": data["dataset"].length > 0,
     "showAuthorTitle": data["author"]["title"] !== null,
     "showAuthorIri": data["author"]["iri"] !== null,
   };
 }
 
-function addHrefToFilters(language, items, name) {
+function addLinksToFilters(localization, items, name) {
   return items.map(item => ({
     "iri": item["iri"],
     "label": item["label"],
-    "href": createLink(APPLICATION_LIST_VIEW_NAME, language, { [name]: item["iri"] })
+    "href": localization.linkFromServer({ [name]: item["iri"] })
   }));
 }
 

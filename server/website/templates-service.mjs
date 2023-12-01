@@ -5,9 +5,15 @@ import logger from "../logger.mjs";
 import configuration from "../configuration.mjs";
 import {listLanguages} from "../localization-service.mjs";
 
+let templatesInitialized = false;
+
 const templatesCache = {};
 
 export function initializeTemplates() {
+  if (templatesInitialized) {
+    return;
+  }
+  templatesInitialized = true;
   for (let language of listLanguages()) {
     templatesCache[language] = loadTemplatesForLanguage(language);
   }

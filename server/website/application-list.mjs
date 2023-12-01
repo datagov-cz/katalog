@@ -1,127 +1,150 @@
 import { getTemplatesForLanguage } from "./templates-service.mjs";
-import { getQueryArgument, getQueryArgumentAsArray, createLink, createNavigationData, translate, translateArgument } from "../localization-service.mjs";
+import { getLocalization } from "../localization-service.mjs";
 import { fetchApplicationsWithLabels } from "../data-service.mjs"
 import { clientTemplateData } from "../configuration.mjs";
-
-const NO_DATASET_FILTER = [];
+import { createNavigationData } from "../navigation-service.mjs";
 
 const VIEW_NAME = "application-list";
 
 const APPLICATION_DETAIL_VIEW_NAME = "application-detail";
 
-const OPTIONS = [
-  ["title", "asc"],
-  ["title", "desc"],
-  ["modified", "asc"],
-  ["modified", "desc"],
-];
+const DEFAULT_SORT = "title";
+
+const SORT_OPTIONS = ["title", "modified"];
+
+const DEFAULT_SORT_DIRECTION = "asc";
+
+const SORT_DIRECTION_OPTIONS = ["asc", "desc"];
+
+const FACETS = ["theme", "type", "state", "platform"];
 
 export default async function handleRequest(language, request, reply) {
   const templates = getTemplatesForLanguage(language);
-  const query = decodeUrlQuery(language, request);
-  const data = await fetchDataForTemplate(language, query);
-  const templateData = prepareTemplateData(language, query, data);
+  const localization = getLocalization(language).view(VIEW_NAME, beforeLinkCallback);
+  const serverQuery = parseClientQuery(localization, request.query);
+  const data = await fetchDataForTemplate(language, serverQuery);
+  const templateData = prepareTemplateData(localization, serverQuery, data);
   reply
     .code(200)
     .header("Content-Type", "text/html; charset=utf-8")
     .send(templates[VIEW_NAME](templateData));
 }
 
-function decodeUrlQuery(language, request) {
-  const query = request.query;
+function beforeLinkCallback(localization, serverQuery) {
+  const result = { ...serverQuery };
 
-  // Parse sort and sort-direction.
-  let sort = "title";
-  let sortDirection = "asc";
-  const sortString = getQueryArgument(VIEW_NAME, language, "sort", query);
-  const sortDirectionString = getQueryArgument(VIEW_NAME, language, "sort-direction", query);
-  for (const [sortValue, directionValue] of OPTIONS) {
-    const sortValueTranslated = translateArgument(VIEW_NAME, language, sortValue);
-    if (sortString === sortValueTranslated) {
-      sort = sortValue;
-    }
-    const directionValueTranslated = translateArgument(VIEW_NAME, language, directionValue);
-    if (sortDirectionString === directionValueTranslated) {
-      sortDirection = directionValue;
-    }
+  const sort = result["sort"];
+  if (sort === DEFAULT_SORT) {
+    delete result["sort"];
+  } else {
+    result["sort"] = localization.argumentFromServer(sort);
   }
-  //  
+
+  const sortDirection = result["sort-direction"];
+  if (sortDirection === DEFAULT_SORT_DIRECTION) {
+    delete result["sort-direction"];
+  } else {
+    result["sort-direction"] = localization.argumentFromServer(sortDirection);
+  }
+  return result;
+}
+
+function parseClientQuery(localization, query) {
+  const clientSort = localization.queryArgumentFromClient(query, "sort");
+  const sort = selectArgumentFromClientQueryOrDefault(
+    localization, SORT_OPTIONS, clientSort,
+    DEFAULT_SORT);
+
+  const clientSortDirection = localization.queryArgumentFromClient(
+    query, "sort-direction");
+  const sortDirection = selectArgumentFromClientQueryOrDefault(
+    localization, SORT_DIRECTION_OPTIONS, clientSortDirection,
+    DEFAULT_SORT_DIRECTION);
 
   return {
-    "query": getQueryArgument(VIEW_NAME, language, "query", query, null),
-    "state": getQueryArgumentAsArray(VIEW_NAME, language, "state", query),
-    "platform": getQueryArgumentAsArray(VIEW_NAME, language, "platform", query),
-    "theme": getQueryArgumentAsArray(VIEW_NAME, language, "theme", query),
-    "type": getQueryArgumentAsArray(VIEW_NAME, language, "type", query),
-    "author": getQueryArgumentAsArray(VIEW_NAME, language, "author", query),
+    "query": localization.queryArgumentFromClient(query, "query"),
+    "state": localization.queryArgumentArrayFromClient(query, "state"),
+    "platform": localization.queryArgumentArrayFromClient(query, "platform"),
+    "theme": localization.queryArgumentArrayFromClient(query, "theme"),
+    "type": localization.queryArgumentArrayFromClient(query, "type"),
+    "author": localization.queryArgumentArrayFromClient(query, "author"),
     "sort": sort,
     "sort-direction": sortDirection,
   };
 }
 
-async function fetchDataForTemplate(language, query) {
-  return await fetchApplicationsWithLabels(
-    language,
-    query["query"], query["state"], query["platform"],
-    query["theme"], query["type"], query["author"],
-    NO_DATASET_FILTER, query["sort"], query["sort-direction"]);
+function selectArgumentFromClientQueryOrDefault(
+  localization, options, clientValue, defaultValue) {
+  for (const value of options) {
+    const valueAsClient = localization.argumentFromServer(value);
+    if (valueAsClient == clientValue) {
+      return value;
+    }
+  }
+  return defaultValue;
 }
 
-function prepareTemplateData(language, query, data) {
+async function fetchDataForTemplate(language, query) {
+  return await fetchApplicationsWithLabels(language, {
+    "searchQuery": query["query"],
+    "state": query["state"],
+    "platform": query["platform"],
+    "theme": query["theme"],
+    "type": query["type"],
+    "author": query["author"],
+    "sort": query["sort"],
+    "sortDirection": query["sort-direction"],
+  });
+}
+
+function prepareTemplateData(localization, query, data) {
+  const datasetFound = data["applications"]["count"];
+  const applications = data["applications"]["items"];
   return {
     "client": clientTemplateData(),
-    "navigation": createNavigationData(VIEW_NAME, query),    
-    //
+    "navigation": {
+      ...createNavigationData(VIEW_NAME, query),
+      "showApplicationLink": false,
+    },
     "message": {
-      "found": translate(language, "datasets-found", [data["applications"]["count"]]),
+      "found": localization.translateFromServer("datasets-found", datasetFound),
     },
     "search": {
       "value": query["query"],
-      "name": translate(language, "query"),
-      "link": "",
+      "name": localization.translateFromServer("query"),
     },
     "applications": {
-      "items": updateApplicationsForHtml(language, data["applications"]["items"])
+      "items": addLinkToApplicationDetail(localization, applications),
     },
-    "facets": updateFacetsForHtml(language, query, data["facets"]),
-    "ordering": createOrdering(language, query),
+    "facets": updateFacetsForTemplate(localization, query, data["facets"]),
+    "ordering": createOrderingForTemplate(localization, query),
   };
 }
 
-function updateApplicationsForHtml(language, applications) {
+
+
+function addLinkToApplicationDetail(localization, applications) {
+  const viewLocalization = localization.parent.view(APPLICATION_DETAIL_VIEW_NAME);
   return applications.map(application => ({
     ...application,
-    "href": createLink(APPLICATION_DETAIL_VIEW_NAME, language, { "iri": application["iri"] }),
+    "href": viewLocalization.linkFromServer({ "iri": application["iri"] }),
   }));
 }
 
-function updateFacetsForHtml(language, query, facets) {
-  const theme = facets["theme"];
-  const type = facets["type"];
-  const state = facets["state"];
-  const platform = facets["platform"];
-  return [
-    {
-      "label": translate(language, "theme"),
-      "count": theme["items"].length,
-      "items": updateWithSelected(language, "theme", query, theme["items"]),
-    }, {
-      "label": translate(language, "type"),
-      "count": type["items"].length,
-      "items": updateWithSelected(language, "type", query, type["items"]),
-    }, {
-      "label": translate(language, "state"),
-      "count": state["items"].length,
-      "items": updateWithSelected(language, "state", query, state["items"]),
-    }, {
-      "label": translate(language, "platform"),
-      "count": platform["items"].length,
-      "items": updateWithSelected(language, "platform", query, platform["items"]),
-    },
-  ]
+function updateFacetsForTemplate(localization, query, facets) {
+  const result = [];
+  for (const name of FACETS) {
+    const items = facets[name]["items"];
+    result.push({
+      "label": localization.translateFromServer(name),
+      "count": items.length,
+      "items": createFacetItemsForTemplate(localization, query, items, name),
+    });
+  }
+  return result;
 }
 
-function updateWithSelected(language, name, query, facetItems) {
+function createFacetItemsForTemplate(localization, query, facetItems, name) {
   const selected = query[name];
   return facetItems.map(item => {
     const iri = item["iri"];
@@ -130,7 +153,7 @@ function updateWithSelected(language, name, query, facetItems) {
       ...query,
       [name]: active ? removeFromArray(selected, iri) : addToArray(selected, iri),
     };
-    const href = createLink(VIEW_NAME, language, facetQuery);
+    const href = localization.linkFromServer(facetQuery);
     return { active, href, ...item };
   });
 }
@@ -155,29 +178,33 @@ function removeFromArray(array, value) {
   }
 }
 
-function createOrdering(language, query) {
-  const sort = query["sort"];
-  const direction = query["sort-direction"];
+function createOrderingForTemplate(localization, query) {
+  const activeSort = query["sort"];
+  const activeDirection = query["sort-direction"];
   // 
-  let active = null;
-  let options = [];
-  for (const value of OPTIONS) {
-    if (value[0] === sort && value[1] === direction) {
-      active = value;
-    } else {
-      options.push(value);
+  const options = [];
+  for (const sort of SORT_OPTIONS) {
+    for (const direction of SORT_DIRECTION_OPTIONS) {
+      if (activeSort === sort && activeDirection === direction) {
+        continue;
+      }
+      options.push({
+        "label": translateOrderingPairFromServer(
+          localization, sort, direction),
+        "href": localization.linkFromServer(
+          { ...query, sort, "sort-direction": direction }),
+      });
     }
   }
   // 
   return {
-    "active": translate(language, active[0]) + " " + translate(language, active[1]),
-    "items": options.map(([sort, direction]) => ({
-      "label": translate(language, sort) + " " + translate(language, direction),
-      "href": createLink(VIEW_NAME, language, {
-        ...query,
-        "sort": translateArgument(VIEW_NAME, language, sort),
-        "sort-direction": translateArgument(VIEW_NAME, language, direction),
-      }),
-    })),
+    "active": translateOrderingPairFromServer(
+      localization, activeSort, activeDirection),
+    "items": options,
   };
+}
+
+function translateOrderingPairFromServer(localization, sort, direction) {
+  return localization.translateFromServer(sort) + " "
+    + localization.translateFromServer(direction);
 }

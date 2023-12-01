@@ -36,21 +36,25 @@ async function executeSolrQuery(query) {
   }
 }
 
-export async function fetchApplications(language, searchQuery, states, platforms, themes, types, authors, datasets, sort, sortDirection) {
-  const query = {
-    "facet.field": ["state", "platform", "theme", "type", "author", "dataset"],
+export async function fetchApplications(language, query) {
+  const {
+    searchQuery,
+    state, platform, theme, type, author,
+    sort, sortDirection,
+  } = query;
+  const solrQuery = {
+    "facet.field": ["state", "platform", "theme", "type", "author"],
     "fl": [
       "iri",
       "title_" + language, "description_" + language,
       "state", "platform", "theme", "type", "author",
     ],
     "fq": [
-      ...solr.prepareFieldQuery("state", states),
-      ...solr.prepareFieldQuery("platform", platforms),
-      ...solr.prepareFieldQuery("theme", themes),
-      ...solr.prepareFieldQuery("type", types),
-      ...solr.prepareFieldQuery("author", authors),
-      ...solr.prepareFieldQuery("dataset", datasets),
+      ...solr.prepareFieldQuery("state", state),
+      ...solr.prepareFieldQuery("platform", platform),
+      ...solr.prepareFieldQuery("theme", theme),
+      ...solr.prepareFieldQuery("type", type),
+      ...solr.prepareFieldQuery("author", author),
     ],
     "sort": prepareSort(language, sort, sortDirection),
     "facet": true,
@@ -58,7 +62,7 @@ export async function fetchApplications(language, searchQuery, states, platforms
     "facet.mincount": 1,
     "q": solr.prepareSolrTextQuery(language, searchQuery),
   };
-  return await executeSolrQuery(query);
+  return await executeSolrQuery(solrQuery);
 }
 
 function prepareSort(language, sort, sortDirection) {

@@ -40,6 +40,6 @@ export default {
     "title": "Title",
     "modified": "Modified",
     "asc": "ascending",
-    "desc": "descending",    
+    "desc": "descending",
   }
 };

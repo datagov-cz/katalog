@@ -1,4 +1,4 @@
-import {initializeTemplates, getTemplatesForLanguage} from "./templates-service.mjs";
+import {initializeTemplates} from "./templates-service.mjs";
 import applicationListHandler from "./application-list.mjs";
 import applicationDetailHandler from "./application-detail.mjs";
 

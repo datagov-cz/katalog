@@ -3,8 +3,8 @@ import { fetchLabel } from "./label-service.mjs";
 import { fetchDatasetDetail } from "./dataset-service.mjs";
 import configuration from "./configuration.mjs";
 
-export async function fetchApplicationsWithLabels(language, searchQuery, state, platform, theme, type, author, dataset, sort, sortDirection) {
-  const solrData = await solr.fetchApplications(language, searchQuery, state, platform, theme, type, author, dataset, sort, sortDirection);
+export async function fetchApplicationsWithLabels(language, query) {
+  const solrData = await solr.fetchApplications(language, query);
   return {
     "applications": {
       "count": solrData["response"]["numFound"],

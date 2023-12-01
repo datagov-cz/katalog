@@ -1,9 +1,7 @@
-
 import { fetchApplicationsWithDatasets } from "../../data-service.mjs"
 
 export default async function handleRequest(request, reply) {
   const query = decodeUrlQuery(request);
-  console.log(query);
   const payload = await fetchApplicationsWithDatasets(query["language"], query["dataset"]);
   reply
     .code(200)
