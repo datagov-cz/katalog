@@ -60,6 +60,7 @@ export async function fetchApplications(language, query) {
     "facet": true,
     "facet.limit": -1,
     "facet.mincount": 1,
+    "rows": 100,
     "q": solr.prepareSolrTextQuery(language, searchQuery),
   };
   return await executeSolrQuery(solrQuery);
