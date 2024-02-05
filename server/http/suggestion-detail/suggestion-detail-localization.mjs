@@ -1,6 +1,6 @@
 export default {
   "cs": {
-    "path": "návrhy-na-datovou-sadu-k-otevření",
+    "path": "návrh-na-datovou-sadu-k-otevření",
     "query": {
       "iri": "iri",
     },
