@@ -30,7 +30,7 @@ export function parseClientQuery(navigation, query) {
     "query": navigation.queryArgumentFromClient(query, "query"),
     "theme": navigation.queryArgumentArrayFromClient(query, "theme"),
     "themeLimit": -1,
-    "publisher": navigation.queryArgumentArrayFromClient(query, "type"),
+    "publisher": navigation.queryArgumentArrayFromClient(query, "publisher"),
     "publisherLimit": -1,
     "sort": sort,
     "sortDirection": sortDirection,
