@@ -26,8 +26,6 @@ export function parseClientQuery(navigation, query) {
 
   const pageSize = navigation.queryArgumentFromClient(query, "page-size");
 
-  console.log("Raw query:", query, navigation.queryArgumentArrayFromClient(query, "theme"));
-
   return {
     "query": navigation.queryArgumentFromClient(query, "query"),
     "state": navigation.queryArgumentArrayFromClient(query, "state"),
