@@ -4,8 +4,7 @@
   "description": "Catalog of registered applications. Component of Nation Data Catalog.",
   "type": "module",
   "scripts": {
-    "start": "node --import ./register-hooks.mjs ./server/server.mjs",
-    "typescript": "node --import ./register-hooks.mjs ./server/server.mjs",
+    "start": "node ./server/entry-point.mjs",
     "test": "node --test"
   },
   "author": "Digitální a informační agentura",
@@ -13,6 +12,7 @@
   "dependencies": {
     "@fastify/cors": "^8.4.1",
     "@fastify/static": "^6.12.0",
+    "@types/pino": "^7.0.5",
     "dotenv": "^16.3.1",
     "fastify": "^4.24.3",
     "handlebars": "^4.7.8",

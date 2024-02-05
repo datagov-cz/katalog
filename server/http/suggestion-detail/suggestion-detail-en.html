@@ -1,0 +1,87 @@
+<html lang="cs">
+
+<head>
+  {{> head }}
+  <!-- Site specific. -->
+  <title>Suggestion - Národní katalog otevřených dat (NKOD)</title>
+</head>
+
+<body>
+  {{#with navigation}} {{> navigation }} {{/with}}
+  {{#with suggestion}}
+  <div class="container">
+    <div>
+      <h1>{{title}}</h1>
+      <h2 class="inline">
+        {{publisher.title}}
+      </h2>
+      <a href="{{publisher.iri}}" title="Go to link" rel="nofollow noopener noreferrer" target="_blank">
+        <i class="bi bi-arrow-up-right-square"></i>
+      </a>
+    </div>
+    <br/>
+    <p>
+      {{breaklines description}}
+    </p>
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-3">
+        <dl>
+          <dt>Theme</dt>
+          {{#each themes}}
+          <dd>
+            <a href="{{href}}">
+              {{label}}
+            </a>
+            &nbsp;
+            <a href="{{iri}}" title="Go to link" rel="nofollow noopener noreferrer" target="_blank">
+              <i class="bi bi-arrow-up-right-square"></i>
+            </a>
+          </dd>
+          {{/each}}
+        </dl>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3">
+        <dl>
+          <dt>Povinným subjektem dle 106</dt>
+          <dd>{{#if mandatory_106}}Ano{{else}}Ne{{/if}}</dd>
+        </dl>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3">
+        <dl>
+          <dt>Existuje překážka dle zvláštního předpisu</dt>
+          <dd>{{#if obstacle_special_regulation}}Ano{{else}}Ne{{/if}}</dd>
+        </dl>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3">
+        <dl>
+          <dt>Existuje překážka dle 106</dt>
+          <dd>{{#if obstacle_106}}Ano{{else}}Ne{{/if}}</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-3">
+        <dl>
+          <dt>Created</dt>
+          <dd>{{created}}</dd>
+        </dl>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3">
+        <dl>
+          <dt>Published</dt>
+          <dd>{{published}}</dd>
+        </dl>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3">
+        <dl>
+          <dt>Modified</dt>
+          <dd>{{modified}}</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+  {{/with}}
+  {{#with footer}} {{> footer }} {{/with}}
+</body>
+
+</html>
