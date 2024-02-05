@@ -172,8 +172,9 @@ div.language-drop-down.dropdown-menu.lang-menu.show {
 	flex-grow: 1;
 }
 
-.facet li:hover{		
+.facet li:hover, .facet li.active{		
 	background-color: var(--list-group-action-active-bg);
+	border-color: var(--list-group-action-active-bg);
 }
 
 .facet li:hover a {
