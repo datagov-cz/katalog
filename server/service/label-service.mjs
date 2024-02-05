@@ -3,10 +3,12 @@ const DEFAULT_IRI = resource => resource["iri"];
 /**
  * Takes array of objects with fetchLabel functionality.
  */
-export function createLabelService(sources) {
+export function createLabelService(sources, cacheSources) {
   const cache = new MemoryCache();
   const fetchLabel = (languages, iri) =>
     fetchLabelFromCouchDb(sources, cache, languages, iri);
+  // Async execution, we do not wait for the result.
+  reloadCache(cache, cacheSources);
   return {
     /**
      * Fetch and return label for resource.
@@ -27,46 +29,89 @@ export function createLabelService(sources) {
   };
 }
 
+/**
+ * TODO Make sure cache is not growing too large.
+ */
 class MemoryCache {
 
   constructor() {
     this.cache = new Map();
   }
 
-  has(languages, iri) {
-    const key = this.key(languages, iri);
-    return this.cache.has(key);
-  }
-
-  key(languages, iri) {
-    return languages.join(",") + iri;
-  }
-
-  get(languages, iri) {
-    const key = this.key(languages, iri);
+  get(language, iri) {
+    const key = this.key(language, iri);
     return this.cache.get(key);
   }
 
-  update(languages, iri, value) {
-    // TODO Make sure cache is not growing too large.
-    const key = this.key(languages, iri);
+  key(language, iri) {
+    return language + ":" + iri;
+  }
+
+  update(language, iri, value) {
+    console.log("update", language, iri, value);
+    const key = this.key(language, iri);
     this.cache.set(key, value);
   }
 }
 
 async function fetchLabelFromCouchDb(labelSources, cache, languages, iri) {
-  if (cache.has(languages, iri)) {
-    return cache.get(languages, iri);
+  const [cacheHit, cacheValue] = retrieveFromCache(cache, languages, iri);
+  if (cacheHit) {
+    return cacheValue;
   }
-  let result = undefined;
-  for (const labelSource of labelSources) {    
-    result = await labelSource.fetchLabel(languages, iri);
-    if (result !== null) {
-      break;
+  // Fetch all data.
+  let labels = {};
+  for (const labelSource of labelSources) {
+    const response = await labelSource.fetchLabel(languages, iri);
+    if (response === null) {
+      // Error.
+      continue;
+    }
+    labels = { ...labels, ...response };
+  }
+  // Update cache and find our result.
+  let result = null;
+  for (const language of languages) {
+    const cached = cache.get(language, iri);
+    const label = labels[language] ?? null;
+    if (cached == undefined) {
+      cache.update(language, iri, label);
+    }
+    result == result ?? cached ?? label;
+  }
+  return result;
+}
+
+/**
+ * Return tuple [cache hit; cached value] .
+ */
+function retrieveFromCache(cache, languages, iri) {
+  for (const language of languages) {
+    const cached = cache.get(language, iri);
+    if (cached === undefined) {
+      // There is undefined so we need to full load.
+      return [false, undefined];
+    } else if (cached === null) {
+      // Stored in the cache as empty.
+      continue;
+    } else {
+      // Cache hit.
+      return [true, cached];
     }
   }
-  cache.update(languages, iri, result);
-  return result;
+  // All values are cached and we still do not have the label.
+  return [true, undefined];
+}
+
+async function reloadCache(cache, cacheSources) {
+  for (const source of cacheSources) {
+    const items = await source.fetchInitialCache(["cs", "en"]);
+    for (const item of items) {
+      for (const label of item.labels) {
+        cache.update(label.language, item.iri, label.value);
+      }
+    }
+  }
 }
 
 async function addLabelToResources(fetchLabel, languages, resources, defaultValue) {

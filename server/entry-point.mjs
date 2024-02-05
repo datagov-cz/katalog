@@ -10,9 +10,10 @@ import { createCouchDbConnector } from "./connector/couchdb.mjs";
 
 import { createCouchDbDataset } from "./data-source/couchdb-dataset.mjs";
 import { createCouchDbLabel } from "./data-source/couchdb-label.mjs";
-import { createCouchDbSuggestions} from "./data-source/couchdb-suggestions.mjs";
+import { createCouchDbSuggestions } from "./data-source/couchdb-suggestions.mjs";
 import { createSolrApplication } from "./data-source/solr-application.mjs";
 import { createSolrSuggestion } from "./data-source/solr-suggestion.mjs";
+import { createCouchDbStatic } from "./data-source/couchdb-static.mjs";
 
 import { createNavigationService } from "./service/navigation-service.mjs";
 import { createLabelService } from "./service/label-service.mjs";
@@ -34,18 +35,22 @@ function createServices() {
 
   const couchDbDataset = createCouchDbDataset(couchdb);
   const couchDbLabel = createCouchDbLabel(couchdb);
+  const couchDbStatic = createCouchDbStatic(couchdb);
   const couchDbSuggestions = createCouchDbSuggestions(couchdb);
   const solrApplication = createSolrApplication(solr);
   const solrSuggestion = createSolrSuggestion(solr);
 
   const navigation = createNavigationService();
-  const label = createLabelService([couchDbLabel, couchDbSuggestions]);
+  const label = createLabelService(
+    [couchDbLabel, couchDbSuggestions], 
+    [couchDbStatic, couchDbSuggestions]);
   const facet = createFacetService(label);
-  
+
   return {
     // Data sources
     "couchDbDataset": couchDbDataset,
     "couchDbLabel": couchDbDataset,
+    "couchDbStatic": couchDbStatic,
     "couchDbSuggestions": couchDbSuggestions,
     "solrApplication": solrApplication,
     "solrSuggestion": solrSuggestion,

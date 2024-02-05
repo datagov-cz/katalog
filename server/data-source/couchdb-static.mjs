@@ -1,25 +1,14 @@
-import { parseLabelResponse } from "./shared/couchdb-response.mjs";
 import { FOAF } from "./shared/vocabulary.mjs";
 
-export function createCouchDbSuggestions(couchDbConnector) {
+export function createCouchDbStatic(couchDbConnector) {
   return {
-    /**
-     * Returns tuple [language, value].
-     */
-    "fetchLabel": (languages, iri) =>
-      fetchLabel(couchDbConnector, languages, iri),
     "fetchInitialCache": (languages) =>
       fetchInitialCache(couchDbConnector, languages),
   };
 }
 
-async function fetchLabel(couchDbConnector, languages, iri) {
-  const response = await couchDbConnector.fetch("suggestions", iri);
-  return parseLabelResponse(languages, response, FOAF.name);
-}
-
 async function fetchInitialCache(couchDbConnector, languages) {
-  const response = await couchDbConnector.fetch("suggestions", "initial_data_cache");
+  const response = await couchDbConnector.fetch("static", "initial_data_cache");
   return parseInitialDataCacheResponse(response, languages);
 }
 
