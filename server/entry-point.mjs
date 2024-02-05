@@ -23,12 +23,12 @@ import { registerHttpRoutes } from "./http/route.mjs";
 
 (async function main() {
   const server = await createHttpServer();
-  const services = createServices();
+  const services = await createServices();
   registerRoutes(server, services);
   startServer(server);
 })();
 
-function createServices() {
+async function createServices() {
   const http = createHttpConnector();
   const solr = createSolrConnector(configuration, http);
   const couchdb = createCouchDbConnector(configuration, http);
@@ -45,6 +45,13 @@ function createServices() {
     [couchDbLabel, couchDbSuggestions], 
     [couchDbStatic, couchDbSuggestions]);
   const facet = createFacetService(label);
+
+  try {
+    logger.info("Loading cache data.")
+    await label.initializeCache();
+  } catch (ex) { 
+    logger.error("Can't load label cache");
+  }
 
   return {
     // Data sources

@@ -7,8 +7,6 @@ export function createLabelService(sources, cacheSources) {
   const cache = new MemoryCache();
   const fetchLabel = (languages, iri) =>
     fetchLabelFromCouchDb(sources, cache, languages, iri);
-  // Async execution, we do not wait for the result.
-  reloadCache(cache, cacheSources);
   return {
     /**
      * Fetch and return label for resource.
@@ -26,6 +24,10 @@ export function createLabelService(sources, cacheSources) {
      */
     "addLabelToResources": (languages, resources, defaultValue = DEFAULT_IRI) =>
       addLabelToResources(fetchLabel, languages, resources, defaultValue),
+    /**
+     * Asynchronous function re-load content of the cache.
+     */
+    "initializeCache": () => reloadCache(cache, cacheSources),
   };
 }
 
@@ -48,7 +50,6 @@ class MemoryCache {
   }
 
   update(language, iri, value) {
-    console.log("update", language, iri, value);
     const key = this.key(language, iri);
     this.cache.set(key, value);
   }
@@ -77,7 +78,7 @@ async function fetchLabelFromCouchDb(labelSources, cache, languages, iri) {
     if (cached == undefined) {
       cache.update(language, iri, label);
     }
-    result == result ?? cached ?? label;
+    result = result ?? cached ?? label;
   }
   return result;
 }
