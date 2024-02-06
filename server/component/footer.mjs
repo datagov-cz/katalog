@@ -6,6 +6,7 @@ export function registerFooter(templateService, language) {
 
 export function createFooterData() {
   return {
-    "registrationFormUrl": configuration.client.applicationFormUrl
+    "applicationRegistrationFormUrl": configuration.client.applicationFormUrl,
+    "suggestionRegistrationFormUrl": configuration.client.suggestionFormUrl,
   };
 }

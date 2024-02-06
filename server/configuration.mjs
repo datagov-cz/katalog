@@ -14,6 +14,7 @@ const configuration = {
   reloadTemplates: process.env.NODE_ENV === "development",
   client: { // Used for rendering.
     applicationFormUrl: process.env.CLIENT_APPLICATION_FORM_URL ?? "",
+    suggestionFormUrl: process.env.CLIENT_SUGGESTION_FORM_URL ?? "",
   },
 };
 
