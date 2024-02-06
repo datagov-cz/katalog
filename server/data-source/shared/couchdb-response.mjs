@@ -19,13 +19,17 @@ export function parseLabelResponse(languages, response, predicate) {
   return getString(resource, predicate);
 }
 
+/**
+ * @param {string[]} languages 
+ * @param {object} values With {language: string}.
+ * @returns {string}
+ */
 export function selectForLanguages(languages, values) {
   for (const language of languages) {
     if (values[language] === undefined) {
       continue;
     }
-    return [language, values[language]];
+    return values[language];
   }
-  const key = Object.keys(values)[0];
-  return [key, values[key]];
+  return Object.values(values)[0];
 }
