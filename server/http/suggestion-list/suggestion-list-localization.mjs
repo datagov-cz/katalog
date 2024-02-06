@@ -19,8 +19,8 @@ export default {
     },
     "translation": {
       "items-found": [
-        [0, "Nebyla nalezen žádná návrh."],
-        [1, "Nalezena jeden návrh."],
+        [0, "Nebyla nalezen žádný návrh."],
+        [1, "Nalezen jeden návrh."],
         [2, "Nalezeny {} návrhy."],
         [5, "Nalezeno {} návrhů."],
       ],
