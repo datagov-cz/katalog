@@ -11,7 +11,8 @@ K dispozici jsou následující proměnné:
 - `COUCHDB_URL` - URL na CouchDB bez '/' na konci.
 - `DATASET_CATALOG_URL` - URL na katalog datových sad bez '/' na konci.
 - `HTTP_SERVE_STATIC` - Obslouží požadavky na statické zdroje z adresáře `assets`.
-- `CLIENT_APPLICATION_FORM_URL` - URL pro registrační formulář.
+- `CLIENT_APPLICATION_FORM_URL` - URL pro registrační formulář aplikací.
+- `CLIENT_SUGGESTION_FORM_URL` - URL pro registrační formulář návrhů ke zveřejnění dat.
 
 ## Sestavení a spuštění
 Po naklonování repozitáře je nejprve zapotřebí nainstalovat knihovny pomocí následujícího příkazu.
