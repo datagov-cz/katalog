@@ -30,6 +30,8 @@ function buildSuggestionQuery(iri) {
       "published",
       "publisher",
       "publisher_cs",
+      "state",
+      "dataset",
       "mandatory_106",
       "obstacle_special_regulation",
       "obstacle_106",
@@ -54,7 +56,9 @@ function parseSuggestionResponse( response) {
     "created": new Date(document["created"]),
     "modified": new Date(document["modified"]),
     "published": new Date(document["published"]),
-    "themes": document["theme"],
+    "themes": document["theme"] ?? [],
+    "state": document["state"] ?? [],
+    "datasets": document["dataset"] ?? [],
     "publisher": {
       "iri": emptyAsNull(document["publisher"]),
       "title": emptyAsNull(document["publisher_cs"]),
@@ -77,6 +81,7 @@ function buildSuggestionsQuery(query) {
     searchQuery,
     theme,
     publisher,
+    state,
     sort,
     sortDirection,
     offset,
@@ -95,6 +100,7 @@ function buildSuggestionsQuery(query) {
     "fq": [
       ...prepareFieldQuery("theme", theme),
       ...prepareFieldQuery("publisher", publisher),
+      ...prepareFieldQuery("state", state),
     ],
     "sort": prepareSort("cs", sort, sortDirection),
     "facet": true,
@@ -110,13 +116,14 @@ function parseSuggestionsResponse(response) {
   const documents = response["response"]["docs"].map(document => ({
     "iri": document["iri"],
     "title": document["title_cs"],
-    "themes": document["theme"],
+    "themes": document["theme"] ?? [],
   }));
 
   const facet_fields = response["facet_counts"]["facet_fields"];
   const facets = {
     "theme": parseFacet(facet_fields["theme"]),
     "publisher": parseFacet(facet_fields["publisher"]),
+    "state": parseFacet(facet_fields["state"]),
   };
 
   return {

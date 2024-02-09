@@ -24,6 +24,9 @@ function isEmpty(value) {
 }
 
 export function parseFacet(payload) {
+  if (payload == undefined) {
+    return [];
+  }
   const result = [];
   for (let index = 0; index < payload.length; index += 2) {
     result.push({

@@ -58,16 +58,16 @@ function parseApplicationResponse(languages, response) {
     "iri": document["iri"],
     "title": selectLanguage(document, "title_", languages),
     "description": selectLanguage(document, "description_", languages),
-    "states": document["state"],
-    "platforms": document["platform"],
-    "themes": document["theme"],
+    "states": document["state"] ?? [],
+    "platforms": document["platform"] ?? [],
+    "themes": document["theme"] ?? [],
     "types": [document["type"]], // This is stored as single value in Solr.
     "author": {
       "iri": emptyAsNull(document["author"]),
       "title": emptyAsNull(selectLanguage(document, "author_", languages)),
     },
     "link": document["link"],
-    "datasets": document["dataset"],
+    "datasets": document["dataset"] ?? [],
     "modified": new Date(document["modified"]),
     "published": new Date(document["published"]),
   };
@@ -128,7 +128,7 @@ function parseApplicationsResponse(languages, response) {
     "iri": document["iri"],
     "title": selectLanguage(document, "title_", languages),
     "description": selectLanguage(document, "description_", languages),
-    "themes": document["theme"],
+    "themes": document["theme"] ?? [],
   }));
 
   const facet_fields = response["facet_counts"]["facet_fields"];
