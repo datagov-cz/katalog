@@ -16,6 +16,7 @@ export async function prepareData(services, languages, query) {
     "documents": data["found"],
     "theme": facets["theme"].length,
     "publisher": facets["publisher"].length,
+    "state": facets["state"].length,
   };
 
   await updateApplicationsInPlace(services, languages, data["documents"]);
@@ -24,6 +25,8 @@ export async function prepareData(services, languages, query) {
     languages, facets["theme"], query["theme"], query["themeLimit"]);
   await services.facet.updateFacetInPlace(
     languages, facets["publisher"], query["publisher"], query["publisherLimit"]);
+  await services.facet.updateFacetInPlace(
+    languages, facets["state"], query["state"], query["stateLimit"]);
 
   return data;
 }

@@ -2,7 +2,7 @@
 import { ROUTE } from "../route-name.mjs";
 import * as components from "../../component/index.mjs";
 
-const FACETS = ["theme", "publisher"];
+const FACETS = ["state", "theme", "publisher"];
 
 const SORT_OPTIONS = [
   ["title", "asc"],

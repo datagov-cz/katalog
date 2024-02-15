@@ -91,6 +91,7 @@ function buildSuggestionsQuery(query) {
     "facet.field": [
       "theme",
       "publisher",
+      "state",
     ],
     "fl": [
       "iri",

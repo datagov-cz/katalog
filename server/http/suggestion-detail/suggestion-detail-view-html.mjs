@@ -2,7 +2,7 @@ import { ROUTE } from "../route-name.mjs";
 import * as components from "../../component/index.mjs";
 
 export function renderHtml(services, languages, query, data, reply) {
-  const templateData = prepareTemplateData(services.navigation, languages, query, data);
+  const templateData = prepareTemplateData(services, languages, query, data);
   const template = services.template.view(ROUTE.SUGGESTION_DETAIL);
   reply
     .code(200)
@@ -10,14 +10,29 @@ export function renderHtml(services, languages, query, data, reply) {
     .send(template(templateData));
 }
 
-export function prepareTemplateData(navigation, languages, query, data) {
+export function prepareTemplateData(services, languages, query, data) {
   const language = languages[0];
-  const suggestion = prepareSuggestion(navigation, language, data);
+  const datasets = data["datasets"];
+  prepareDatasetsInPlace(services, language, data["datasets"]);
+  const suggestion = prepareSuggestion(services.navigation, language, data);
   return {
-    "navigation": components.createNavigationData(navigation, languages, query, true),
+    "navigation": components.createNavigationData(
+      services.navigation, languages, query, true),
     "footer": components.createFooterData(),
     "suggestion": suggestion,
+    "datasets": {
+      "visible": datasets.length > 0,
+      "items": datasets,
+    },
   };
+}
+
+function prepareDatasetsInPlace(services, language, datasets) {
+  const datasetService = services.dataset;
+  for (const dataset of datasets) {
+    dataset["href"] = datasetService.datasetCatalogLink(
+      language, dataset["iri"]);
+  }
 }
 
 function prepareSuggestion(navigation, language, suggestion) {
@@ -27,6 +42,7 @@ function prepareSuggestion(navigation, language, suggestion) {
     "title": suggestion["title"],
     "description": suggestion["description"],
     "themes": suggestion["themes"],
+    "state": suggestion["state"],
     "created": formatDate(language, suggestion["created"]),
     "published": formatDate(language, suggestion["published"]),
     "modified": formatDate(language, suggestion["modified"]),

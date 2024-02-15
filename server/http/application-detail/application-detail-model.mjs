@@ -5,7 +5,7 @@ export async function prepareData(services, languages, query) {
   data["platforms"] = await irisToResources(labelService, languages, data["platforms"]);
   data["themes"] = await irisToResources(labelService, languages, data["themes"]);
   data["types"] = await irisToResources(labelService, languages, data["types"])
-  data["datasets"] = await prepareDatasets(services, languages, data["datasets"]);
+  data["datasets"] = await services.dataset.fetchDatasetPreviews(languages, data["datasets"]);
   return data;
 };
 
@@ -23,17 +23,4 @@ async function iriToResource(labelService, languages, iri) {
     "iri": iri,
     "label": labels ?? iri,
   }
-}
-
-async function prepareDatasets(services, languages, iris) {
-  const result = [];
-  for (const iri of iris) {
-    const dataset = await services.couchDbDataset.fetchDataset(languages, iri)
-    result.push({
-      "iri": iri,
-      "title": dataset?.["title"] ?? iri,
-      "description": dataset?.["description"] ?? "",
-    });
-  }
-  return result;
 }

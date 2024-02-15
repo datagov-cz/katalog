@@ -18,6 +18,7 @@ import { createCouchDbStatic } from "./data-source/couchdb-static.mjs";
 import { createNavigationService } from "./service/navigation-service.mjs";
 import { createLabelService } from "./service/label-service.mjs";
 import { createFacetService } from "./service/facet-service.mjs";
+import { createDatasetService } from "./service/dataset-service.mjs";
 
 import { registerHttpRoutes } from "./http/route.mjs";
 
@@ -45,6 +46,7 @@ async function createServices() {
     [couchDbLabel, couchDbSuggestions], 
     [couchDbStatic, couchDbSuggestions]);
   const facet = createFacetService(label);
+  const dataset = createDatasetService(couchDbDataset);
 
   try {
     logger.info("Loading cache data.")
@@ -65,6 +67,7 @@ async function createServices() {
     "navigation": navigation,
     "label": label,
     "facet": facet,
+    "dataset": dataset,
   };
 }
 
