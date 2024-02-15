@@ -57,8 +57,10 @@ function prepareSuggestion(navigation, language, suggestion) {
 }
 
 function formatDate(language, value) {
-  const date = new Date(value);
-  return date.toLocaleDateString(language);
+  if (value === null) {
+    return "-";
+  }
+  return value.toLocaleDateString(language);
 }
 
 function updateCodelistInPlace(navigation, items, name) {

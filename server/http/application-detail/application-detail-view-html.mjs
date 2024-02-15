@@ -1,4 +1,3 @@
-import configuration from "../../configuration.mjs";
 import { ROUTE } from "../route-name.mjs";
 import * as components from "../../component/index.mjs";
 
@@ -65,8 +64,10 @@ function prepareApplication(navigation, language, application) {
 }
 
 function formatDate(language, value) {
-  const date = new Date(value);
-  return date.toLocaleDateString(language);
+  if (value === null) {
+    return "-";
+  }
+  return value.toLocaleDateString(language);
 }
 
 function updateCodelistInPlace(navigation, items, name) {

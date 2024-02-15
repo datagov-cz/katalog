@@ -1,5 +1,5 @@
 import { prepareFieldQuery, prepareTextQuery, prepareSort } from "./shared/solr-query.mjs";
-import { selectLanguage, emptyAsNull, parseFacet } from "./shared/solr-response.mjs";
+import { selectLanguage, emptyAsNull, parseFacet, parseDate } from "./shared/solr-response.mjs";
 
 const CORE = "applications";
 
@@ -68,8 +68,8 @@ function parseApplicationResponse(languages, response) {
     },
     "link": document["link"],
     "datasets": document["dataset"] ?? [],
-    "modified": new Date(document["modified"]),
-    "published": new Date(document["published"]),
+    "modified": parseDate(document["modified"]),
+    "published": parseDate(document["published"]),
   };
 }
 

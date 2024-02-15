@@ -1,5 +1,5 @@
 import { prepareFieldQuery, prepareTextQuery, prepareSort } from "./shared/solr-query.mjs";
-import { emptyAsNull, parseFacet } from "./shared/solr-response.mjs";
+import { emptyAsNull, parseFacet, parseDate } from "./shared/solr-response.mjs";
 
 const CORE = "suggestions";
 
@@ -53,9 +53,9 @@ function parseSuggestionResponse( response) {
     "iri": document["iri"],
     "title": document["title_cs"],
     "description": document["description_cs"],
-    "created": new Date(document["created"]),
-    "modified": new Date(document["modified"]),
-    "published": new Date(document["published"]),
+    "created": parseDate(document["created"]),
+    "modified": parseDate(document["modified"]),
+    "published": parseDate(document["published"]),
     "themes": document["theme"] ?? [],
     "state": document["state"] ?? [],
     "datasets": document["dataset"] ?? [],
