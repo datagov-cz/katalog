@@ -1,5 +1,5 @@
 import { prepareFieldQuery, prepareTextQuery, prepareSort } from "./shared/solr-query.mjs";
-import { emptyAsNull, parseFacet } from "./shared/solr-response.mjs";
+import { emptyAsNull, parseFacet, parseDate } from "./shared/solr-response.mjs";
 
 const CORE = "suggestions";
 
@@ -26,8 +26,6 @@ function buildSuggestionQuery(iri) {
       "description_cs",
       "theme",
       "created",
-      "modified",
-      "published",
       "publisher",
       "publisher_cs",
       "state",
@@ -53,9 +51,7 @@ function parseSuggestionResponse( response) {
     "iri": document["iri"],
     "title": document["title_cs"],
     "description": document["description_cs"],
-    "created": new Date(document["created"]),
-    "modified": new Date(document["modified"]),
-    "published": new Date(document["published"]),
+    "created": parseDate(document["created"]),
     "themes": document["theme"] ?? [],
     "state": document["state"] ?? [],
     "datasets": document["dataset"] ?? [],
@@ -91,10 +87,12 @@ function buildSuggestionsQuery(query) {
     "facet.field": [
       "theme",
       "publisher",
+      "state",
     ],
     "fl": [
       "iri",
       "title_cs",
+      "description_cs",
       "theme",
     ],
     "fq": [
@@ -116,6 +114,7 @@ function parseSuggestionsResponse(response) {
   const documents = response["response"]["docs"].map(document => ({
     "iri": document["iri"],
     "title": document["title_cs"],
+    "description": document["description_cs"],
     "themes": document["theme"] ?? [],
   }));
 

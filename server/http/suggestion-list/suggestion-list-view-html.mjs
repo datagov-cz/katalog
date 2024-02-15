@@ -2,15 +2,13 @@
 import { ROUTE } from "../route-name.mjs";
 import * as components from "../../component/index.mjs";
 
-const FACETS = ["theme", "publisher"];
+const FACETS = ["state", "theme", "publisher"];
 
 const SORT_OPTIONS = [
   ["title", "asc"],
   ["title", "desc"],
   ["created", "asc"],
   ["created", "desc"],
-  ["modified", "asc"],
-  ["modified", "desc"],
 ];
 
 export function renderHtml(services, languages, query, data, reply) {
@@ -39,10 +37,10 @@ export function prepareTemplateData(translation, navigation, languages, query, d
 }
 
 function prepareDocumentsInPlace(navigation, suggestions) {
-  const applicationDetailNavigation = navigation.changeView(ROUTE.SUGGESTION_DETAIL);
-  for (const application of suggestions) {
-    application["href"] = applicationDetailNavigation.linkFromServer({
-      "iri": application["iri"]
+  const suggestionDetailNavigation = navigation.changeView(ROUTE.SUGGESTION_DETAIL);
+  for (const suggestion of suggestions) {
+    suggestion["href"] = suggestionDetailNavigation.linkFromServer({
+      "iri": suggestion["iri"]
     });
   }
 }

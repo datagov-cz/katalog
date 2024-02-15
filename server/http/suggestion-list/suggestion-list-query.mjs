@@ -1,4 +1,4 @@
-const SORT_OPTIONS = ["title", "modified", "created"]
+const SORT_OPTIONS = ["title", "created"]
 
 const SORT_DIRECTION_OPTIONS = ["asc", "desc"];
 
@@ -32,6 +32,8 @@ export function parseClientQuery(navigation, query) {
     "themeLimit": -1,
     "publisher": navigation.queryArgumentArrayFromClient(query, "publisher"),
     "publisherLimit": -1,
+    "state": navigation.queryArgumentArrayFromClient(query, "state"),
+    "stateLimit": -1,
     "sort": sort,
     "sortDirection": sortDirection,
     "page": asPositiveNumber(page, 1) - 1,
@@ -79,6 +81,7 @@ export function beforeLinkCallback(navigation, serverQuery) {
 
   delete result["themeLimit"];
   delete result["publisherLimit"];
+  delete result["stateLimit"];
 
   return result;
 }

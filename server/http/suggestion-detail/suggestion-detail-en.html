@@ -8,8 +8,8 @@
 
 <body>
   {{#with navigation}} {{> navigation }} {{/with}}
-  {{#with suggestion}}
   <div class="container">
+    {{#with suggestion}}
     <div>
       <h1>{{title}}</h1>
       <h2 class="inline">
@@ -42,6 +42,20 @@
       </div>
       <div class="col-12 col-sm-6 col-md-3">
         <dl>
+          <dt>Created</dt>
+          <dd>{{created}}</dd>
+        </dl>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3">
+        <dl>
+          <dt>State</dt>
+          <dd>{{state.label}}</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-3">
+        <dl>
           <dt>Obliged entity according to law number 106/1999</dt>
           <dd>{{#if mandatory_106}}Yes{{else}}No{{/if}}</dd>
         </dl>
@@ -59,28 +73,28 @@
         </dl>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12 col-sm-6 col-md-3">
-        <dl>
-          <dt>Created</dt>
-          <dd>{{created}}</dd>
-        </dl>
+    {{/with}}
+    <br/>
+    {{#with datasets}}
+    {{#if visible}}
+    <h2>Datasets</h2>
+    <br/>
+    <div>
+      {{#each items}}
+      <div class="dataset">
+        <a href="{{href}}" rel="nofollow noopener noreferrer">
+          <h4>{{title}}</h4>
+        </a>
+        <p>
+          {{description}}
+        </p>
       </div>
-      <div class="col-12 col-sm-6 col-md-3">
-        <dl>
-          <dt>Published</dt>
-          <dd>{{published}}</dd>
-        </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
-        <dl>
-          <dt>Modified</dt>
-          <dd>{{modified}}</dd>
-        </dl>
-      </div>
+      {{/each}}
     </div>
+    {{/if}}
+    {{/with}}
   </div>
-  {{/with}}
+  
   {{#with footer}} {{> footer }} {{/with}}
 </body>
 

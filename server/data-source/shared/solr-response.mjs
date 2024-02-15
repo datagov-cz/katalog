@@ -1,3 +1,4 @@
+import logger from "../../logger.mjs";
 
 export function selectLanguage(document, name_prefix, languages) {
   for (const language of languages) {
@@ -35,5 +36,17 @@ export function parseFacet(payload) {
     });
   }
   result.sort((left, right) => right.count - left.count);
+  return result;
+}
+
+export function parseDate(value) {
+  if (value == undefined) {
+    return null;
+  }
+  const result = new Date(value);
+  if (isNaN(result.getDate())) {
+    logger.info("Invalid date '%s'.", value);
+    return null;
+  }
   return result;
 }
