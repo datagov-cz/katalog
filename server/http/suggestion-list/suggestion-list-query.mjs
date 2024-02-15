@@ -1,4 +1,4 @@
-const SORT_OPTIONS = ["title", "modified", "created"]
+const SORT_OPTIONS = ["title", "created"]
 
 const SORT_DIRECTION_OPTIONS = ["asc", "desc"];
 

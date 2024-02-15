@@ -14,7 +14,6 @@ export default {
     "argument": {
       "title": "název",
       "created": "vytvořeno",
-      "modified": "data-úpravy",
       "asc": "vzestupně",
       "desc": "sestupně",
     },
@@ -31,7 +30,6 @@ export default {
       "state": "Stav",
       "title": "Název",
       "created": "Vytvořeno",
-      "modified": "Data úpravy",
       "asc": "vzestupně",
       "desc": "sestupně",
     },
@@ -51,7 +49,6 @@ export default {
     "argument": {
       "title": "title",
       "created": "created",
-      "modified": "modified",
       "asc": "ascending",
       "desc": "descending",
     },
@@ -67,7 +64,6 @@ export default {
       "state": "State",
       "title": "Title",
       "created": "Created",
-      "modified": "Modified",
       "asc": "ascending",
       "desc": "descending",
     },

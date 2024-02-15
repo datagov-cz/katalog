@@ -44,8 +44,6 @@ function prepareSuggestion(navigation, language, suggestion) {
     "themes": suggestion["themes"],
     "state": suggestion["state"],
     "created": formatDate(language, suggestion["created"]),
-    "published": formatDate(language, suggestion["published"]),
-    "modified": formatDate(language, suggestion["modified"]),
     "mandatory_106": suggestion["mandatory_106"],
     "obstacle_special_regulation": suggestion["obstacle_special_regulation"],
     "obstacle_106": suggestion["obstacle_106"],

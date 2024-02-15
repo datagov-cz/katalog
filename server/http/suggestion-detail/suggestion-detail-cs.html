@@ -42,7 +42,21 @@
       </div>
       <div class="col-12 col-sm-6 col-md-3">
         <dl>
-          <dt>Povinným subjektem dle zákona 106</dt>
+          <dt>Vytvořeno</dt>
+          <dd>{{created}}</dd>
+        </dl>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3">
+        <dl>
+          <dt>Stav</dt>
+          <dd>{{state.label}}</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-3">
+        <dl>
+          <dt>Povinným subjektem dle z. 106/1999 Sb.</dt>
           <dd>{{#if mandatory_106}}Ano{{else}}Ne{{/if}}</dd>
         </dl>
       </div>
@@ -54,34 +68,8 @@
       </div>
       <div class="col-12 col-sm-6 col-md-3">
         <dl>
-          <dt>Existuje překážka dle zákona 106</dt>
+          <dt>Existuje překážka dle z. 106/1999 Sb.</dt>
           <dd>{{#if obstacle_106}}Ano{{else}}Ne{{/if}}</dd>
-        </dl>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12 col-sm-6 col-md-3">
-        <dl>
-          <dt>Vytvořeno</dt>
-          <dd>{{created}}</dd>
-        </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
-        <dl>
-          <dt>Publikováno</dt>
-          <dd>{{published}}</dd>
-        </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
-        <dl>
-          <dt>Poslední úprava</dt>
-          <dd>{{modified}}</dd>
-        </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
-        <dl>
-          <dt>Stav</dt>
-          <dd>{{state.label}}</dd>
         </dl>
       </div>
     </div>

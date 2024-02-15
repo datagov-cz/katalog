@@ -42,6 +42,20 @@
       </div>
       <div class="col-12 col-sm-6 col-md-3">
         <dl>
+          <dt>Created</dt>
+          <dd>{{created}}</dd>
+        </dl>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3">
+        <dl>
+          <dt>State</dt>
+          <dd>{{state.label}}</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-3">
+        <dl>
           <dt>Obliged entity according to law number 106/1999</dt>
           <dd>{{#if mandatory_106}}Yes{{else}}No{{/if}}</dd>
         </dl>
@@ -56,32 +70,6 @@
         <dl>
           <dt>According to law number 106/1999 an impediment exists</dt>
           <dd>{{#if obstacle_106}}Yes{{else}}No{{/if}}</dd>
-        </dl>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12 col-sm-6 col-md-3">
-        <dl>
-          <dt>Created</dt>
-          <dd>{{created}}</dd>
-        </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
-        <dl>
-          <dt>Published</dt>
-          <dd>{{published}}</dd>
-        </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
-        <dl>
-          <dt>Modified</dt>
-          <dd>{{modified}}</dd>
-        </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
-        <dl>
-          <dt>State</dt>
-          <dd>{{state.label}}</dd>
         </dl>
       </div>
     </div>

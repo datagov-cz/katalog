@@ -9,8 +9,6 @@ const SORT_OPTIONS = [
   ["title", "desc"],
   ["created", "asc"],
   ["created", "desc"],
-  ["modified", "asc"],
-  ["modified", "desc"],
 ];
 
 export function renderHtml(services, languages, query, data, reply) {
