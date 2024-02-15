@@ -37,10 +37,10 @@ export function prepareTemplateData(translation, navigation, languages, query, d
 }
 
 function prepareDocumentsInPlace(navigation, suggestions) {
-  const applicationDetailNavigation = navigation.changeView(ROUTE.SUGGESTION_DETAIL);
-  for (const application of suggestions) {
-    application["href"] = applicationDetailNavigation.linkFromServer({
-      "iri": application["iri"]
+  const suggestionDetailNavigation = navigation.changeView(ROUTE.SUGGESTION_DETAIL);
+  for (const suggestion of suggestions) {
+    suggestion["href"] = suggestionDetailNavigation.linkFromServer({
+      "iri": suggestion["iri"]
     });
   }
 }
