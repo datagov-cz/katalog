@@ -92,6 +92,7 @@ function buildSuggestionsQuery(query) {
     "fl": [
       "iri",
       "title_cs",
+      "description_cs",
       "theme",
     ],
     "fq": [
@@ -113,6 +114,7 @@ function parseSuggestionsResponse(response) {
   const documents = response["response"]["docs"].map(document => ({
     "iri": document["iri"],
     "title": document["title_cs"],
+    "description": document["description_cs"],
     "themes": document["theme"] ?? [],
   }));
 
