@@ -51,6 +51,7 @@ function prepareSuggestion(navigation, language, suggestion) {
       "iri": suggestion["publisher"]["iri"],
       "title": suggestion["publisher"]["title"],
     },
+    "publication_plan": suggestion["publication_plan"] ?? "",
   }
 }
 

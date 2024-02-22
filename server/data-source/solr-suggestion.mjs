@@ -33,6 +33,7 @@ function buildSuggestionQuery(iri) {
       "mandatory_106",
       "obstacle_special_regulation",
       "obstacle_106",
+      "publication_plan",
     ],
     "fq": [
       ...prepareFieldQuery("iri", [iri]),
@@ -62,6 +63,7 @@ function parseSuggestionResponse( response) {
     "mandatory_106": document["mandatory_106"],
     "obstacle_special_regulation": document["obstacle_special_regulation"],
     "obstacle_106": document["obstacle_106"],
+    "publication_plan": document["publication_plan"] ?? null,
   };
 }
 
