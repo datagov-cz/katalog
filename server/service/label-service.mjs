@@ -1,3 +1,5 @@
+import logger from "../logger.mjs";
+
 const DEFAULT_IRI = resource => resource["iri"];
 
 /**
@@ -27,7 +29,7 @@ export function createLabelService(sources, cacheSources) {
     /**
      * Asynchronous function re-load content of the cache.
      */
-    "initializeCache": () => reloadCache(cache, cacheSources),
+    "reloadCache": () => reloadCache(cache, cacheSources),
   };
 }
 
@@ -53,6 +55,21 @@ class MemoryCache {
     const key = this.key(language, iri);
     this.cache.set(key, value);
   }
+
+  size() {
+    return this.cache.size;
+  }
+
+  /**
+   * Swap inner cache structure of a memory cache.
+   * @param {MemoryCache} other
+   */
+  swapContent(other) {
+    const swap = this.cache;
+    this.cache = other.cache;
+    other.cache = swap;
+  }
+
 }
 
 async function fetchLabelFromCouchDb(labelSources, cache, languages, iri) {
@@ -105,6 +122,21 @@ function retrieveFromCache(cache, languages, iri) {
 }
 
 async function reloadCache(cache, cacheSources) {
+  // Initialize a new cache.
+  const nextCache = new MemoryCache();
+  const start = new Date();
+  try {
+    await initializeCacheFromSources(nextCache, cacheSources);
+    // Swap cache content.
+    cache.swapContent(nextCache);
+  } catch (exception) {
+    logger.error("Can't load label cache.", exception);
+  }
+  logger.info("Replacing old cache of size %d with new of size %d took %d ms",
+    nextCache.size(), cache.size(), new Date() - start);
+}
+
+async function initializeCacheFromSources(cache, cacheSources) {
   for (const source of cacheSources) {
     const items = await source.fetchInitialCache(["cs", "en"]);
     for (const item of items) {
