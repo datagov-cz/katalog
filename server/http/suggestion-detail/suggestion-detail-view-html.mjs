@@ -51,7 +51,8 @@ function prepareSuggestion(navigation, language, suggestion) {
       "iri": suggestion["publisher"]["iri"],
       "title": suggestion["publisher"]["title"],
     },
-    "publication_plan": suggestion["publication_plan"] ?? "",
+    "publication_plan": suggestion["publication_plan"],
+    "publication_plan_visible": isNotEmpty(suggestion["publication_plan"]),
   }
 }
 
@@ -67,4 +68,8 @@ function updateCodelistInPlace(navigation, items, name) {
   for (const item of items) {
     item["href"] = listNavigation.linkFromServer({ [name]: item["iri"] });
   }
+}
+
+function isNotEmpty(value) {
+  return value !== undefined && value !== null && value !== "";
 }
