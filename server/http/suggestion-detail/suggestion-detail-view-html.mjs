@@ -2,6 +2,10 @@ import { ROUTE } from "../route-name.mjs";
 import * as components from "../../component/index.mjs";
 
 export function renderHtml(services, languages, query, data, reply) {
+  if (data == null) {
+    services.http.handleNotFound(services, reply);
+    return;
+  }
   const templateData = prepareTemplateData(services, languages, query, data);
   const template = services.template.view(ROUTE.SUGGESTION_DETAIL);
   reply

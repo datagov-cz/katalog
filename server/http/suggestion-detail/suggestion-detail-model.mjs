@@ -1,6 +1,9 @@
 export async function prepareData(services, languages, query) {
   const labelService = services.label;
   const data = await services.solrSuggestion.fetchSuggestion(query["iri"]);
+  if (data === null) {
+    return null;
+  }
   data["themes"] = await irisToResources(labelService, languages, data["themes"]);
   data["state"] = await iriToResource(labelService, languages, data["state"]);
   data["datasets"] = await services.dataset.fetchDatasetPreviews(languages, data["datasets"]);
