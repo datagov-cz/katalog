@@ -13,6 +13,7 @@ K dispozici jsou následující proměnné:
 - `HTTP_SERVE_STATIC` - Obslouží požadavky na statické zdroje z adresáře `assets`.
 - `CLIENT_APPLICATION_FORM_URL` - URL pro registrační formulář aplikací.
 - `CLIENT_SUGGESTION_FORM_URL` - URL pro registrační formulář návrhů ke zveřejnění dat.
+- `LABEL_CACHE_RELOAD_CRON` - Volitelné, pokud je uvedeno tak v [Cron formátu](https://crontab.guru/) popisuje jak často se má re-inicializovat interní cache pro labely.
 
 ## Sestavení a spuštění
 Po naklonování repozitáře je nejprve zapotřebí nainstalovat knihovny pomocí následujícího příkazu.
@@ -30,6 +31,8 @@ COUCHDB_URL = "http://localhost:5984"
 DATASET_CATALOG_URL = "http://localhost:8030"
 HTTP_SERVE_STATIC = "1"
 CLIENT_APPLICATION_URL = ""
+# Reload every 15 minutes.
+LABEL_CACHE_RELOAD_CRON = "0/15 * * * *"
 ```
 
 Pak je již možné provést samotné spuštění.

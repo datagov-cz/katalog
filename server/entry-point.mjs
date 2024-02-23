@@ -19,6 +19,7 @@ import { createNavigationService } from "./service/navigation-service.mjs";
 import { createLabelService } from "./service/label-service.mjs";
 import { createFacetService } from "./service/facet-service.mjs";
 import { createDatasetService } from "./service/dataset-service.mjs";
+import { createCronService } from "./service/cron-service.mjs";
 
 import { registerHttpRoutes } from "./http/route.mjs";
 
@@ -48,12 +49,11 @@ async function createServices() {
   const facet = createFacetService(label);
   const dataset = createDatasetService(couchDbDataset);
 
-  try {
-    logger.info("Loading cache data.")
-    await label.initializeCache();
-  } catch (ex) { 
-    logger.error("Can't load label cache");
-  }
+  // Initialize static data.
+  await label.reloadCache();
+
+  // Start time-based services.
+  createCronService(configuration, label).initialize();
 
   return {
     // Data sources
