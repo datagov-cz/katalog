@@ -1,15 +1,23 @@
-<html lang="cs">
+<!DOCTYPE html>
+<html dir="ltr" lang="cs">
 
 <head>
   {{> head }}
   <!-- Site specific. -->
   <title>Aplikace - Národní katalog otevřených dat (NKOD)</title>
+  <style>
+    gov-icon {
+      height: 1rem;
+    }
+    .inline {
+      display: inline;
+    }
+  </style>
 </head>
 
-<body>
+<body class="application-detail">
   {{#with navigation}} {{> navigation }} {{/with}}
-
-  <div class="container">
+  <gov-container>
     {{#with application}}
     <div>
       {{#if author.titleVisible}}
@@ -22,7 +30,7 @@
       {{/if}}
       {{#if author.iriVisible}}
       <a href="{{author.iri}}" title="Přejít na odkaz" rel="nofollow noopener noreferrer" target="_blank">
-        <i class="bi bi-arrow-up-right-square"></i>
+        <gov-icon name="box-arrow-up-right"></gov-icon>
       </a>
       {{/if}}
     </div>
@@ -30,8 +38,8 @@
     <p>
       {{breaklines description}}
     </p>
-    <div class="row">
-      <div class="col-12 col-sm-6 col-md-3">
+    <gov-grid>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
         <dl>
           <dt>Stav</dt>
           {{#each states}}
@@ -41,13 +49,13 @@
             </a>
             &nbsp;
             <a href="{{iri}}" title="Přejít na odkaz" rel="nofollow noopener noreferrer" target="_blank">
-              <i class="bi bi-arrow-up-right-square"></i>
+              <gov-icon name="box-arrow-up-right"></gov-icon>
             </a>
           </dd>
           {{/each}}
         </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
+      </gov-grid-item>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
         <dl>
           <dt>Téma</dt>
           {{#each themes}}
@@ -57,13 +65,13 @@
             </a>
             &nbsp;
             <a href="{{iri}}" title="Přejít na odkaz" rel="nofollow noopener noreferrer" target="_blank">
-              <i class="bi bi-arrow-up-right-square"></i>
+              <gov-icon name="box-arrow-up-right"></gov-icon>
             </a>
           </dd>
           {{/each}}
         </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
+      </gov-grid-item>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
         <dl>
           <dt>Platforma</dt>
           {{#each platforms}}
@@ -73,13 +81,13 @@
             </a>
             &nbsp;
             <a href="{{iri}}" title="Přejít na odkaz" rel="nofollow noopener noreferrer" target="_blank">
-              <i class="bi bi-arrow-up-right-square"></i>
+              <gov-icon name="box-arrow-up-right"></gov-icon>
             </a>
           </dd>
           {{/each}}
         </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
+      </gov-grid-item>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
         <dl>
           <dt>Typ</dt>
           {{#each types}}
@@ -89,44 +97,44 @@
             </a>
             &nbsp;
             <a href="{{iri}}" title="Přejít na odkaz" rel="nofollow noopener noreferrer" target="_blank">
-              <i class="bi bi-arrow-up-right-square"></i>
+              <gov-icon name="box-arrow-up-right"></gov-icon>
             </a>
           </dd>
           {{/each}}
         </dl>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-12 col-sm-6 col-md-3">
+    </gov-grid>
+    <gov-grid>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
         <dl>
           <dt>Datum publikování</dt>
           <dd>{{published}}</dd>
         </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
+      </gov-grid-item>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
         <dl>
           <dt>Datum poslední úpravy</dt>
           <dd>{{modified}}</dd>
         </dl>
-      </div>
-    </div>
-    <div class="d-grid gap-2">
-      <a class="btn btn-outline-success  btn-lg" href="{{link}}" rel="nofollow noopener noreferrer">
+      </gov-grid-item>
+    </gov-grid>
+    <gov-spacer size="xs" breakpoint="sm"></gov-spacer>
+    <div>
+      <gov-button variant="primary" type="outlined" href="{{link}}" expanded="true" rel="nofollow noopener noreferrer">
         Přejít na aplikaci
-      </a>
+      </gov-button>
     </div>
     {{/with}}
-
     <br/>
     {{#with datasets}}
     {{#if visible}}
     <h2>Využívané datové sady</h2>      
     <br/>
-    <div>      
+    <div class="list">      
       {{#each items}}
-      <div class="dataset">
+      <div class="list-item">
         <a href="{{href}}" rel="nofollow noopener noreferrer">
-          <h4>{{title}}</h4>
+          <h3>{{title}}</h3>
         </a>
         <p>
           {{description}}
@@ -136,8 +144,7 @@
     </div>
     {{/if}}
     {{/with}}
-  </div>
-
+  </gov-container>
   {{#with footer}} {{> footer }} {{/with}}
 </body>
 

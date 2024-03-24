@@ -15,9 +15,6 @@ function createOrderingForTemplate(translation, navigation, query, sortOptions) 
   // 
   const options = [];
   for (const [sort, direction] of sortOptions) {
-    if (activeSort === sort && activeDirection === direction) {
-      continue;
-    }
     options.push({
       "label": createLabelForOrdering(translation, sort, direction),
       "href": navigation.linkFromServer({
@@ -30,7 +27,11 @@ function createOrderingForTemplate(translation, navigation, query, sortOptions) 
   }
   // 
   return {
-    "active": createLabelForOrdering(translation, activeSort, activeDirection),
+    "active": navigation.linkFromServer({
+      ...query,
+      "sort": activeSort,
+      "sortDirection": activeDirection,
+    }),
     "items": options,
   };
 }

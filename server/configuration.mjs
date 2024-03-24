@@ -13,6 +13,7 @@ const configuration = {
   serverAssets: process.env.NODE_ENV === "development" || process.env.HTTP_SERVE_STATIC === "1",
   reloadTemplates: process.env.NODE_ENV === "development",
   labelReloadCron: process.env.LABEL_CACHE_RELOAD_CRON,
+  designSystemFolder: stripTrailingSlash(process.env.DESIGN_SYSTEM_FOLDER),
   client: { // Used for rendering.
     applicationFormUrl: process.env.CLIENT_APPLICATION_FORM_URL ?? "",
     suggestionFormUrl: process.env.CLIENT_SUGGESTION_FORM_URL ?? "",

@@ -1,9 +1,8 @@
-<div class="mt-2 facet">
-  <h3 class="p-lg-2">{{label}} ({{count}})</h3>
-  <ul class="list-group">
+<div class="facet">
+  <h3 class="facet-title">{{label}} ({{count}})</h3>
+  <ul class="facet-list">
     {{#each items}}
-    <li class="filter-button list-group-item-action list-group-item {{#if active}}active{{/if}}" 
-        style="overflow-wrap: break-word;">
+    <li class="facet-item {{#if active}}active{{/if}}">
       <a href="{{href}}">
         {{label}} ({{count}})
       </a>

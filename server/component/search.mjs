@@ -4,14 +4,16 @@ export function registerSearch(templateService, language) {
     "search", "search-" + language + ".html");
 }
 
-export function createSearchData(navigationService, translationService, query) {
+// translationService, navigationService, query, sortOptions, itemsCount
+export function createSearchData(navigationService, translationService, query, sortOptions) {
   return {
-    "value": query["query"] ?? "",
-    "query-name": translationService.translate("input-name-query"),
-    "url": navigationService.linkFromServer({
-      ...query,
-      "page": 0,
-      "query": ""
-    })
+    // TODO We need to use this in header.
+    // "value": query["query"] ?? "",
+    // "query-name": translationService.translate("input-name-query"),
+    // "url": navigationService.linkFromServer({
+    //   ...query,
+    //   "page": 0,
+    //   "query": ""
+    // }),
   };
 }

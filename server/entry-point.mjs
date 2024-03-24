@@ -92,8 +92,17 @@ function registerRoutes(server, services) {
 function registerAssetsRoutes(server) {
   server.register(import("@fastify/static"), {
     root: new URL("../assets", import.meta.url),
-    prefix: "/aplikace/assets/"
+    prefix: "/aplikace/assets/",
+    decorateReply: false
   });
+  if (configuration.designSystemFolder) {
+    logger.info("Serving design system assets from given directory.")
+    server.register(import("@fastify/static"), {
+      root: configuration.designSystemFolder,
+      prefix: "/design-system/",
+      decorateReply: false
+    });
+  }
 }
 
 function startServer(server) {
