@@ -8,7 +8,7 @@ const DEFAULT_SORT_DIRECTION = "asc";
 
 const DEFAULT_PAGE = 0;
 
-const DEFAULT_PAGE_SIZE = 10;
+const DEFAULT_PAGE_SIZE = 25;
 
 export function parseClientQuery(navigation, query) {
   const clientSort = navigation.queryArgumentFromClient(query, "sort");

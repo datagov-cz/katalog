@@ -1,0 +1,61 @@
+<html lang="cs">
+
+<head>
+  {{> head }}
+  <!-- Site specific. -->
+  <title>Lokální katalogy - Národní katalog otevřených dat (NKOD)</title>
+  <meta name="description" content="Portál otevřených dat a Národní katalog otevřených dat České republiky" />
+  <!--  -->
+</head>
+
+<body>
+  {{#with navigation}} {{> navigation }} {{/with}}
+  <gov-spacer size="s" breakpoint="sm"></gov-spacer>
+  <gov-container>
+    <h1>Lokální katalogy</h1>
+    <p>
+      {{message}}
+    </p>
+    <gov-grid>
+      {{#each catalogs}}
+      <gov-grid-item size-sm="12/12" size-md="6/12" size-md="6/12" size-lg="4/12" size-xl="3/12">
+        <gov-card>
+          <div class="gov-card__header">
+            <h3 class="gov-card__title" style="display: inline;">
+              {{publisher.label}}
+            </h3>
+            <a href="{{publisher.describeUrl}}">
+              <gov-icon name="box-arrow-up-right"></gov-icon>
+            </a>
+          </div>
+          <div class="gov-card__inner">
+            <div class="gov-card__main">
+              <div>
+                {{title}}
+                <a href="{{describeUrl}}">
+                  <gov-icon name="box-arrow-up-right"></gov-icon>
+                </a>
+              </div>
+              <div>
+                <a href="{{contactPoint.email}}">
+                  <gov-icon name="envelope"></gov-icon>
+                  {{contactPoint.name}}
+                </a>
+              </div>
+            </div>
+            <div class="gov-card__footer" style="font-size: large;">
+              <a href="{{homepage}}"><gov-icon name="house-door-fill"></gov-icon></a>
+              <a href="{{endpointURL}}"><gov-icon name="link-45deg"></gov-icon></a>
+              <a href="{{deleteUrl}}"><gov-icon name="trash"></gov-icon></a>
+            </div>
+          </div>
+        </gov-card>
+      </gov-grid-item>
+      {{/each}}
+    </gov-grid>
+    <gov-spacer size="s" breakpoint="sm"></gov-spacer>
+  </gov-container>
+  {{#with footer}} {{> footer }} {{/with}}
+</body>
+
+</html>

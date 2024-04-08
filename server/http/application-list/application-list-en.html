@@ -10,43 +10,9 @@
 
 <body>
   {{#with navigation}} {{> navigation }} {{/with}}
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-md-3">
-        {{#each facets}} {{>facet}} {{/each}}
-      </div>
-      <div class="col-12 col-md-9">
-        <div class="m-md-1">
-          {{#with search}} {{> search }} {{/with}}
-        </div>
-        <div class="m-md-1">
-          {{#with result-bar}} {{> result-bar }} {{/with}}
-          <div>
-            {{#each documents}}
-            <div class="document">
-              <a href="{{href}}">
-                <h4>{{title}}</h4>
-              </a>
-              <p style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
-                {{breaklines description}}
-              </p>
-              <div style="margin-top: 0.2em;">
-                {{#each themes}}
-                <span class="badge bg-info rounded-pill" style="margin-left: 1em; margin-bottom: 0.5em; font-size: 0.7em;">
-                  {{label}}
-                </span>
-                {{/each}}
-              </div>
-              <hr>
-            </div>
-            {{/each}}
-          </div>
-          {{#with pagination}} {{> pagination }} {{/with}}
-        </div>
-      </div>
-    </div>
-  </div>
-  <script src="/aplikace/assets/js/text-search.js"></script>
+  <gov-container>
+    <!-- TODO -->
+  </gov-container>
   {{#with footer}} {{> footer }} {{/with}}
 </body>
 

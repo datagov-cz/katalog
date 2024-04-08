@@ -20,16 +20,19 @@ export function parseLabelResponse(languages, response, predicate) {
 }
 
 /**
- * @param {string[]} languages 
+ * @param {string[] | null | undefined} languages 
  * @param {object} values With {language: string}.
- * @returns {string}
+ * @returns {string | null} Null only for null and undefined.
  */
 export function selectForLanguages(languages, values) {
+  if (values === null | values === undefined) {
+    return null;
+  }
   for (const language of languages) {
     if (values[language] === undefined) {
       continue;
     }
     return values[language];
   }
-  return Object.values(values)[0];
+  return Object.values(values)[0] ?? null;
 }

@@ -4,50 +4,60 @@
   {{> head }}
   <!-- Site specific. -->
   <title>Žádosti - Národní katalog otevřených dat (NKOD)</title>
-  <meta name="description" content="Portál otevřených dat a Národní katalog otevřených dat České republiky"/>
+  <meta name="description" content="Portál otevřených dat a Národní katalog otevřených dat České republiky" />
   <!--  -->
 </head>
 
 <body>
   {{#with navigation}} {{> navigation }} {{/with}}
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-md-3">
+  <gov-container>
+    <gov-spacer size="xs" breakpoint="sm"></gov-spacer>
+    <gov-grid>
+      <gov-grid-item size-sm="12/12" size-md="4/12">
         {{#each facets}} {{>facet}} {{/each}}
-      </div>
-      <div class="col-12 col-md-9">
-        <div class="m-md-1">
-          {{#with search}} {{> search }} {{/with}}
-        </div>
-        <div class="m-md-1">
-          {{#with result-bar}} {{> result-bar }} {{/with}}
-          <div>
-            {{#each documents}}
-            <div class="document">
-              <a href="{{href}}">
-                <h4>{{title}}</h4>
-              </a>
-              <p style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
-                {{breaklines description}}
-              </p>
-              <div style="margin-top: 0.2em;">
-                {{#each themes}}
-                <span class="badge bg-info rounded-pill" style="margin-left: 1em; margin-bottom: 0.5em; font-size: 0.7em;">
-                  {{label}}
-                </span>
-                {{/each}}
-              </div>
-              <hr>
+      </gov-grid-item>
+      <gov-grid-item size-sm="12/12" size-md="8/12" class="p-2">
+        <!-- Search. -->
+        {{#with search}}
+        <gov-accordion size="xs">
+          <gov-accordion-item>
+            <h3 slot="label">Rozšířené vyhledávání</h3>
+            <div>
+              <gov-button slot="button" variant="primary" size="m">Smaž filtry</gov-button>
             </div>
-            {{/each}}
+          </gov-accordion-item>
+        </gov-accordion>
+        {{/with}}
+        <!-- Result bar. -->
+        {{#with result-bar}} {{> result-bar }} {{/with}}
+        <!-- Datasets -->
+        <div class="p-2 list">
+          <hr />
+          {{#each documents}}
+          <div class="p-2 list-item">
+            <a href="{{href}}">
+              <h3>
+                {{title}}
+                <gov-icon name="chevron-right"></gov-icon>
+              </h3>
+            </a>
+            <p style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
+              {{breaklines description}}
+            </p>
+            <div>
+              {{#each themes}}
+              <gov-chip variant="primary" type="outlined" size="xs">
+                {{label}}
+              </gov-chip>
+              {{/each}}
+            </div>
           </div>
-          {{#with pagination}} {{> pagination }} {{/with}}
+          <hr />
+          {{/each}}
         </div>
-      </div>
-    </div>
-  </div>
-  <script src="/aplikace/assets/js/text-search.js"></script>
-  {{#with footer}} {{> footer }} {{/with}}
+        {{#with pagination}} {{> pagination }} {{/with}}
+      </gov-grid-item>
+    </gov-grid>
 </body>
 
 </html>

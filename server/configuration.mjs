@@ -15,8 +15,15 @@ const configuration = {
   labelReloadCron: process.env.LABEL_CACHE_RELOAD_CRON,
   designSystemFolder: stripTrailingSlash(process.env.DESIGN_SYSTEM_FOLDER),
   client: { // Used for rendering.
+    catalogFormUrl: process.env.CLIENT_CATALOG_FORM_URL ?? "",
     applicationFormUrl: process.env.CLIENT_APPLICATION_FORM_URL ?? "",
     suggestionFormUrl: process.env.CLIENT_SUGGESTION_FORM_URL ?? "",
+    // Replace {} with publisher URL.
+    publisherDashboardDailyTemplate: process.env.CLIENT_DASHBOARD_PUBLISHER_DAILY ?? "",
+    // Replace {} with publisher URL.
+    publisherDashboardMonthlyTemplate: process.env.CLIENT_DASHBOARD_PUBLISHER_MONTHLY ?? "",
+    // Replace {} with URL for reference.
+    dereferenceTemplate: process.env.CLIENT_DEREFERENCE ?? "{}",
   },
 };
 

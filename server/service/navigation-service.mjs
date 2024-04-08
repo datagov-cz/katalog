@@ -19,8 +19,8 @@ class NavigationService {
 
   /**
    * Return navigation for given view.
-   * @param {String} language 
-   * @param {String} viewName 
+   * @param {String} language
+   * @param {String} viewName
    * @returns {ViewBoundNavigation}
    */
   view(language, viewName) {
@@ -75,7 +75,7 @@ class ViewBoundNavigation {
     const value = clientQuery[clientKey] ?? null;
     if (Array.isArray(value)) {
       return value;
-    } 
+    }
     return asArray(value);
   }
 
@@ -123,7 +123,11 @@ class ViewBoundNavigation {
       if (isEmpty(value)) {
         continue;
       }
-      localized[this.data.query[key]] = value;
+      let queryName = this.data.query[key];
+      if (Array.isArray(queryName)) {
+        queryName = queryName[0];
+      }
+      localized[queryName] = value;
     }
     return querystring.stringify(localized);
   }

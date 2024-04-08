@@ -1,0 +1,54 @@
+<html lang="cs">
+
+<head>
+  {{> head }}
+  <!-- Site specific. -->
+  <title>Poskytovatelé - Národní katalog otevřených dat (NKOD)</title>
+  <meta name="description" content="Portál otevřených dat a Národní katalog otevřených dat České republiky" />
+  <!--  -->
+</head>
+
+<body>
+  {{#with navigation}} {{> navigation }} {{/with}}
+  <gov-spacer size="s" breakpoint="sm"></gov-spacer>
+  <gov-container>
+    <h1>Poskytovatelé</h1>
+    <p>
+      {{message}}
+    </p>
+    <gov-grid>
+      {{#each publishers}}
+      <gov-grid-item size-sm="12/12" size-md="6/12" size-md="6/12" size-lg="4/12" size-xl="3/12">
+        <gov-card>
+          <div class="gov-card__header">
+            <a href="{{href}}">
+              <h3 class="gov-card__title">
+                {{label}}
+              </h3>
+            </a>
+          </div>
+          <div class="gov-card__inner">
+            <div class="gov-card__main" style="font-size: large; display: flex; flex-direction: row;">
+              <a href="{{dashboardMonthly}}">
+                <!-- TODO -->
+                <gov-icon name="star"></gov-icon>
+              </a>
+              <a href="{{dashboardDaily}}">
+                <!-- TODO -->
+                <gov-icon name="star"></gov-icon>
+              </a>
+            </div>
+            <div class="gov-card__footer">
+              {{message}}
+            </div>
+          </div>
+        </gov-card>
+      </gov-grid-item>
+      {{/each}}
+    </gov-grid>
+    <gov-spacer size="s" breakpoint="sm"></gov-spacer>
+  </gov-container>
+  {{#with footer}} {{> footer }} {{/with}}
+</body>
+
+</html>

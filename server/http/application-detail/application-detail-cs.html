@@ -5,14 +5,6 @@
   {{> head }}
   <!-- Site specific. -->
   <title>Aplikace - Národní katalog otevřených dat (NKOD)</title>
-  <style>
-    gov-icon {
-      height: 1rem;
-    }
-    .inline {
-      display: inline;
-    }
-  </style>
 </head>
 
 <body class="application-detail">
@@ -128,9 +120,9 @@
     <br/>
     {{#with datasets}}
     {{#if visible}}
-    <h2>Využívané datové sady</h2>      
+    <h2>Využívané datové sady</h2>
     <br/>
-    <div class="list">      
+    <div class="list">
       {{#each items}}
       <div class="list-item">
         <a href="{{href}}" rel="nofollow noopener noreferrer">

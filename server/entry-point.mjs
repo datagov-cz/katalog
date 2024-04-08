@@ -7,6 +7,7 @@ import logger from "./logger.mjs";
 import { createHttpConnector } from "./connector/http.mjs";
 import { createSolrConnector } from "./connector/solr.mjs";
 import { createCouchDbConnector } from "./connector/couchdb.mjs";
+import { createSparqlConnector } from "./connector/sparql.mjs";
 
 import { createCouchDbDataset } from "./data-source/couchdb-dataset.mjs";
 import { createCouchDbLabel } from "./data-source/couchdb-label.mjs";
@@ -14,6 +15,10 @@ import { createCouchDbSuggestions } from "./data-source/couchdb-suggestions.mjs"
 import { createSolrApplication } from "./data-source/solr-application.mjs";
 import { createSolrSuggestion } from "./data-source/solr-suggestion.mjs";
 import { createCouchDbStatic } from "./data-source/couchdb-static.mjs";
+import { createSolrPublisher } from "./data-source/solr-publisher.mjs";
+import { createCouchDbCatalog } from "./data-source/couchdb-catalog.mjs";
+import { createSolrDataset } from "./data-source/solr-dataset.mjs";
+import { createSparqlQuality } from "./data-source/sparql-quality.mjs";
 
 import { createNavigationService } from "./service/navigation-service.mjs";
 import { createLabelService } from "./service/label-service.mjs";
@@ -34,20 +39,29 @@ async function createServices() {
   const http = createHttpConnector();
   const solr = createSolrConnector(configuration, http);
   const couchdb = createCouchDbConnector(configuration, http);
+  const sparql = createSparqlConnector({
+    "sparqlUrl": "https://oha02.dia.gov.cz/sparql"
+  }, http);
 
   const couchDbDataset = createCouchDbDataset(couchdb);
   const couchDbLabel = createCouchDbLabel(couchdb);
   const couchDbStatic = createCouchDbStatic(couchdb);
   const couchDbSuggestions = createCouchDbSuggestions(couchdb);
+  const couchDbLocalCatalog = createCouchDbCatalog(couchdb);
+
   const solrApplication = createSolrApplication(solr);
   const solrSuggestion = createSolrSuggestion(solr);
+  const solrPublisher = createSolrPublisher(solr);
+  const solrDataset = createSolrDataset(solr);
+
+  const sparqlQuality = createSparqlQuality(sparql);
 
   const navigation = createNavigationService();
   const label = createLabelService(
     [couchDbLabel, couchDbSuggestions], 
     [couchDbStatic, couchDbSuggestions]);
   const facet = createFacetService(label);
-  const dataset = createDatasetService(couchDbDataset);
+  const dataset = createDatasetService(couchDbDataset); // TODO Add solrDataset.
 
   // Initialize static data.
   await label.reloadCache();
@@ -61,13 +75,19 @@ async function createServices() {
     "couchDbLabel": couchDbDataset,
     "couchDbStatic": couchDbStatic,
     "couchDbSuggestions": couchDbSuggestions,
+    "couchDbLocalCatalog": couchDbLocalCatalog,
     "solrApplication": solrApplication,
     "solrSuggestion": solrSuggestion,
+    "solrPublisher": solrPublisher,
+    "solrDataset": solrDataset,
+    "sparqlQuality": sparqlQuality,
     // Services
     "navigation": navigation,
     "label": label,
     "facet": facet,
     "dataset": dataset,
+    // Configuration
+    "configuration": configuration,
   };
 }
 
@@ -96,7 +116,7 @@ function registerAssetsRoutes(server) {
     decorateReply: false
   });
   if (configuration.designSystemFolder) {
-    logger.info("Serving design system assets from given directory.")
+    logger.info("Serving design system assets from the given directory.")
     server.register(import("@fastify/static"), {
       root: configuration.designSystemFolder,
       prefix: "/design-system/",

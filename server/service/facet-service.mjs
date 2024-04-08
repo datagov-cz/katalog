@@ -7,20 +7,25 @@ export function createFacetService(labelService) {
      * @param {Object[]} items Items.
      * @param {String[]} active IRIs of active facets.
      * @param {Number} limit Number of facets to prepare.
+     * @param {} labelCallback
      * @returns {}
      */
-    "updateFacetInPlace": (languages, items, active, limit) =>
-      updateFacetInPlace(labelService, languages, items, active, limit),
+    "updateFacetInPlace": (languages, items, active, limit, labelCallback = null) =>
+      updateFacetInPlace(labelService, languages, items, active, limit, labelCallback),
   }
 }
 
 async function updateFacetInPlace(
-  labelService, languages, items, active, limit
+  labelService, languages, items, active, limit, labelCallback
 ) {
   addActivityAndActive(items, active);
-  await labelService.addLabelToResources(languages, items);
+  if (labelCallback == null) {
+    await labelService.addLabelToResources(languages, items);
+  } else {
+    items.forEach(labelCallback);
+  }
   items.sort(createCompareFacetItems(languages[0]));
-  if (limit !== -1) {
+  if (limit !== -1 && limit < items.length) {
     items.length = limit;
   }
 }

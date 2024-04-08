@@ -1,0 +1,45 @@
+<html lang="en">
+
+<head>
+  {{> head }}
+  <!-- Site specific. -->
+  <title>Dataset - Národní katalog otevřených dat (NKOD)</title>
+  <meta name="description" content="Portál otevřených dat a Národní katalog otevřených dat České republiky" />
+  <!--  -->
+</head>
+
+<body>
+  {{#with navigation}} {{> navigation }} {{/with}}
+  {{#with dataset}}
+  <gov-container>
+    {{#with heading}}
+    <h1 style="display: inline;">{{title}}</h1>
+    <span style="font-size: large;">
+      <a href="{{openUrl}}"><gov-icon name="box-arrow-up-right"></gov-icon></a>
+      <a href="{{copyUrl}}"><gov-icon name="files"></gov-icon></a>
+      <a href="{{deleteUrl}}"><gov-icon name="trash"></gov-icon></a>
+    </span>
+    {{/with}}
+    {{#with publisher}}
+    <a href="{{href}}">
+      <h2>{{label}}</h2>
+    </a>
+    {{/with}}
+    <br/>
+    <p>
+      {{breaklines description}}
+    </p>
+    <div>
+      {{#each keywords}}
+      <gov-chip variant="primary" type="outlined" size="xs" href="{{href}}">
+        {{label}}
+      </gov-chip>
+      {{/each}}
+    </div>
+  </gov-container>
+  {{/with}}
+  <gov-spacer size="s" breakpoint="sm"></gov-spacer>
+  {{#with footer}} {{> footer }} {{/with}}
+</body>
+
+</html>

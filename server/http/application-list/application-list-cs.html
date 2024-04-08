@@ -18,7 +18,18 @@
       </gov-grid-item>
       <gov-grid-item size-sm="12/12" size-md="8/12" class="p-2">
         <!-- Search. -->
-        {{#with search}} {{> search }} {{/with}}
+        {{#with search}}
+        <gov-accordion size="xs">
+          <gov-accordion-item>
+            <h3 slot="label">Rozšířené vyhledávání</h3>
+            <div>
+              <gov-button slot="button" variant="primary" size="m">
+                Smaž filtry
+              </gov-button>
+            </div>
+          </gov-accordion-item>
+        </gov-accordion>
+        {{/with}}
         <!-- Result bar. -->
         {{#with result-bar}} {{> result-bar }} {{/with}}
         <!-- Datasets -->

@@ -11,7 +11,6 @@ async function executeQuery(couchDbUrl, http, database, identifier) {
   try {
     const response = await http.fetch(url);
     return await response.json();
-
   } catch (error) {
     throw error;
   }

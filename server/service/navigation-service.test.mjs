@@ -21,6 +21,12 @@ describe("Navigation service", () => {
       "query": { "detail": "detail" }
     });
 
+  service.view("cs", "multiple")
+    .setNavigationData({
+      "path": "multiple",
+      "query": { "keyword": ["klíčová-slova", "klíčová slova"] }
+    });
+
   it("Path", () => {
     assert.strictEqual(
       service.view("cs", "list").linkFromServer({}),
@@ -63,6 +69,22 @@ describe("Navigation service", () => {
     assert.strictEqual(
       service.view("cs", "list").linkFromServer({ "sort": "title" }),
       "seznam?po%C5%99ad%C3%AD=title");
+  });
+
+  it("Multiple query values", () => {
+    // Any of given can be used to parse the value.
+    assert.strictEqual(
+      service.view("cs", "multiple").queryArgumentFromClient(
+        { "klíčová-slova": "value" }, "keyword"),
+      "value");
+    assert.strictEqual(
+      service.view("cs", "multiple").queryArgumentFromClient(
+        { "klíčová slova": "value" }, "keyword"),
+      "value");
+    // The first one should be used to create a query.
+    assert.strictEqual(
+      service.view("cs", "multiple").linkFromServer({ "keyword": "value" }),
+      "multiple?kl%C3%AD%C4%8Dov%C3%A1-slova=title");
   });
 
 });

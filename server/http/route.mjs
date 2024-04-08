@@ -1,12 +1,15 @@
-import Fastify from "fastify";
-
-import apiV1HandleRequest from "./api-v1-applications-for-dataset/api-v1-applications-for-dataset.mjs";
+import apiV1HandleRequest from "./api/v1/applications-for-dataset/api-v1-applications-for-dataset.mjs";
+import createV2Quality from "./api/v2/quality/api-v2-quality-presenter.mjs";
 
 import createApplicationList from "./application-list/application-list-presenter.mjs";
 import createApplicationDetail from "./application-detail/application-detail-presenter.mjs";
 import createSuggestionList from "./suggestion-list/suggestion-list-presenter.mjs";
 import createSuggestionDetail from "./suggestion-detail/suggestion-detail-presenter.mjs";
 import createStatusHandlers from "./http-status-handlers/http-status-handlers.mjs";
+import createPublisherList from "./publisher-list/publisher-list-presenter.mjs";
+import createLocalCatalogList from "./local-catalog-list/local-catalog-list-presenter.mjs";
+import createDatasetList from "./dataset-list/dataset-list-presenter.mjs";
+import createDatasetDetail from "./dataset-detail/dataset-detail-presenter.mjs";
 
 import { createTemplateService } from "../service/template-service.mjs";
 import { registerComponents } from "../component/index.mjs";
@@ -21,11 +24,17 @@ export function registerHttpRoutes(server, services) {
     handler: (request, reply) => apiV1HandleRequest(services, request, reply),
   });
 
+  // TODO Consider split to dataset and distribution quality.
+  const quality = createV2Quality(services);
+  registerHandler(server, quality);
+
   const httpStatusHandlers = createStatusHandlers([templateCs, templateEn]);
   const webServices = {
     ...services,
     "http": httpStatusHandlers,
   };
+
+  // Application list.
 
   const applicationListCs = createApplicationList(
     webServices, templateCs, ["cs", "en"]);
@@ -35,6 +44,8 @@ export function registerHttpRoutes(server, services) {
     webServices, templateEn, ["en", "cs"]);
   registerHandler(server, applicationListEn);
 
+  // Application detail.
+
   const applicationDetailCs = createApplicationDetail(
     webServices, templateCs, ["cs", "en"]);
   registerHandler(server, applicationDetailCs);
@@ -42,6 +53,8 @@ export function registerHttpRoutes(server, services) {
   const applicationDetailEn = createApplicationDetail(
     webServices, templateEn, ["en", "cs"]);
   registerHandler(server, applicationDetailEn);
+
+  // Suggestion list.
 
   const suggestionListCs = createSuggestionList(
     webServices, templateCs, ["cs", "en"]);
@@ -51,6 +64,8 @@ export function registerHttpRoutes(server, services) {
     webServices, templateEn, ["en", "cs"]);
   registerHandler(server, suggestionListEn);
 
+  // Suggestion detail.
+
   const suggestionDetailCs = createSuggestionDetail(
     webServices, templateCs, ["cs", "en"]);
   registerHandler(server, suggestionDetailCs);
@@ -58,6 +73,48 @@ export function registerHttpRoutes(server, services) {
   const suggestionDetailEn = createSuggestionDetail(
     webServices, templateEn, ["en", "cs"]);
   registerHandler(server, suggestionDetailEn);
+
+  // Publisher list.
+
+  const publisherListCs = createPublisherList(
+    webServices, templateCs, ["cs", "en"]);
+  registerHandler(server, publisherListCs);
+
+  const publisherListEn = createPublisherList(
+    webServices, templateEn, ["en", "cs"]);
+  registerHandler(server, publisherListEn);
+
+  // Local catalog list.
+
+  const localCatalogListCs = createLocalCatalogList(
+    webServices, templateCs, ["cs", "en"]);
+  registerHandler(server, localCatalogListCs);
+
+  const localCatalogListEn = createLocalCatalogList(
+    webServices, templateEn, ["en", "cs"]);
+  registerHandler(server, localCatalogListEn);
+
+  // Dataset list.
+
+  const datasetListCs = createDatasetList(
+    webServices, templateCs, ["cs", "en"]);
+  registerHandler(server, datasetListCs);
+
+  const datasetListEn = createDatasetList(
+    webServices, templateEn, ["en", "cs"]);
+  registerHandler(server, datasetListEn);
+
+  // Dataset detail.
+
+  const datasetDetailCs = createDatasetDetail(
+    webServices, templateCs, ["cs", "en"]);
+  registerHandler(server, datasetDetailCs);
+
+  const datasetDetailEn = createDatasetDetail(
+    webServices, templateEn, ["en", "cs"]);
+  registerHandler(server, datasetDetailEn);
+
+  //
 
   server.route({
     method: "GET",
