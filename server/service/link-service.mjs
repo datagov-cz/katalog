@@ -1,4 +1,8 @@
 
+/**
+ * Objective of link service is to update links to external resources.
+ * Those may include links to publishers, catalogs, and datasets.
+ */
 export function createLinkService(configuration) {
   const template = configuration.client.dereferenceTemplate;
   let wrapLink;
