@@ -2,9 +2,7 @@ import { ROUTE } from "../route-name.mjs";
 import * as components from "../../component/index.mjs";
 
 export function renderHtml(services, languages, query, data, reply) {
-  const templateData = prepareTemplateData(
-    services.configuration, services.navigation,
-    services.translation, languages, query, data);
+  const templateData = prepareTemplateData(services, languages, query, data);
   const template = services.template.view(ROUTE.LOCAL_CATALOG_LIST);
   reply
     .code(200)
@@ -12,22 +10,20 @@ export function renderHtml(services, languages, query, data, reply) {
     .send(template(templateData));
 }
 
-export function prepareTemplateData(configuration, navigation, translation, languages, query, data) {
-  prepareCatalogsInPlace(configuration, translation, data["catalogs"])
+export function prepareTemplateData(services, languages, query, data) {
+  prepareCatalogsInPlace(services.configuration, services.link, services.translation, data["catalogs"])
   return {
-    "navigation": components.createNavigationData(navigation, languages, query),
+    "navigation": components.createNavigationData(services.navigation, languages, query),
     "footer": components.createFooterData(),
-    "message": translation.translate("items-found", data["catalogs"].length),
+    "message": services.translation.translate("items-found", data["catalogs"].length),
     "catalogs": data["catalogs"],
   };
 }
 
-function prepareCatalogsInPlace(configuration, translation, catalogs) {
+function prepareCatalogsInPlace(configuration, link, translation, catalogs) {
   for (const catalog of catalogs) {
-    catalog.publisher.describeUrl = configuration.client.dereferenceTemplate
-      .replace("{}", encodeURIComponent(catalog.publisher.iri));
-    catalog.describeUrl = configuration.client.dereferenceTemplate
-      .replace("{}", encodeURIComponent(catalog.iri));
+    catalog.iri = link.wrapLink(catalog.iri);
+    catalog.publisher.iri = link.wrapLink(catalog.publisher.iri);
     catalog.deleteUrl = configuration.client.catalogFormUrl
       + translation.translate("url-remove-link")
       + encodeURIComponent(catalog.iri);

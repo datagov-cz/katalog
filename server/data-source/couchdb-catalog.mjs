@@ -42,6 +42,10 @@ function jsonldToCatalogs(languages, jsonld) {
       result.push(catalog);
     }
   }
+  // Force ordering.
+  result.sort((left, right) => {
+    return left.iri.localeCompare(right.iri, "en");
+  });
   return result;
 }
 
@@ -49,7 +53,7 @@ function jsonldToPublisher(languages, entity) {
   const contactPoint = entity[DCAT.contactPoint] ?? {};
   return {
     "iri": entity["@id"],
-    "publisher": { // 
+    "publisher": { //
       "iri": getResource(entity, DCTERMS.publisher),
     },
     "title": selectForLanguages(languages, getString(entity, DCTERMS.title)),

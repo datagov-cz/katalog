@@ -25,6 +25,7 @@ import { createLabelService } from "./service/label-service.mjs";
 import { createFacetService } from "./service/facet-service.mjs";
 import { createDatasetService } from "./service/dataset-service.mjs";
 import { createCronService } from "./service/cron-service.mjs";
+import { createLinkService } from "./service/link-service.mjs";
 
 import { registerHttpRoutes } from "./http/route.mjs";
 
@@ -58,10 +59,11 @@ async function createServices() {
 
   const navigation = createNavigationService();
   const label = createLabelService(
-    [couchDbLabel, couchDbSuggestions], 
+    [couchDbLabel, couchDbSuggestions],
     [couchDbStatic, couchDbSuggestions]);
   const facet = createFacetService(label);
   const dataset = createDatasetService(couchDbDataset); // TODO Add solrDataset.
+  const link = createLinkService(configuration);
 
   // Initialize static data.
   await label.reloadCache();
@@ -86,6 +88,7 @@ async function createServices() {
     "label": label,
     "facet": facet,
     "dataset": dataset,
+    "link": link,
     // Configuration
     "configuration": configuration,
   };

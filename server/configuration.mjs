@@ -23,7 +23,7 @@ const configuration = {
     // Replace {} with publisher URL.
     publisherDashboardMonthlyTemplate: process.env.CLIENT_DASHBOARD_PUBLISHER_MONTHLY ?? "",
     // Replace {} with URL for reference.
-    dereferenceTemplate: process.env.CLIENT_DEREFERENCE ?? "{}",
+    dereferenceTemplate: process.env.CLIENT_DEREFERENCE ?? "",
   },
 };
 

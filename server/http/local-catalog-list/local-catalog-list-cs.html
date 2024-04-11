@@ -18,13 +18,13 @@
     </p>
     <gov-grid>
       {{#each catalogs}}
-      <gov-grid-item size-sm="12/12" size-md="6/12" size-md="6/12" size-lg="4/12" size-xl="3/12">
+      <gov-grid-item size-sm="12/12" size-md="6/12" size-md="6/12" size-lg="4/12" size-xl="3/12" style="padding: .25rem">
         <gov-card>
           <div class="gov-card__header">
             <h3 class="gov-card__title" style="display: inline;">
               {{publisher.label}}
             </h3>
-            <a href="{{publisher.describeUrl}}">
+            <a href="{{publisher.iri}}">
               <gov-icon name="box-arrow-up-right"></gov-icon>
             </a>
           </div>
@@ -32,7 +32,7 @@
             <div class="gov-card__main">
               <div>
                 {{title}}
-                <a href="{{describeUrl}}">
+                <a href="{{iri}}">
                   <gov-icon name="box-arrow-up-right"></gov-icon>
                 </a>
               </div>
