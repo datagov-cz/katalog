@@ -1,108 +1,18 @@
-<html lang="cs">
+<html lang="en">
 
 <head>
   {{> head }}
   <!-- Site specific. -->
   <title>Suggestion - Národní katalog otevřených dat (NKOD)</title>
+  <meta name="description" content="Portál otevřených dat a Národní katalog otevřených dat České republiky"/>
+  <!--  -->
 </head>
 
 <body>
   {{#with navigation}} {{> navigation }} {{/with}}
-  <div class="container">
-    {{#with suggestion}}
-    <div>
-      <h1>{{title}}</h1>
-      <h2 class="inline">
-        {{publisher.title}}
-      </h2>
-      <a href="{{publisher.iri}}" title="Go to link" rel="nofollow noopener noreferrer" target="_blank">
-        <i class="bi bi-arrow-up-right-square"></i>
-      </a>
-    </div>
-    <br/>
-    <p>
-      {{breaklines description}}
-    </p>
-    <div class="row">
-      <div class="col-12 col-sm-6 col-md-3">
-        <dl>
-          <dt>Theme</dt>
-          {{#each themes}}
-          <dd>
-            <a href="{{href}}">
-              {{label}}
-            </a>
-            &nbsp;
-            <a href="{{iri}}" title="Go to link" rel="nofollow noopener noreferrer" target="_blank">
-              <i class="bi bi-arrow-up-right-square"></i>
-            </a>
-          </dd>
-          {{/each}}
-        </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
-        <dl>
-          <dt>Created</dt>
-          <dd>{{created}}</dd>
-        </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
-        <dl>
-          <dt>State</dt>
-          <dd>{{state.label}}</dd>
-        </dl>
-      </div>
-      {{#if publication_plan_visible}}
-      <div class="col-12 col-sm-6 col-md-3">
-        <dl>
-          <dt>Publication plan</dt>
-          <dd>{{publication_plan}}</dd>
-        </dl>
-      </div>
-      {/if}
-    </div>
-    <div class="row">
-      <div class="col-12 col-sm-6 col-md-3">
-        <dl>
-          <dt>Obliged entity according to law number 106/1999</dt>
-          <dd>{{#if mandatory_106}}Yes{{else}}No{{/if}}</dd>
-        </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
-        <dl>
-          <dt>According to special regulation an impediment exists</dt>
-          <dd>{{#if obstacle_special_regulation}}Yes{{else}}No{{/if}}</dd>
-        </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
-        <dl>
-          <dt>According to law number 106/1999 an impediment exists</dt>
-          <dd>{{#if obstacle_106}}Yes{{else}}No{{/if}}</dd>
-        </dl>
-      </div>
-    </div>
-    {{/with}}
-    <br/>
-    {{#with datasets}}
-    {{#if visible}}
-    <h2>Datasets</h2>
-    <br/>
-    <div>
-      {{#each items}}
-      <div class="dataset">
-        <a href="{{href}}" rel="nofollow noopener noreferrer">
-          <h4>{{title}}</h4>
-        </a>
-        <p>
-          {{description}}
-        </p>
-      </div>
-      {{/each}}
-    </div>
-    {{/if}}
-    {{/with}}
-  </div>
-  
+  <gov-container>
+    <!-- TODO -->
+  </gov-container>
   {{#with footer}} {{> footer }} {{/with}}
 </body>
 
