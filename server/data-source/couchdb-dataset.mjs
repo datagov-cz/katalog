@@ -4,8 +4,10 @@ import { DCTERMS, DCAT, VCARD, SKOS, SGOV, EUA, ADMS, FOAF, OWL, NKOD, PU, SPDX 
 
 export function createCouchDbDataset(couchDbConnector) {
   return {
-    "fetchDataset": (languages, iri) =>
-      fetchDataset(couchDbConnector, languages, iri),
+    "fetchDataset": (languages, query) =>
+      fetchDataset(couchDbConnector, languages, query),
+    "fetchDatasetPreview": (languages, iri) =>
+      fetchDatasetPreview(couchDbConnector, languages, iri),
   };
 }
 
@@ -317,5 +319,19 @@ function createEmptyDataService() {
     "endpointDescription": null,
     "endpointURL": null,
     "dataServiceConformsTo": [],
+  };
+}
+
+async function fetchDatasetPreview(couchDbConnector, languages, iri) {
+  const response = await couchDbConnector.fetch("datasets", iri);
+  if (response["error"] !== undefined) {
+    // We assume it is missing.
+    return null;
+  }
+  const dataset = jsonldToDataset(response["jsonld"], iri);
+  return {
+    "iri": iri,
+    "title": selectForLanguages(languages, dataset.title),
+    "description": selectForLanguages(languages, dataset.description),
   };
 }
