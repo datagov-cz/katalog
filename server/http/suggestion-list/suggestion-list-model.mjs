@@ -4,6 +4,7 @@ export async function prepareData(services, languages, query) {
     "searchQuery": query.query,
     "theme": query.theme,
     "publisher": query.publisher,
+    "state": query.state,
     "sort": query.sort,
     "sortDirection": query.sortDirection,
     "offset": query.page * query.pageSize,
