@@ -55,7 +55,7 @@ function createCompareFacetItems(language) {
     if (!left.active && right.active) {
       return 1;
     }
-    const count = left.count - right.count;
+    const count = right.count - left.count;
     if (count === 0) {
       return left.label.localeCompare(right.label, language);
     }
