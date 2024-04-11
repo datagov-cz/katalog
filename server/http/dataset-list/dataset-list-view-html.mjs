@@ -26,7 +26,9 @@ export function prepareTemplateData(translation, navigation, languages, query, d
   return {
     "navigation": components.createNavigationData(navigation, languages, query),
     "footer": components.createFooterData(),
-    "search": components.createSearchData(navigation, translation, query),
+    "search": {
+      "clear-href": navigation.linkFromServer(),
+    },
     "result-bar": components.createResultBarData(translation, navigation, query, SORT_OPTIONS, count),
     "pagination": components.createPaginationData(navigation, query, count),
     "documents": documents,
