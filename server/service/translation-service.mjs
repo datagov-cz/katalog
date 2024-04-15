@@ -4,7 +4,8 @@
 export function createTranslationService(serverToLocal) {
   return {
     /**
-     * Translate message from server.
+     * @param {string} serverMessage
+     * @param {number | undefined} number
      */
     "translate": (serverMessage, number) =>
       translate(serverToLocal, serverMessage, number),
@@ -28,4 +29,3 @@ function translate(serverToLocal, serverMessage, number) {
   }
   return result.replace("{}", number);
 }
-
