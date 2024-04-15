@@ -11,6 +11,7 @@
 <body>
   {{#with navigation}} {{> navigation }} {{/with}}
   {{#with dataset}}
+  <gov-spacer size="s" breakpoint="sm"></gov-spacer>
   <gov-container>
     {{#with heading}}
     <h1 style="display: inline;">{{title}}</h1>
@@ -25,7 +26,7 @@
       <h2>{{label}}</h2>
     </a>
     {{/with}}
-    <br/>
+    <br />
     <p>
       {{breaklines description}}
     </p>
@@ -36,7 +37,296 @@
       </gov-chip>
       {{/each}}
     </div>
+    <gov-spacer size="s" breakpoint="sm"></gov-spacer>
+    <gov-grid>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
+        {{#if themesVisible}}
+        <dl>
+          <dt>Téma</dt>
+          {{#each themes}}
+          <dd>
+            <a href="{{href}}">
+              {{label}}
+            </a>
+            &nbsp;
+            <a href="{{iri}}" title="Přejít na odkaz" rel="nofollow noopener noreferrer" target="_blank">
+              <gov-icon name="box-arrow-up-right"></gov-icon>
+            </a>
+          </dd>
+          {{/each}}
+        </dl>
+        {{/if}}
+        {{#if euroVocThemesVisible}}
+        <dl>
+          <dt>Klasifikace dle EuroVoc</dt>
+          {{#each euroVocThemes}}
+          <dd>
+            <a href="{{href}}">
+              {{label}}
+            </a>
+            &nbsp;
+            <a href="{{iri}}" title="Přejít na odkaz" rel="nofollow noopener noreferrer" target="_blank">
+              <gov-icon name="box-arrow-up-right"></gov-icon>
+            </a>
+          </dd>
+          {{/each}}
+        </dl>
+        {{/if}}
+      </gov-grid-item>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
+        {{#if spatialVisible}}
+        <dl>
+          <dt>Související geografické území</dt>
+          {{#each spatial}}
+          <dd>
+            {{label}}
+            &nbsp;
+            <a href="{{iri}}" title="Přejít na odkaz" rel="nofollow noopener noreferrer" target="_blank">
+              <gov-icon name="box-arrow-up-right"></gov-icon>
+            </a>
+          </dd>
+          {{/each}}
+        </dl>
+        {{/if}}
+        {{#if spatialResolutionInMetersVisible}}
+        <dl>
+          <dt>Prostorové rozlišení v metrech</dt>
+          <dd>
+            {{spatialResolutionInMeters}}
+          </dd>
+        </dl>
+        {{/if}}
+        {{#if temporalVisible}}
+        <dl>
+          <dt>Časové pokrytí</dt>
+          <dd>
+            {{temporal}}
+          </dd>
+        </dl>
+        {{/if}}
+        {{#if temporalResolutionVisible}}
+        <dl>
+          <dt>Časové rozlišení</dt>
+          <dd>
+            {{temporalResolution}}
+          </dd>
+        </dl>
+        {{/if}}
+      </gov-grid-item>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
+        {{#if documentationVisible}}
+        <dl>
+          <dt>Dokumentace</dt>
+          {{#each documentation}}
+          <dd>
+            <a href="{{href}}">Zobrazit dokumentaci</a>
+          </dd>
+          {{/each}}
+        </dl>
+        {{/if}}
+        {{#if contactVisible}}
+        <dl>
+          <dt>Kontaktní bod</dt>
+          {{#each contact}}
+          <dd>
+            <a href="{{href}}">{{label}}</a>
+          </dd>
+          {{/each}}
+        </dl>
+        {{/if}}
+        {{#if conformsToVisible}}
+        <dl>
+          <dt>Dokumentace</dt>
+          {{#each conformsTo}}
+          <dd>
+            <a href="{{href}}">Zobrazit specifikaci</a>
+          </dd>
+          {{/each}}
+        </dl>
+        {{/if}}
+      </gov-grid-item>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
+        {{#if frequencyVisible}}
+        <dl>
+          <dt>Periodicita aktualizace</dt>
+          <dd>
+            {{frequency.label}}
+            &nbsp;
+            <a href="{{frequency.iri}}" title="Přejít na odkaz" rel="nofollow noopener noreferrer" target="_blank">
+              <gov-icon name="box-arrow-up-right"></gov-icon>
+            </a>
+          </dd>
+        </dl>
+        {{/if}}
+      </gov-grid-item>
+    </gov-grid>
   </gov-container>
+  {{/with}}
+  {{#with distributions}}
+  {{#if visible}}
+  <gov-container>
+    <h2>Distribuce datové sady</h2>
+    <br />
+    <div style="display: flex; flex-direction: row;flex-wrap: wrap;">
+      {{#each items}}
+      <div style="width: 50%;">
+        <h3>{{title}}</h3>
+        <h4>{{format}}</h4>
+        <div style="display: flex; flex-direction: row;">
+          {{#if missingLegal}}
+          MISSING
+          {{/if}}
+          {{#if dcatApLegal}}
+          DCAT-AP LEGAL
+          {{/if}}
+          {{#if dcatApCzLegal}}{{#with dcatApCzLegal}}
+          <div style="width: 50%;">
+            Podmínky užití distribuce
+            <ul>
+              <li>
+                <div></div>
+                Autorské dílo
+              </li>
+              <li>
+                <div></div>
+                Originální databáze
+              </li>
+              <li>
+                <div></div>
+                Zvláštní právo pořizovatele databáze
+              </li>
+              <li>
+                <div></div>
+                Osobní údaje
+              </li>
+            </ul>
+          </div>
+          {{/with}}{{/if}}
+          {{#if distribution}}{{#with distribution}}
+          <div style="width: 50%;">
+            Soubor ke stažení
+            <ul>
+              <li>
+                {{#each downloadArray}}
+                <a href="{{this}}">Stáhnout</a>
+                {{/each}}
+              </li>
+              <li>
+                {{#each schemaArray}}
+                <a href="{{this}}">Schéma</a>
+                {{/each}}
+              </li>
+              <li>
+                <div>
+                  {{mediaType.label}}
+                  <a href="{{mediaType.iri}}">
+                    <gov-icon name="box-arrow-up-right"></gov-icon>
+                  </a>
+                </div>
+                Typ média
+              </li>
+              <!-- compressFormat -->
+              <!-- packageFormat -->
+            </ul>
+          </div>
+          {{/with}}{{/if}}
+          {{#if dataService}}{{#with dataService}}
+          <div style="width: 50%;">
+            Datová služba
+            <ul>
+              <li>
+                <a href="{{endpointDescription}}">Popis endpointu</a>
+              </li>
+              <li>
+                <a href="{{endpointURL}}">Endpoint</a>
+                {{#if sparqlEditor}}
+                <br/>
+                <a href="{{sparqlEditor}}">SPARQL dotazování</a>
+                {{/if}}
+                {{#if classesAndProperties}}
+                <br/>
+                <a href="{{classesAndProperties}}">Třídy a vlastnosti</a>
+                {{/if}}
+              </li>
+              <li>
+                {{#each schemaArray}}
+                <a href="{{this}}">Schéma</a>
+                {{/each}}
+              </li>
+              {{#if mediaType}}
+              <li>
+                {{mediaType.label}}
+                <a href="{{mediaType.iri}}">
+                  <gov-icon name="box-arrow-up-right"></gov-icon>
+                </a>
+                <br/>
+                Typ média
+              </li>
+              {{/if}}
+              <!-- compressFormat -->
+              <!-- packageFormat -->
+            </ul>
+          </div>
+          {{/with}}{{/if}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{#with pagination}} {{#if visible}}
+    <gov-grid-item size-sm="12/12" size-md="10/12">
+      <gov-pagination total="{{total}}" current="{{currentPage}}" page-size="{{pageSize}}"
+        wcag-label="Stránkování pro sekci dokumenty"
+        wcag-select-label="Vybrat stránku"
+        link="{{linkTemplate}}"
+        >
+      </gov-pagination>
+    </gov-grid-item>
+    {{/if}} {{/with}}
+  </gov-container>
+  {{/if}}
+  {{/with}}
+  {{#with datasetSeries}}
+  {{#if visible}}
+  <gov-container>
+    <h2>Datové sady této datové série</h2>
+    <br />
+    <div class="list">
+      {{#each items}}
+      <div class="list-item">
+        <a href="{{href}}" rel="nofollow noopener noreferrer">
+          <h3>{{title}}</h3>
+        </a>
+        <p>
+          {{description}}
+        </p>
+      </div>
+      {{/each}}
+    </div>
+    <a href="{{showAllHref}}">
+      Zobrazit všechny dílčí datové sady v seznamu datových sad
+    </a>
+  </gov-container>
+  {{/if}}
+  {{/with}}
+  {{#with applications}}
+  {{#if visible}}
+  <gov-container>
+    <h2>Aplikace využívající tuto datovou sadu</h2>
+    <br />
+    <div class="list">
+      {{#each items}}
+      <div class="list-item">
+        <a href="{{href}}" rel="nofollow noopener noreferrer">
+          <h3>{{title}}</h3>
+        </a>
+        <p>
+          {{description}}
+        </p>
+      </div>
+      {{/each}}
+    </div>
+  </gov-container>
+  {{/if}}
   {{/with}}
   <gov-spacer size="s" breakpoint="sm"></gov-spacer>
   {{#with footer}} {{> footer }} {{/with}}

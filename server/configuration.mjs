@@ -24,6 +24,11 @@ const configuration = {
     publisherDashboardMonthlyTemplate: process.env.CLIENT_DASHBOARD_PUBLISHER_MONTHLY ?? "",
     // Replace {} with URL for reference.
     dereferenceTemplate: process.env.CLIENT_DEREFERENCE ?? "",
+    //
+    sparqlEditorUrl: process.env.CLIENT_SPARQL_EDITOR_URL ?? null,
+    sparqlDefaultQuery: process.env.CLIENT_SPARQL_DEFAULT_QUERY ?? null,
+    // Replace {} with endpoint URL.
+    sparqlClassAndPropertiesTemplate: process.env.CLIENT_DATA_SERVICE_CLASS_AND_PROPERTIES_TEMPLATE ?? null
   },
 };
 

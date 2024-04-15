@@ -15,7 +15,12 @@ export function createDatasetService(couchDbDataset) {
 async function fetchDatasetPreviews(couchDbDataset, languages, iris) {
   const result = [];
   for (const iri of iris) {
-    result.push(await couchDbDataset.fetchDatasetPreview(languages, iri));
+    const dataset = await couchDbDataset.fetchDatasetPreview(languages, iri);
+    result.push({
+      "iri": iri,
+      "title": dataset?.title ?? iri,
+      "description": dataset?.description ?? "",
+    });
   }
   return result;
 }
