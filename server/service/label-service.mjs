@@ -20,7 +20,7 @@ export function createLabelService(sources, cacheSources) {
     /**
      * Add label to given object.
      * @param {String[]} languages Language preferences.
-     * @param {Object[]} resources Objects with iri.
+     * @param {(Object | null)[]} resources Array of objects with IRI or nulls.
      * @param {Function} defaultValue Select default label, where none is found.
      * @returns {}
      */
@@ -92,10 +92,18 @@ async function fetchLabelFromCouchDb(labelSources, cache, languages, iri) {
   for (const language of languages) {
     const cached = cache.get(language, iri);
     const label = labels[language] ?? null;
-    if (cached == undefined) {
+    if (cached === undefined) {
       cache.update(language, iri, label);
     }
     result = result ?? cached ?? label;
+  }
+  if (result === null) {
+    // This can happen when there is no value in any of required languages.
+    // This is also the case for strings without a language.
+    result = labels[""] ?? null;
+    if (result !== null) {
+      cache.update(languages[0], iri, result);
+    }
   }
   return result;
 }
@@ -149,6 +157,9 @@ async function initializeCacheFromSources(cache, cacheSources) {
 
 async function addLabelToResources(fetchLabel, languages, resources, defaultValue) {
   for (const resource of resources) {
+    if (resource === null) {
+      continue;
+    }
     const label = await fetchLabel(languages, resource["iri"]);
     resource["label"] = label ?? defaultValue(resource);
   }
