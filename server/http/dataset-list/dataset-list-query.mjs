@@ -70,37 +70,6 @@ function selectArgumentFromClientQueryOrDefault(
   return defaultValue;
 }
 
-export function beforeLinkCallback(navigation, serverQuery) {
-  const result = { ...serverQuery };
-
-  const sort = result["sort"];
-  if (sort === DEFAULT_SORT) {
-    delete result["sort"];
-  } else {
-    result["sort"] = navigation.argumentFromServer(sort);
-  }
-
-  const sortDirection = result["sortDirection"];
-  delete result["sortDirection"];
-  if (sortDirection !== DEFAULT_SORT_DIRECTION) {
-    result["sort-direction"] = navigation.argumentFromServer(sortDirection);
-  }
-
-  if (result["page"] === DEFAULT_PAGE) {
-    delete result["page"];
-  }
-
-  const pageSize = result["pageSize"];
-  delete result["pageSize"];
-  if (pageSize !== DEFAULT_PAGE_SIZE) {
-    result["page-size"] = pageSize;
-  }
-
-  // TODO Remove facets!
-
-  return result;
-}
-
 function asPositiveNumber(value, defaultValue) {
   if (value === undefined || value === null) {
     return defaultValue;
@@ -110,5 +79,53 @@ function asPositiveNumber(value, defaultValue) {
     return defaultValue;
   } else {
     return result;
+  }
+}
+
+export function beforeLinkCallback(navigation, serverQuery) {
+  const result = {};
+  setIfNotEmpty(result, "query", serverQuery.searchQuery);
+  setIfNotEmpty(result, "publisher", serverQuery.publisher);
+  setIfNotDefault(result, "publisher-limit", serverQuery.publisherLimit, DEFAULT_FACET_SIZE);
+  setIfNotEmpty(result, "theme", serverQuery.theme);
+  setIfNotDefault(result, "theme-limit", serverQuery.themeLimit, DEFAULT_FACET_SIZE);
+  setIfNotEmpty(result, "keyword", serverQuery.keyword);
+  setIfNotDefault(result, "keyword-limit", serverQuery.keywordLimit, DEFAULT_FACET_SIZE);
+  setIfNotEmpty(result, "format", serverQuery.format);
+  setIfNotDefault(result, "format-limit", serverQuery.formatLimit, DEFAULT_FACET_SIZE);
+  setIfNotEmpty(result, "data-service-type", serverQuery.dataServiceType);
+  setIfNotEmpty(result, "temporal-start", serverQuery.temporalStart);
+  setIfNotEmpty(result, "temporal-end", serverQuery.temporalEnd);
+  setIfTrue(result, "vdf-public-data", serverQuery.vdfPublicData);
+  setIfTrue(result, "vdf-codelist", serverQuery.vdfCodelist);
+  setIfNotEmpty(result, "is-part-of", serverQuery.isPartOf);
+  if (serverQuery.sort !== DEFAULT_SORT) {
+    result["sort"] = navigation.argumentFromServer(serverQuery.sort);
+  }
+  if (serverQuery.sortDirection !== DEFAULT_SORT_DIRECTION) {
+    result["sort-direction"] = navigation.argumentFromServer(serverQuery.sortDirection);
+  }
+  setIfNotDefault(result, "page", serverQuery.page, DEFAULT_PAGE);
+  setIfNotDefault(result, "page-size", serverQuery.pageSize, DEFAULT_PAGE_SIZE);
+  return result;
+}
+
+function setIfNotDefault(query, key, value, defaultValue) {
+  if (value === undefined || value === null || value === defaultValue) {
+    return;
+  }
+  query[key] = value;
+}
+
+function setIfNotEmpty(query, key, value) {
+  if (value === undefined || value === null || value.length === 0) {
+    return;
+  }
+  query[key] = value;
+}
+
+function setIfTrue(query, key, value) {
+  if (value === true) {
+    query[key] = value;
   }
 }

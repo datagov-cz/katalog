@@ -1,7 +1,8 @@
 import { ROUTE } from "../route-name.mjs";
 import * as components from "../../component/index.mjs";
 
-// TODO We need facet when filtering for child of a dataset.
+const FACET_SERIES = "datasetSeries";
+
 const FACETS = ["publisher", "theme", "keyword", "format", "dataServiceType"];
 
 const SORT_OPTIONS = [
@@ -27,7 +28,7 @@ export function prepareTemplateData(translation, navigation, languages, query, d
     "navigation": components.createNavigationData(navigation, languages, query),
     "footer": components.createFooterData(),
     "search": {
-      "clear-href": navigation.linkFromServer(),
+      "clear-href": navigation.linkFromServer({}),
     },
     "result-bar": components.createResultBarData(translation, navigation, query, SORT_OPTIONS, count),
     "pagination": components.createPaginationData(navigation, query, count),
@@ -47,6 +48,13 @@ function prepareDocumentsInPlace(navigation, suggestions) {
 
 function prepareFacets(translation, navigation, query, facets, counts) {
   const result = [];
+  if (query.isPartOf.length > 0) {
+    result.push({
+      "label": translation.translate(FACET_SERIES),
+      "count": query.isPartOf.length,
+      "items": [], // TODO
+    });
+  }
   for (const name of FACETS) {
     const facetData = facets[name];
     const facerLabel = translation.translate(name);
