@@ -9,8 +9,8 @@ export function createSparqlVdf(sparqlConnector) {
 }
 
 /**
- * @param {*} sparqlConnector 
- * @param {string} iri 
+ * @param {*} sparqlConnector
+ * @param {string} iri
  * @return {object}
  */
 async function fetchDatasetVdf(sparqlConnector, iri) {

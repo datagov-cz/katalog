@@ -19,6 +19,7 @@ import { createSolrPublisher } from "./data-source/solr-publisher.mjs";
 import { createCouchDbCatalog } from "./data-source/couchdb-catalog.mjs";
 import { createSolrDataset } from "./data-source/solr-dataset.mjs";
 import { createSparqlQuality } from "./data-source/sparql-quality.mjs";
+import { createCouchDbVdf } from "./data-source/couchdb-vdf.mjs";
 
 import { createNavigationService } from "./service/navigation-service.mjs";
 import { createLabelService } from "./service/label-service.mjs";
@@ -49,6 +50,7 @@ async function createServices() {
   const couchDbStatic = createCouchDbStatic(couchdb);
   const couchDbSuggestions = createCouchDbSuggestions(couchdb);
   const couchDbLocalCatalog = createCouchDbCatalog(couchdb);
+  const couchDbVdf = createCouchDbVdf(couchdb);
 
   const solrApplication = createSolrApplication(solr);
   const solrSuggestion = createSolrSuggestion(solr);
@@ -78,6 +80,7 @@ async function createServices() {
     "couchDbStatic": couchDbStatic,
     "couchDbSuggestions": couchDbSuggestions,
     "couchDbLocalCatalog": couchDbLocalCatalog,
+    "couchDbVdf": couchDbVdf,
     "solrApplication": solrApplication,
     "solrSuggestion": solrSuggestion,
     "solrPublisher": solrPublisher,

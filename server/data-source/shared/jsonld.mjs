@@ -1,6 +1,6 @@
 
 /**
- * @param {object} entity 
+ * @param {object} entity
  * @returns Resource identifier.
  */
 export function getId(entity) {
@@ -8,7 +8,7 @@ export function getId(entity) {
 }
 
 /**
- * @param {object} entity 
+ * @param {object} entity
  * @return {string[]} Array of types or an empty array.
  */
 export function getTypes(entity) {
@@ -23,8 +23,8 @@ export function getTypes(entity) {
 }
 
 /**
- * @param {object} entity 
- * @param {string} type 
+ * @param {object} entity
+ * @param {string} type
  * @return {boolean} True when given entity is of given type.
  */
 export function hasType(entity, type) {
@@ -32,8 +32,8 @@ export function hasType(entity, type) {
 }
 
 /**
- * @param {object} entity 
- * @param {string} predicate 
+ * @param {object} entity
+ * @param {string} predicate
  * @returns {object | null} Object with language pairs.
  */
 export function getString(entity, predicate) {
@@ -76,8 +76,8 @@ function valueToString(value) {
 }
 
 /**
- * @param {object} entity 
- * @param {string} predicate 
+ * @param {object} entity
+ * @param {string} predicate
  * @returns {string | null}
  */
 export function getResource(entity, predicate) {
@@ -86,8 +86,8 @@ export function getResource(entity, predicate) {
 }
 
 /**
- * @param {object} entity 
- * @param {string} predicate 
+ * @param {object} entity
+ * @param {string} predicate
  * @returns {string[]}
  */
 export function getResources(entity, predicate) {
@@ -95,8 +95,8 @@ export function getResources(entity, predicate) {
 }
 
 /**
- * @param {object} entity 
- * @param {string} predicate 
+ * @param {object} entity
+ * @param {string} predicate
  * @returns {string | null}
  */
 export function getValue(entity, predicate) {
@@ -105,8 +105,8 @@ export function getValue(entity, predicate) {
 }
 
 /**
- * @param {object} entity 
- * @param {string} predicate 
+ * @param {object} entity
+ * @param {string} predicate
  * @returns {string[]}
  */
 export function getValues(entity, predicate) {
@@ -123,12 +123,12 @@ function asPlainValue(value) {
 
 /**
  * @param {object[]} jsonld Array of JSON-LD objects with "@id".
- * @param {string} iri 
+ * @param {string} iri
  * @returns Resource with given identifier or null.
  */
 export function getEntityByIri(jsonld, iri) {
   if (iri === undefined || iri === null) {
-    return undefined;
+    return null;
   }
   for (const entity of jsonld) {
     if (getId(entity) === iri) {
@@ -139,8 +139,8 @@ export function getEntityByIri(jsonld, iri) {
 }
 
 /**
- * @param {object} entity 
- * @param {string} predicate 
+ * @param {object} entity
+ * @param {string} predicate
  * @returns {string | null}
  */
 export function getPlainString(entity, predicate) {
@@ -148,8 +148,8 @@ export function getPlainString(entity, predicate) {
 }
 
 /**
- * @param {object} entity 
- * @param {string} predicate 
+ * @param {object} entity
+ * @param {string} predicate
  * @returns {string[]}
  */
 export function getPlainStrings(entity, predicate) {
@@ -157,8 +157,8 @@ export function getPlainStrings(entity, predicate) {
 }
 
 /**
- * @param {object[]} jsonld 
- * @param {string} type 
+ * @param {object[]} jsonld
+ * @param {string} type
  * @returns First found entity with given type or null.
  */
 export function getEntityByType(jsonld, type) {
@@ -171,8 +171,8 @@ export function getEntityByType(jsonld, type) {
 }
 
 /**
- * @param {object[]} jsonld 
- * @param {string} type 
+ * @param {object[]} jsonld
+ * @param {string} type
  * @returns {object[]}
  */
 export function getEntitiesByType(jsonld, type) {

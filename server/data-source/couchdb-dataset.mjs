@@ -1,4 +1,4 @@
-import { getId, getTypes, getEntityByIri, getString, getStrings, getResource, getResources, getPlainStrings, getPlainString, getEntityByType } from "./shared/jsonld.mjs";
+import { getId, getTypes, getEntityByIri, getString, getStrings, getResource, getResources, getPlainStrings, getPlainString, getEntityByType, getValue } from "./shared/jsonld.mjs";
 import { selectForLanguages } from "./shared/couchdb-response.mjs";
 import { DCTERMS, DCAT, VCARD, SKOS, SGOV, EUA, ADMS, FOAF, OWL, NKOD, PU, SPDX } from "./shared/vocabulary.mjs";
 
@@ -31,11 +31,14 @@ async function fetchDataset(couchDbConnector, languages, query) {
   dataset.keywords = dataset.keywords
     .map(keyword => keyword.cs)
     .filter(value => value !== undefined);
+  dataset.contactPoints.forEach(contactPoint => {
+    contactPoint.title = selectForLanguages(languages, contactPoint.title);
+  });
 
   dataset.distributions.sort();
   dataset.distributionsFound = dataset.distributions.length;
   dataset.distributions = dataset.distributions.slice(
-    distributionOffset, distributionLimit);
+    distributionOffset, distributionOffset + distributionLimit);
 
   dataset.distributions = dataset.distributions
     .map(iri => jsonldToDistribution(response["jsonld"], iri))
@@ -45,8 +48,8 @@ async function fetchDataset(couchDbConnector, languages, query) {
   dataset.distributions.forEach(distribution => {
     distribution.title = selectForLanguages(languages, distribution.title);
     distribution.description = selectForLanguages(languages, distribution.description);
-    if (distribution.dataServiceTitle) {
-      distribution.dataServiceTitle = selectForLanguages(languages, distribution.dataServiceTitle);
+    if (distribution.dataService) {
+      distribution.dataService.title = selectForLanguages(languages, distribution.dataService.title);
     }
   });
 
@@ -80,7 +83,7 @@ function createEmptyDataset(iri) {
     "keywords": [],
     "publisher": null,
     "themes": [],
-    "datasetThemes": [],
+    "euroVocThemes": [],
     "accessRights": [],
     "conformsTo": [],
     "documentation": [],
@@ -152,31 +155,32 @@ function loadDatasetThemes(jsonld, entity, dataset) {
   for (const iri of getResources(entity, DCAT.theme)) {
     // We split the themes based on schema they belong to.
     const entity = getEntityByIri(jsonld, iri);
-    if (entity === undefined) {
-      dataset.themes.push(iri);
+    if (entity === null) {
+      dataset.euroVocThemes.push(iri);
       continue;
     }
     const inScheme = getResources(entity, SKOS.inScheme);
     if (inScheme.includes(EUA.dataTheme)) {
-      dataset.datasetThemes.push(iri);
+      dataset.themes.push(iri);
     } else if (inScheme.includes(SGOV.ObjectType)) {
       dataset.semanticThemes.push(iri);
     } else {
-      dataset.themes.push(iri);
+      dataset.euroVocThemes.push(iri);
     }
   }
 }
 
 function loadDatasetTemporal(jsonld, entity, dataset) {
   const iri = getResource(entity, DCTERMS.temporal);
-  if (iri === undefined) {
+  if (iri === null) {
     return;
   }
   const temporal = getEntityByIri(jsonld, iri);
-  if (temporal === undefined) {
+  if (temporal === null) {
     return;
   }
   dataset.temporal = {
+    "iri": iri,
     "startDate": getValue(temporal, DCAT.startDate),
     "endDate": getValue(temporal, DCAT.endDate),
   };
@@ -205,8 +209,7 @@ function loadDatasetOptional(entity, dataset) {
   dataset.versionNotes = getPlainStrings(entity, ADMS.versionNotes);
   dataset.temporalResolution = getPlainString(entity, DCAT.temporalResolution);
   const resolution = getPlainString(entity, DCAT.spatialResolutionInMeters);
-  dataset.spatialResolutionInMeters = resolution === undefined ?
-    undefined : Number(resolution);
+  dataset.spatialResolutionInMeters = resolution === null ? null : Number(resolution);
 }
 
 function loadDatasetNationalCatalog(jsonld, entity, dataset) {
@@ -267,7 +270,7 @@ function jsonldToDistribution(jsonld, iri) {
   return {
     ...distribution,
     "type": "DataService",
-    ...loadDistributionDataService(jsonld, iri),
+    "dataService": loadDistributionDataService(jsonld, accessServiceIri),
   };
 }
 
@@ -275,50 +278,39 @@ function loadDistributionLegal(jsonld, distribution) {
   const iri = getResource(distribution, PU.specification);
   const entity = getEntityByIri(jsonld, iri);
   if (entity === null) {
-    return createDefaultLegal();
+    return null;
   }
   return {
-    "authorship": getResource(entity, PU.authorship),
-    "author": getString(entity, PU.author),
-    "databaseAuthorship": getResource(entity, PU.databaseAuthorship),
-    "databaseAuthor": getString(entity, PU.databaseAuthor),
-    "protectedDatabase": getResource(entity, PU.protectedDatabase),
     "personalData": getResource(entity, PU.personalData),
-  };
-}
-
-function createDefaultLegal() {
-  return {
-    "authorship": "missing",
-    "author": null,
-    "databaseAuthorship": "missing",
-    "databaseAuthor": null,
-    "protectedDatabase": "missing",
-    "personalData": "missing",
+    "author": getString(entity, PU.author),
+    "authorship": getResource(entity, PU.authorship),
+    "databaseAuthor": getString(entity, PU.databaseAuthor),
+    "databaseAuthorship": getResource(entity, PU.databaseAuthorship),
+    "protectedDatabase": getResource(entity, PU.protectedDatabase),
   };
 }
 
 function loadDistributionDataService(jsonld, iri) {
   const entity = getEntityByIri(jsonld, iri);
-  if (dataService === undefined) {
+  if (entity === null) {
     return createEmptyDataService();
   }
   return {
-    "dataService": accessServiceIri,
-    "dataServiceTitle": getString(entity, DCTERMS.title),
+    "iri": getId(entity),
+    "title": getString(entity, DCTERMS.title),
     "endpointDescription": getResource(entity, DCAT.endpointDescription),
     "endpointURL": getResource(entity, DCAT.endpointURL),
-    "dataServiceConformsTo": getResources(entity, DCTERMS.conformsTo),
+    "conformsTo": getResources(entity, DCTERMS.conformsTo),
   }
 }
 
 function createEmptyDataService() {
   return {
-    "dataService": accessServiceIri,
-    "dataServiceTitle": null,
+    "iri": accessServiceIri,
+    "title": null,
     "endpointDescription": null,
     "endpointURL": null,
-    "dataServiceConformsTo": [],
+    "conformsTo": [],
   };
 }
 
