@@ -13,7 +13,7 @@ export default {
         [5, "Nalezeno {} poskytovatelů."],
       ],
       "datasets-found": [
-        [0, "Žádní datová sadata."],
+        [0, "Žádná datová sada."],
         [1, "Jedna datová sada."],
         [2, "{} datové sady."],
         [5, "{} datových sad."],

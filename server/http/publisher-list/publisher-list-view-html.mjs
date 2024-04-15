@@ -36,5 +36,13 @@ function preparePublishersInPlace(configuration, navigation, translation, publis
         .replace("{}", publisher["iri"]);
     publisher.message =
       translation.translate("datasets-found", publisher.count);
+    //
+    publisher.badges = {
+      "vdf": publisher.vdfOriginator || publisher.vdfPublisher,
+      "vdfOriginator": publisher.vdfOriginator,
+      "vdfPublisher": publisher.vdfPublisher,
+    };
   }
 }
+
+

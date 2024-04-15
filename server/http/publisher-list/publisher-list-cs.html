@@ -18,25 +18,45 @@
     </p>
     <gov-grid>
       {{#each publishers}}
-      <gov-grid-item size-sm="12/12" size-md="6/12" size-md="6/12" size-lg="4/12" size-xl="3/12">
+      <gov-grid-item size-sm="12/12" size-md="6/12" size-md="6/12" size-lg="4/12" size-xl="3/12" style="padding: .25rem">
         <gov-card>
           <div class="gov-card__header">
-            <a href="{{href}}">
+            <a href="{{href}}" style="text-decoration: none;">
               <h3 class="gov-card__title">
                 {{label}}
+                <gov-icon name="chevron-right"></gov-icon>
               </h3>
             </a>
           </div>
           <div class="gov-card__inner">
-            <div class="gov-card__main" style="font-size: large; display: flex; flex-direction: row;">
-              <a href="{{dashboardMonthly}}">
-                <!-- TODO -->
-                <gov-icon name="star"></gov-icon>
-              </a>
-              <a href="{{dashboardDaily}}">
-                <!-- TODO -->
-                <gov-icon name="star"></gov-icon>
-              </a>
+            <div class="gov-card__main">
+              <div style="font-size: x-large; display: flex; flex-direction: row; gap: 1em;">
+                <a href="{{dashboardMonthly}}" title="Dashboard - měsíční průměry">
+                  <gov-icon name="clipboard2-data" type="bootstrap" ></gov-icon>
+                </a>
+                <a href="{{dashboardDaily}}" title="Dashboard - denní měření">
+                  <gov-icon name="clipboard2-pulse" type="bootstrap"></gov-icon>
+                </a>
+              </div>
+              <div style="display: flex; flex-direction: row; gap: .5em;">
+                {{#with badges}}
+                {{#if vdf}}
+                <gov-chip variant="primary" type="outlined" size="xs">
+                  VDF
+                </gov-chip>
+                {{/if}}
+                {{#if vdfOriginator}}
+                <gov-chip variant="primary" type="outlined" size="xs">
+                  poskytovatel
+                </gov-chip>
+                {{/if}}
+                {{#if vdfPublisher}}
+                <gov-chip variant="primary" type="outlined" size="xs">
+                  původce
+                </gov-chip>
+                {{/if}}
+                {{/with}}
+              </div>
             </div>
             <div class="gov-card__footer">
               {{message}}
