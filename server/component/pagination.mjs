@@ -9,5 +9,9 @@ export function createPaginationData(navigation, query, documentsCount) {
     "total": documentsCount,
     "pageSize": query.pageSize,
     "currentPage": query.page + 1,
+    "linkTemplate": navigation.linkFromServer({
+      ...query,
+      "page": "_PAGE_"
+    }).replace("_PAGE_", "{PAGE}") // We need '{PAGE}' in link template.
   }
 }

@@ -2,8 +2,9 @@
   <gov-grid-item size-sm="12/12" size-md="10/12">
     {{#if visible}}
     <gov-pagination total="{{total}}" current="{{currentPage}}" page-size="{{pageSize}}"
-      wcag-label="Stránkování pro sekci dokumenty" 
-      wcag-select-label="Vybrat stránku">
+      wcag-label="Stránkování pro sekci dokumenty"
+      wcag-select-label="Vybrat stránku"
+      link="{{linkTemplate}}">
     </gov-pagination>
     {{/if}}
   </gov-grid-item>
