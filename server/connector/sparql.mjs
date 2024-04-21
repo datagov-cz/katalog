@@ -12,9 +12,9 @@ export function createSparqlConnector(configuration, http) {
 }
 
 /**
- * @param {string} sparqlUrl 
- * @param {*} http 
- * @param {string} query 
+ * @param {string} sparqlUrl
+ * @param {*} http
+ * @param {string} query
  * @returns {object | array}
  * @throws If there is any error loading the data.
  */
