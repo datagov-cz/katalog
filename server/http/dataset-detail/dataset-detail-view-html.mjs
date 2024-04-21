@@ -26,7 +26,7 @@ const PERSONAL_DATA_MAP = {
     "iconColor": "danger",
     "iconTitle": "missing-personal-data-information-comment",
   }),
-};
+}
 
 const AUTHORSHIP_MAP = {
   [PU_PREFIX + "neobsahuje-autorská-díla/"]: () => ({
@@ -310,6 +310,11 @@ function prepareContactPoints(contactPoints) {
 }
 
 function prepareDistributions(configuration, translation, navigation, query, data) {
+  if (data.distributions.items.length === 0) {
+    return {
+      "visible": false,
+    };
+  }
   return {
     "visible": true,
     "pagination": {
