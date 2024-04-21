@@ -420,9 +420,11 @@ function prepareDistribution(distribution) {
   }
   return {
     "distribution": {
+      "downloadArrayVisible": downloadArray.length > 0,
       "downloadArray": downloadArray,
       // QUALITY.download, verified_user / link_off
       // QUALITY.downloadCors, http / http
+      "schemaArrayVisible": distribution.conformsTo.length > 0,
       "schemaArray": distribution.conformsTo,
       // QUALITY.schema, verified_user / link_off
       // QUALITY.schemaCors, http / http
@@ -464,7 +466,8 @@ function prepareDataService(configuration, distribution, dataService) {
       "classesAndProperties": showSparqlEditor && client.sparqlClassAndPropertiesTemplate
         ? client.sparqlClassAndPropertiesTemplate.replace("{}", encodeURIComponent(dataService.endpointURL))
         : null,
-      "schemaArray": dataService.conformsTo, // conformsTo
+      "schemaArrayVisible": dataService.conformsTo.length > 0,
+      "schemaArray": dataService.conformsTo,
       // QUALITY.schema, verified_user / link_off
       "mediaType": mediaType,
       // QUALITY.mediaType, verified_user / link_off

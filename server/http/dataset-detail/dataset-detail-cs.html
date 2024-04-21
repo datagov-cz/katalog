@@ -206,16 +206,20 @@
           <div style="width: 50%;">
             Soubor ke stažení
             <ul>
+              {{#if downloadArrayVisible}}
               <li>
                 {{#each downloadArray}}
                 <a href="{{this}}">Stáhnout</a>
                 {{/each}}
               </li>
+              {{/if}}
+              {{#if schemaArrayVisible}}
               <li>
                 {{#each schemaArray}}
                 <a href="{{this}}">Schéma</a>
                 {{/each}}
               </li>
+              {{/if}}
               <li>
                 <div>
                   {{mediaType.label}}
@@ -248,11 +252,13 @@
                 <a href="{{classesAndProperties}}">Třídy a vlastnosti</a>
                 {{/if}}
               </li>
+              {{#if schemaArrayVisible}}
               <li>
                 {{#each schemaArray}}
                 <a href="{{this}}">Schéma</a>
                 {{/each}}
               </li>
+              {{/if}}
               {{#if mediaType}}
               <li>
                 {{mediaType.label}}
