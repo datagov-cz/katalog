@@ -3,10 +3,22 @@
     & a {
       text-decoration: none;
       & h3 {
-        display: flex; 
+        display: flex;
         justify-content: space-between;
         padding: 0.25rem;
       }
     }
   }
+}
+
+.alright {
+  color: #198754;
+}
+
+.warning {
+  color: #ffc107
+}
+
+.danger {
+  color: #dc3545
 }

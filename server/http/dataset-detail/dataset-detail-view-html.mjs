@@ -5,87 +5,125 @@ const SPARQL_SCHEMA = "https://www.w3.org/TR/sparql11-protocol/";
 
 const PU_PREFIX = "https://data.gov.cz/podmínky-užití/";
 
-const PERSONAL_DATA_MAP = {
-  [PU_PREFIX + "obsahuje-osobní-údaje/"]: () => ({
-    "label": "with-personal-data-label",
-    "iconColor": "warning",
-    "iconTitle": "with-personal-data-comment",
-  }),
-  [PU_PREFIX + "neobsahuje-osobní-údaje/"]: () => ({
-    "label": "without-personal-data-label",
-    "iconColor": "alright",
-    "iconTitle": "without-personal-data-comment",
-  }),
-  [PU_PREFIX + "není-specifikováno-zda-obsahuje-osobní-údaje/"]: () => ({
-    "label": "unspecified-personal-data-label",
-    "iconColor": "warning",
-    "iconTitle": "unspecified-personal-data-comment",
-  }),
-  [null]: () => ({
-    "label": "missing-personal-data-information-label",
-    "iconColor": "danger",
-    "iconTitle": "missing-personal-data-information-comment",
-  }),
-}
-
 const AUTHORSHIP_MAP = {
   [PU_PREFIX + "neobsahuje-autorská-díla/"]: () => ({
     "label": "without-authorship",
-    "iconColor": "alright",
+    "icon": "check-lg",
+    "iconStyle": "alright",
     "iconTitle": "without-authorship-comment",
   }),
   [PU_PREFIX + "obsahuje-více-autorských-děl/"]: () => ({
     "label": "with-multiple-authorship",
-    "iconColor": "warning",
+    "icon": "list",
+    "iconStyle": "warning",
     "iconTitle": "with-authorship-comment",
   }),
   "https://creativecommons.org/licenses/by/4.0/": (author) => ({
     "label": "ccby-authorship",
-    "iconColor": "warning",
+    "icon": "bookmark-fill",
+    "iconStyle": "warning",
     "iconTitle": "ccby-authorship-comment",
     "author": author,
   }),
   [null]: () => ({
     "label": "missing-authorship",
-    "iconColor": "danger",
+    "icon": "exclamation-circle",
+    "iconStyle": "danger",
     "iconTitle": "missing-authorship-comment",
   }),
 }
 
+const AUTHORSHIP_CUSTOM = (authorship) => ({
+  "label": "custom-authorship",
+  "icon": "question-circle",
+  "iconStyle": "warning",
+  "iconTitle": "custom-authorship-comment",
+  "href": authorship,
+});
+
 const DATABASE_AUTHORSHIP_MAP = {
   [PU_PREFIX + "není-autorskoprávně-chráněnou-databází/"]: () => ({
-    "label": "without-dataset-authorship",
-    "iconColor": "alright",
-    "iconTitle": "without-dataset-authorship-comment",
+    "label": "without-database-authorship",
+    "icon": "check-lg",
+    "iconStyle": "alright",
+    "iconTitle": "without-database-authorship-comment",
   }),
   "https://creativecommons.org/licenses/by/4.0/": (author) => ({
-    "label": "ccby-dataset-authorship",
-    "iconColor": "warning",
-    "iconTitle": "ccby-dataset-authorship-comment",
+    "label": "ccby-database-authorship",
+    "icon": "bookmark-fill",
+    "iconStyle": "warning",
+    "iconTitle": "ccby-database-authorship-comment",
     "author": author
   }),
   [null]: () => ({
-    "label": "missing-dataset-authorship",
-    "iconColor": "danger",
-    "iconTitle": "missing-dataset-authorship-comment",
+    "label": "missing-database-authorship",
+    "icon": "exclamation-circle",
+    "iconStyle": "danger",
+    "iconTitle": "missing-database-authorship-comment",
   }),
 }
 
+const DATABASE_AUTHORSHIP_CUSTOM = (authorship) => ({
+  "label": "custom-database-authorship",
+  "icon": "question-circle",
+  "iconStyle": "warning",
+  "iconTitle": "custom-database-authorship-comment",
+  "href": authorship,
+});
+
 const PROTECTED_DATABASE_AUTHORSHIP_MAP = {
   [PU_PREFIX + "není-chráněna-zvláštním-právem-pořizovatele-databáze/"]: () => ({
-    "label": "without-protected-dataset-authorship",
-    "iconColor": "alright",
-    "iconTitle": "without-protected-dataset-authorship-comment",
+    "label": "without-protected-database-authorship",
+    "icon": "check-lg",
+    "iconStyle": "alright",
+    "iconTitle": "without-protected-database-authorship-comment",
   }),
   "https://creativecommons.org/publicdomain/zero/1.0/": () => ({
-    "label": "cc0-protected-dataset-authorship",
-    "iconColor": "alright",
-    "iconTitle": "cc0-protected-dataset-authorship-comment",
+    "label": "cc0-protected-database-authorship",
+    "icon": "check-lg",
+    "iconStyle": "alright",
+    "iconTitle": "cc0-protected-database-authorship-comment",
   }),
   [null]: () => ({
-    "label": "missing-protected-dataset-authorship",
-    "iconColor": "danger",
-    "iconTitle": "missing-protected-dataset-authorship-comment",
+    "label": "missing-protected-database-authorship",
+    "icon": "exclamation-circle",
+    "iconStyle": "danger",
+    "iconTitle": "missing-protected-database-authorship-comment",
+  }),
+}
+
+const PROTECTED_DATABASE_AUTHORSHIP_CUSTOM = (authorship) => ({
+  "label": "custom-protected-database",
+  "icon": "question-circle",
+  "iconStyle": "warning",
+  "iconTitle": "custom-protected-database-comment",
+  "href": authorship,
+});
+
+const PERSONAL_DATA_MAP = {
+  [PU_PREFIX + "obsahuje-osobní-údaje/"]: () => ({
+    "label": "with-personal-data-label",
+    "icon": "person-fill",
+    "iconStyle": "warning",
+    "iconTitle": "with-personal-data-comment",
+  }),
+  [PU_PREFIX + "neobsahuje-osobní-údaje/"]: () => ({
+    "label": "without-personal-data-label",
+    "icon": "person-fill",
+    "iconStyle": "alright",
+    "iconTitle": "without-personal-data-comment",
+  }),
+  [PU_PREFIX + "není-specifikováno-zda-obsahuje-osobní-údaje/"]: () => ({
+    "label": "unspecified-personal-data-label",
+    "icon": "person-fill",
+    "iconStyle": "warning",
+    "iconTitle": "unspecified-personal-data-comment",
+  }),
+  [null]: () => ({
+    "label": "missing-personal-data-information-label",
+    "icon": "person-fill",
+    "iconStyle": "danger",
+    "iconTitle": "missing-personal-data-information-comment",
   }),
 }
 
@@ -101,7 +139,6 @@ export function renderHtml(services, languages, query, data, reply) {
   reply
     .code(200)
     .header("Content-Type", "text/html; charset=utf-8").send(template(templateData));
-    // .header("Content-Type", "application/json; charset=utf-8").send({ query, "data": templateData, "source": data });
 }
 
 export function prepareTemplateData(configuration, translation, navigation, languages, query, data) {
@@ -328,8 +365,8 @@ function prepareDistributions(configuration, translation, navigation, query, dat
       }).replace("_PAGE_", "{PAGE}") // We need '{PAGE}' in link template.
     },
     "items": data.distributions.items.map(item => ({
-      "title": item.title, // title
-      "format": item.format?.label ?? null, // format.label
+      "title": item.title,
+      "format": item.format?.label ?? null,
       ...prepareLegal(translation, item),
       ...prepareDistribution(item),
       ...prepareDataService(configuration, item, item.dataService)
@@ -353,6 +390,30 @@ function prepareLegal(translation, distribution) {
     }
   }
 
+  // Authorship can have a custom value.
+  const authorship = AUTHORSHIP_MAP[legal.authorship]?.(legal.author)
+    ?? AUTHORSHIP_CUSTOM(legal.authorship);
+  if (authorship !== null) {
+    authorship.label = translation.translate(authorship.label);
+    authorship.iconTitle = translation.translate(authorship.iconTitle);
+  }
+
+  // Database authorship can have a custom value.
+  const databaseAuthorship = DATABASE_AUTHORSHIP_MAP[legal.databaseAuthorship]?.(legal.databaseAuthor)
+    ?? DATABASE_AUTHORSHIP_CUSTOM(legal.databaseAuthorship);
+  if (databaseAuthorship !== null) {
+    databaseAuthorship.label = translation.translate(databaseAuthorship.label);
+    databaseAuthorship.iconTitle = translation.translate(databaseAuthorship.iconTitle);
+  }
+
+  // Protected database authorship can have a custom value.
+  const protectedDatabaseAuthorship = PROTECTED_DATABASE_AUTHORSHIP_MAP[legal.protectedDatabase]?.()
+    ?? PROTECTED_DATABASE_AUTHORSHIP_CUSTOM(legal.protectedDatabase);
+  if (protectedDatabaseAuthorship !== null) {
+    protectedDatabaseAuthorship.label = translation.translate(protectedDatabaseAuthorship.label);
+    protectedDatabaseAuthorship.iconTitle = translation.translate(protectedDatabaseAuthorship.iconTitle);
+  }
+
   // Information about personal information can be missing.
   const personalData = PERSONAL_DATA_MAP[legal.personalData]?.() ?? null;
   if (personalData !== null) {
@@ -360,43 +421,12 @@ function prepareLegal(translation, distribution) {
     personalData.iconTitle = translation.translate(personalData.iconTitle);
   }
 
-  // Authorship can be a custom value.
-  const authorship = AUTHORSHIP_MAP[legal.authorship]?.(legal.author) ?? {
-    "href": legal.authorship,
-    // license.authorCustomComment
-  };
-  if (authorship !== null) {
-    authorship.label = translation.translate(authorship.label);
-    authorship.iconTitle = translation.translate(authorship.iconTitle);
-  }
-
-  // Database authorship can be a custom value.
-  const databaseAuthorship = DATABASE_AUTHORSHIP_MAP[legal.databaseAuthorship]?.(legal.databaseAuthor) ?? {
-    "href": legal.databaseAuthorship,
-    // "license.authorCustomComment
-  };
-  if (databaseAuthorship !== null) {
-    databaseAuthorship.label = translation.translate(databaseAuthorship.label);
-    databaseAuthorship.iconTitle = translation.translate(databaseAuthorship.iconTitle);
-  }
-
-  // Protected database authorship can be a custom value.
-  const protectedDatabaseAuthorship = PROTECTED_DATABASE_AUTHORSHIP_MAP[legal.protectedDatabase]?.() ?? {
-    "href": legal.protectedDatabase,
-    //license.specialdbCustom
-  };
-  if (databaseAuthorship !== null) {
-    protectedDatabaseAuthorship.label = translation.translate(protectedDatabaseAuthorship.label);
-    protectedDatabaseAuthorship.iconTitle = translation.translate(protectedDatabaseAuthorship.iconTitle);
-  }
-
   return {
     "dcatApCzLegal": {
-      // {label} {icon person} {message}
-      personalData,
       authorship,
       databaseAuthorship,
-      protectedDatabaseAuthorship
+      protectedDatabaseAuthorship,
+      personalData
     },
   };
 }
