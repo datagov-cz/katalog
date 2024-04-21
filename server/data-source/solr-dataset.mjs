@@ -39,7 +39,7 @@ function buildDatasetsQuery(language, query) {
   const fq = [
     ...prepareFieldQuery("publisher", publisher),
     ...prepareFieldQuery("theme", theme),
-    ...prepareFieldQuery("keyword", keyword),
+    ...prepareFieldQuery(`keyword_${language}`, keyword),
     ...prepareFieldQuery("file_type", format),
     ...prepareFieldQuery("data_service_type", dataServiceType),
     ...prepareFieldQuery("is_part_of", isPartOf),
