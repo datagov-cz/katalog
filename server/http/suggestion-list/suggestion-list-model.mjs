@@ -1,7 +1,7 @@
 
 export async function prepareData(services, languages, query) {
   const data = await services.solrSuggestion.fetchSuggestions({
-    "searchQuery": query.query,
+    "searchQuery": query.searchQuery,
     "theme": query.theme,
     "publisher": query.publisher,
     "state": query.state,

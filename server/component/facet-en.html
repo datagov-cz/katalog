@@ -8,5 +8,15 @@
       </a>
     </li>
     {{/each}}
+    {{#if showMoreHref}}
+    <li class="facet-item">
+      <a href="{{showMoreHref}}">Show more</a>
+    </li>
+    {{/if}}
+    {{#if showInitialHref}}
+    <li class="facet-item">
+      <a href="{{showInitialHref}}">Show popular only</a>
+    </li>
+    {{/if}}
   </ul>
 </div>

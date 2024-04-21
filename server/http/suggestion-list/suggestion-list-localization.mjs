@@ -4,8 +4,11 @@ export default {
     "query": {
       "query": "dotaz",
       "theme": "téma",
+      "theme-limit": "počet-témat",
       "publisher": "poskytovatel",
+      "publisher-limit": "počet-poskytovatelů",
       "state": "stav",
+      "state-limit": "počet-stavů",
       "sort": "řazení",
       "sort-direction": "směr-řazení",
       "page": "stránka",
@@ -39,8 +42,11 @@ export default {
     "query": {
       "query": "query",
       "theme": "theme",
+      "theme-limit": "theme-limit",
       "publisher": "publisher",
+      "publisher-limit": "publisher-limit",
       "state": "state",
+      "state-limit": "state-limit",
       "sort": "sort",
       "sort-direction": "sort-direction",
       "page": "page",

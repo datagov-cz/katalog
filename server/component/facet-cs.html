@@ -1,0 +1,22 @@
+<div class="facet">
+  <h3 class="facet-title">{{label}} ({{count}})</h3>
+  <ul class="facet-list">
+    {{#each items}}
+    <li class="facet-item {{#if active}}active{{/if}}">
+      <a href="{{href}}">
+        {{label}} ({{count}})
+      </a>
+    </li>
+    {{/each}}
+    {{#if showMoreHref}}
+    <li class="facet-item">
+      <a href="{{showMoreHref}}">Zobrazit další</a>
+    </li>
+    {{/if}}
+    {{#if showInitialHref}}
+    <li class="facet-item">
+      <a href="{{showInitialHref}}">Zobrazit pouze populární</a>
+    </li>
+    {{/if}}
+  </ul>
+</div>

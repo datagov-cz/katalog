@@ -1,15 +1,30 @@
+import {DEFAULT_FACET_SIZE} from "../constants.mjs";
 
 export function registerFacet(templateService, language) {
-  templateService.syncAddComponent("facet", "facet.html");
+  templateService.syncAddComponent("facet", "facet-" + language + ".html");
 }
 
 export function createFacetData(navigationService, query, facetData, facetName, facetLabel, count) {
   facetData.forEach(item => prepareFacetItemInPlace(navigationService, facetName, query, item))
-  return {
+  const result = {
     "label": facetLabel,
     "count": count,
     "items": facetData,
+  };
+  if (count > facetData.length) {
+    result["showMoreHref"] = navigationService.linkFromServer({
+      ...query,
+      [facetName + "Limit"]: query[facetName + "Limit"] + DEFAULT_FACET_SIZE,
+    });
+    console.log(result["showMoreHref"], {facetName});
   }
+  if (DEFAULT_FACET_SIZE < facetData.length) {
+    result["showInitialHref"] = navigationService.linkFromServer({
+      ...query,
+      [facetName + "Limit"]: DEFAULT_FACET_SIZE,
+    });
+  }
+  return result;
 }
 
 function prepareFacetItemInPlace(navigationService, facetName, query, item) {

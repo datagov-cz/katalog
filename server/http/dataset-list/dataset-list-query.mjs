@@ -1,3 +1,5 @@
+import {DEFAULT_FACET_SIZE, DEFAULT_PAGE_SIZE} from "../../constants.mjs";
+
 const SORT_OPTIONS = ["title"]
 
 const SORT_DIRECTION_OPTIONS = ["asc", "desc"];
@@ -7,10 +9,6 @@ const DEFAULT_SORT = "title";
 const DEFAULT_SORT_DIRECTION = "asc";
 
 const DEFAULT_PAGE = 0;
-
-const DEFAULT_PAGE_SIZE = 25;
-
-const DEFAULT_FACET_SIZE = 12;
 
 export function parseClientQuery(navigation, query) {
   const clientSort = navigation.queryArgumentFromClient(query, "sort");
