@@ -49,17 +49,18 @@ function prepareDocumentsInPlace(navigation, suggestions) {
 function prepareFacets(translation, navigation, query, facets, counts) {
   const result = [];
   if (query.isPartOf.length > 0) {
-    result.push({
-      "label": translation.translate(FACET_SERIES),
-      "count": query.isPartOf.length,
-      "items": [], // TODO
-    });
+    const name = "isPartOf";
+    const facetData = facets[name];
+    const facetLabel = translation.translate(FACET_SERIES);
+    //
+    result.push(components.createFacetData(
+      navigation, query, facetData, name, facetLabel, query.isPartOf.length));
   }
   for (const name of FACETS) {
     const facetData = facets[name];
-    const facerLabel = translation.translate(name);
+    const facetLabel = translation.translate(name);
     result.push(components.createFacetData(
-      navigation, query, facetData, name, facerLabel, counts[name]))
+      navigation, query, facetData, name, facetLabel, counts[name]))
   }
   return result;
 }

@@ -31,6 +31,19 @@ export async function prepareData(services, languages, query) {
 
   await updateDatasetsInPlace(services, languages, data["documents"]);
 
+  // We create dataset series facet. As we use it as a filter,
+  // it is not part of Solr response.
+  facets.isPartOf = [];
+  for (const iri of query.isPartOf) {
+    facets.isPartOf.push({
+      "iri": iri,
+      "count": data["found"]["documents"],
+      "active": true,
+      "label": (await services.couchDbDataset.fetchDatasetPreview(languages, iri))?.title ?? iri,
+    });
+  }
+
+  // Other facets.
   await services.facet.updateFacetInPlace(
     languages, facets["keyword"], query["keyword"], query["keywordLimit"],
     (item) => item.label = item.iri);
