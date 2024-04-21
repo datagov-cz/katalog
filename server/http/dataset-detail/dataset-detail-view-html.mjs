@@ -212,7 +212,10 @@ function prepareDataset(configuration, translation, navigation, { dataset }) {
     "contact": prepareContactPoints(dataset.contactPoints),
     //
     "conformsToVisible": dataset.conformsTo.length > 0,
-    "conformsTo": dataset.conformsTo,
+    "conformsTo": dataset.conformsTo.map(item => ({
+      "href": item.iri,
+      "label": item.label ?? translation.translate("show-specification"),
+    })),
     //
     "frequencyVisible": dataset.frequency !== null,
     "frequency": {

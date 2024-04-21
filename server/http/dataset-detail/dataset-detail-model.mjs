@@ -30,6 +30,9 @@ export async function prepareData(services, languages, query) {
 
   await services.label.addLabelToResources(languages, resourcesToAddLabelsTo);
 
+  // Resources without the need for default value.
+  await services.label.addLabelToResources(languages, dataset.conformsTo, () => null);
+
   return {
     dataset,
     distributions,
@@ -51,6 +54,7 @@ function prepareDataset(dataset) {
     "iri": dataset.publisher,
   };
   dataset.spatial = dataset.spatial.map(iri => ({ iri }));
+  dataset.conformsTo = dataset.conformsTo.map(iri => ({iri}));
 }
 
 function prepareDistributions(dataset) {

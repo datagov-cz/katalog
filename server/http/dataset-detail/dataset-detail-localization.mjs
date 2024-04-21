@@ -75,6 +75,7 @@ export default {
       "missing-protected-database-authorship-comment": "Poskytovatel dat nespecifikoval podmínky užití. Nejedná se tedy o otevřená data a jejich užitím se příjemce vystavuje právním rizikům.",
       "custom-protected-database": "Vlastní licence",
       "custom-protected-database-comment": "Poskytovatel pro ošetření zvláštního práva pořizovatele databáze používá vlastní podmínky užití. Před užitím databáze je nutné se s nimi seznámit a souhlasit s nimi..",
+      "show-specification": "Zobrazit specifikaci"
     },
   },
   "en": {
@@ -147,6 +148,7 @@ export default {
       "missing-protected-database-authorship-comment": "The publisher does not specify the terms of use for this distribution. It is not considered open data and by using it, you expose yourself to legal issues.",
       "custom-protected-database": "Custom license",
       "custom-protected-database-comment": "The publisher uses custom terms of use for the sui generis database rights. It is necessary to agree to them before using the database.",
+      "show-specification": "Show specification",
     },
   },
 };
