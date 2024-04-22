@@ -84,6 +84,24 @@
     </gov-grid>
     {{/with}}
     <br />
+    {{#with datasets}}
+    {{#if visible}}
+    <h2>Datové sady</h2>
+    <br/>
+    <div class="list">
+      {{#each items}}
+      <div class="list-item">
+        <a href="{{href}}" rel="nofollow noopener noreferrer">
+          <h3>{{title}}</h3>
+        </a>
+        <p>
+          {{description}}
+        </p>
+      </div>
+      {{/each}}
+    </div>
+    {{/if}}
+    {{/with}}
   </gov-container>
   {{#with footer}} {{> footer }} {{/with}}
 </body>

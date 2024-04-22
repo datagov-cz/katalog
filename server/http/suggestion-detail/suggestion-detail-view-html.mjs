@@ -17,7 +17,7 @@ export function renderHtml(services, languages, query, data, reply) {
 export function prepareTemplateData(services, languages, query, data) {
   const language = languages[0];
   const datasets = data["datasets"];
-  prepareDatasetsInPlace(services, language, data["datasets"]);
+  prepareDatasetsInPlace(services, data["datasets"]);
   const suggestion = prepareSuggestion(services.navigation, language, data);
   return {
     "navigation": components.createNavigationData(
@@ -31,11 +31,11 @@ export function prepareTemplateData(services, languages, query, data) {
   };
 }
 
-function prepareDatasetsInPlace(services, language, datasets) {
-  const datasetService = services.dataset;
+function prepareDatasetsInPlace(services, datasets) {
+  const listNavigation = services.navigation.changeView(ROUTE.DATASET_DETAIL);
   for (const dataset of datasets) {
-    dataset["href"] = datasetService.datasetCatalogLink(
-      language, dataset["iri"]);
+    dataset["href"] = listNavigation.linkFromServer({ "iri": dataset["iri"] });
+    console.log(dataset);
   }
 }
 
