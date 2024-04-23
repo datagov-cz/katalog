@@ -35,7 +35,6 @@ function prepareDatasetsInPlace(services, datasets) {
   const listNavigation = services.navigation.changeView(ROUTE.DATASET_DETAIL);
   for (const dataset of datasets) {
     dataset["href"] = listNavigation.linkFromServer({ "iri": dataset["iri"] });
-    console.log(dataset);
   }
 }
 
