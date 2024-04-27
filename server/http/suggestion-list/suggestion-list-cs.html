@@ -19,16 +19,23 @@
       <gov-grid-item size-sm="12/12" size-md="8/12" class="p-2">
         <!-- Search. -->
         {{#with search}}
+        <gov-form-search variant="primary" id="search" href="{{search-href}}">
+          <gov-form-input slot="input"size="m" placeholder="Co hledáte" wcag-label="vyhledávání" value="{{value}}"></gov-form-input>
+          <gov-button slot="button" variant="primary" size="s" wcag-label="hledat">
+            Hledat
+          </gov-button>
+        </gov-form-search>
         <gov-accordion size="xs">
           <gov-accordion-item>
             <h3 slot="label">Rozšířené vyhledávání</h3>
             <div>
-              <gov-button slot="button" variant="primary" size="m" href="{{clear-href}}">
+              <gov-button slot="button" variant="primary" size="m" href="{{clear-href}}" wcag-label="Smaž filtry">
                 Smaž filtry
               </gov-button>
             </div>
           </gov-accordion-item>
         </gov-accordion>
+        <script src="/aplikace/assets/js/text-search.js"></script>
         {{/with}}
         <!-- Result bar. -->
         {{#with result-bar}} {{> result-bar }} {{/with}}

@@ -1,23 +1,33 @@
-(() => {
-  const form = document.getElementById("search");
-  form.addEventListener("submit",
-   (event) => handleSubmit(form, event));
-})();
+window.addEventListener("load", () => {
+  const search = document.querySelector("#search");
+  const initialValue = document.querySelector("#search gov-form-input").value;
+  let value = initialValue;
 
-function handleSubmit(form, event) {
-  event.preventDefault();
-  // 
-  const baseUrl = form.dataset.url;
-  const queryName = form.dataset.queryName;
-  const value = form.elements["query"].value;
-  let url = baseUrl;
-  if (value !== "") {
-    if (url.includes("?")) {
-      url += "&";
-    } else {
-      url += "?";
-    }
-    url += encodeURIComponent(queryName) + "=" + encodeURIComponent(value);
+  function onInput(event) {
+    value = event.target.value;
   }
-  window.location.href = url;
-}
+
+  function onKeyDown(event) {
+    if (event.detail.originalEvent.code === "Enter") {
+      onSubmit();
+    }
+  }
+
+  function onSubmit() {
+    if (value === initialValue) {
+      return;
+    }
+    const urlTemplate = search.getAttribute("href");
+    const url = urlTemplate.replace("_QUERY_", encodeURIComponent(value));
+    window.location.href = url;
+  }
+
+  function onClick() {
+    onSubmit();
+  }
+
+  // Register event.
+  search.addEventListener("gov-input", onInput);
+  search.addEventListener("gov-keydown", onKeyDown);
+  search.addEventListener("gov-click", onClick);
+});
