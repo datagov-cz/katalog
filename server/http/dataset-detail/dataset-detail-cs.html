@@ -15,7 +15,7 @@
   <gov-container>
     {{#with heading}}
     <h1 style="display: inline;">{{title}}</h1>
-    <span style="font-size: large;">
+    <span style="font-size: x-large;">
       <a href="{{openUrl}}"><gov-icon name="box-arrow-up-right"></gov-icon></a>
       <a href="{{copyUrl}}"><gov-icon name="files"></gov-icon></a>
       <a href="{{deleteUrl}}"><gov-icon name="trash"></gov-icon></a>
@@ -167,27 +167,27 @@
   <gov-container>
     <h2>Distribuce datové sady</h2>
     <br />
-    <div style="display: flex; flex-direction: row;flex-wrap: wrap;">
+    <div class="distribution">
       {{#each items}}
-      <div style="width: 50%;">
+      <div>
         <h3>{{title}}</h3>
         <h4>{{format}}</h4>
-        <div style="display: flex; flex-direction: row;">
+        <div class="distribution-column">
           {{#if missingLegal}}
-          <div style="width: 50%;">
-            Podmínky užití distribuce nejsou specifikovány
+          <div>
+            <h5>Podmínky užití distribuce nejsou specifikovány</h5>
           </div>
           {{/if}}
           {{#if dcatApLegal}}
-          <div style="width: 50%;">
+          <div>
             <a href="{{license}}" rel="nofollow noopener noreferrer" target="_blank">
               Podmínky užití distribuce
             </a>
           </div>
           {{/if}}
           {{#if dcatApCzLegal}}{{#with dcatApCzLegal}}
-          <div style="width: 50%;">
-            Podmínky užití distribuce
+          <div>
+            <h5>Podmínky užití distribuce</h5>
             <ul>
               <li>
                 {{#with authorship}}
@@ -249,8 +249,8 @@
           </div>
           {{/with}}{{/if}}
           {{#if distribution}}{{#with distribution}}
-          <div style="width: 50%;">
-            Soubor ke stažení
+          <div>
+            <h5>Soubor ke stažení</h5>
             <ul>
               {{#if downloadArrayVisible}}
               <li>
@@ -281,8 +281,8 @@
           </div>
           {{/with}}{{/if}}
           {{#if dataService}}{{#with dataService}}
-          <div style="width: 50%;">
-            Datová služba
+          <div>
+            <h5>Datová služba</h5>
             <ul>
               <li>
                 <a href="{{endpointDescription}}">Popis endpointu</a>
