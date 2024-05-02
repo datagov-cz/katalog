@@ -5,13 +5,15 @@
   {{> head }}
   <!-- Site specific. -->
   <title>Datové sady - Národní katalog otevřených dat (NKOD)</title>
-  <!--  -->
+  <link rel="canonical" href="/datasets">
+  <link rel="alternate" href="/datové-sady" hreflang="cs">
+  <link rel="alternate" href="/datasets" hreflang="en">
+  <script src="/aplikace/assets/js/dataset-list.js"></script>
 </head>
 
 <body>
   {{#with navigation}} {{> navigation }} {{/with}}
   <gov-container>
-    <gov-spacer size="xs" breakpoint="sm"></gov-spacer>
     <gov-grid>
       <gov-grid-item size-sm="12/12" size-md="4/12">
         {{#each facets}} {{>facet}} {{/each}}
@@ -19,29 +21,67 @@
       <gov-grid-item size-sm="12/12" size-md="8/12" class="p-2">
         <!-- Search. -->
         {{#with search}}
-        <gov-form-search variant="primary" id="search" href="{{search-href}}">
-          <gov-form-input slot="input"size="m" placeholder="Co hledáte" wcag-label="vyhledávání" value="{{value}}"></gov-form-input>
-          <gov-button slot="button" variant="primary" size="s" wcag-label="hledat">
+        <gov-form-search variant="primary" id="search" data-query="dotaz" data-base-url="{{base-url}}">
+          <gov-form-input slot="input" size="m" placeholder="Co hledáte" wcag-label="vyhledávání" value="{{query.searchQuery}}"
+            data-type="query"></gov-form-input>
+          <gov-button slot="button" variant="primary" size="s" wcag-label="hledat" data-type="submit">
             Hledat
           </gov-button>
         </gov-form-search>
         <gov-accordion size="xs" wcag-label="Rozšířené vyhledávání">
           <gov-accordion-item>
             <h3 slot="label">Rozšířené vyhledávání</h3>
-            <div>
-              <gov-button slot="button" variant="primary" size="m" href="{{clear-href}}" wcag-label="Smaž filtry">
-                Smaž filtry
-              </gov-button>
+            <div class="extended-search">
+              <div class="time">
+                <div>
+                  Časové pokrytí od
+                  <gov-form-input input-type="date" data-type="time-from" value="{{query.temporalFrom}}"></gov-form-input>
+                  do
+                  <gov-form-input input-type="date" data-type="time-to" value="{{query.temporalTo}}"></gov-form-input>
+                </div>
+                <div class="flex-justify-end">
+                  <gov-button variant="primary" size="m" data-type="this-year">Tento rok</gov-button>
+                  <gov-button variant="primary" size="m" data-type="last-year">Minulý rok</gov-button>
+                </div>
+              </div>
+              <div class="vdf">
+                Veřejný datový fond
+                <gov-form-switch data-type="public-data" {{#if query.publicData}}checked{{/if}}>
+                  <gov-form-label slot="label">Veřejné údaje</gov-form-label>
+                </gov-form-switch>
+                <gov-form-switch data-type="codelist" {{#if query.codelist}}checked{{/if}}>
+                  <gov-form-label slot="label">Číselník</gov-form-label>
+                </gov-form-switch>
+              </div>
+              <div class="flex-space-between">
+                <gov-button variant="warning" size="m" href="{{clear-href}}" wcag-label="Smaž filtry">
+                  Smaž filtry
+                </gov-button>
+                <gov-button variant="primary" size="m" wcag-label="Hledat" data-type="submit">
+                  Hledat
+                </gov-button>
+              </div>
             </div>
           </gov-accordion-item>
         </gov-accordion>
-        <script src="/aplikace/assets/js/text-search.js"></script>
+        <script>
+          window.search = {
+            "localization": {
+              "searchQuery": "dotaz",
+              "temporalFrom": "časové-období-začátek",
+              "temporalTo": "časové-období-konec",
+              "publicData": "vdf-veřejné-údaje",
+              "codelist": "vdf-číselník",
+            },
+            "query": {{{queryObjectAsString}}},
+          };
+        </script>
         {{/with}}
         <!-- Result bar. -->
         {{#with result-bar}} {{> result-bar }} {{/with}}
         <!-- Datasets -->
         <div class="p-2 list">
-          <hr/>
+          <hr />
           {{#each documents}}
           <div class="p-2 list-item">
             <a href="{{href}}">
@@ -61,7 +101,7 @@
               {{/each}}
             </div>
           </div>
-          <hr/>
+          <hr />
           {{/each}}
         </div>
         {{#with pagination}} {{> pagination }} {{/with}}

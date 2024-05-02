@@ -3,15 +3,16 @@
 <head>
   {{> head }}
   <!-- Site specific. -->
-  <title>Dataset - Národní katalog otevřených dat (NKOD)</title>
-  <meta name="description" content="Portál otevřených dat a Národní katalog otevřených dat České republiky" />
-  <!--  -->
+  <title>{{dataset.heading.title}} - Národní katalog otevřených dat (NKOD)</title>
+  <link rel="canonical" href="/dataset">
+  <link rel="alternate" href="/datová-sada" hreflang="cs">
+  <link rel="alternate" href="/dataset" hreflang="en">
+  <script src="/aplikace/assets/js/dataset-detail.js"></script>
 </head>
 
 <body>
   {{#with navigation}} {{> navigation }} {{/with}}
   {{#with dataset}}
-  <gov-spacer size="s" breakpoint="sm"></gov-spacer>
   <gov-container>
     {{#with heading}}
     <h1 style="display: inline;">{{title}}</h1>
@@ -37,7 +38,6 @@
       </gov-chip>
       {{/each}}
     </div>
-    <gov-spacer size="s" breakpoint="sm"></gov-spacer>
     <gov-grid>
       <gov-grid-item size-sm="6/12" size-md="3/12">
         {{#if themesVisible}}
@@ -380,8 +380,8 @@
   </gov-container>
   {{/if}}
   {{/with}}
-  <gov-spacer size="s" breakpoint="sm"></gov-spacer>
   {{#with footer}} {{> footer }} {{/with}}
+  <script type="application/ld+json">{{{metadataAsString}}}</script>
 </body>
 
 </html>
