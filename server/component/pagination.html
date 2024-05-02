@@ -8,8 +8,8 @@
     </gov-pagination>
     {{/if}}
   </gov-grid-item>
-  <gov-grid-item size-sm="4/12" size-md="2/12">
-    <gov-form-select wcag-label="Velikost stránky" value="{{pageSize}}">
+  <gov-grid-item size-sm="4/12" size-md="2/12" id="page-size">
+    <gov-form-select wcag-label="Velikost stránky" value="{{pageSize}}" data-href="{{pageSizeHref}}">
       <option value="25">25</option>
       <option value="50">50</option>
       <option value="75">75</option>

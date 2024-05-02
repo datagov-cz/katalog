@@ -12,6 +12,11 @@ export function createPaginationData(navigation, query, documentsCount) {
     "linkTemplate": navigation.linkFromServer({
       ...query,
       "page": "_PAGE_"
-    }).replace("_PAGE_", "{PAGE}") // We need '{PAGE}' in link template.
+    }).replace("_PAGE_", "{PAGE}"), // We need '{PAGE}' in link template.
+    "pageSizeHref": navigation.linkFromServer({
+      ...query,
+      "page": 0,
+      "pageSize": "_PAGE_SIZE_"
+    })
   }
 }
