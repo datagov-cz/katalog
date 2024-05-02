@@ -28,9 +28,30 @@ export function prepareTemplateData(translation, navigation, languages, query, d
     "navigation": components.createNavigationData(navigation, languages, query),
     "footer": components.createFooterData(),
     "search": {
-      "value": query.searchQuery,
       "clear-href": navigation.linkFromServer({}),
-      "search-href": navigation.linkFromServer({...query, "searchQuery": "_QUERY_", "page": 0}),
+      // Empty query used by client-side JavaScript search functionality.
+      "base-url": navigation.linkFromServer({
+        ...query,
+        "page": 0,
+        "temporalStart": null,
+        "temporalEnd": null,
+        "vdfPublicData": false,
+        "vdfCodelist": false,
+      }),
+      "query": {
+        "searchQuery": query.searchQuery,
+        "temporalFrom": query.temporalStart,
+        "temporalTo": query.temporalEnd,
+        "publicData": query.vdfPublicData,
+        "codelist": query.vdfCodelist,
+      },
+      "queryObjectAsString" : JSON.stringify({
+        "searchQuery": query.searchQuery,
+        "temporalFrom": query.temporalStart,
+        "temporalTo": query.temporalEnd,
+        "publicData": query.vdfPublicData,
+        "codelist": query.vdfCodelist,
+      })
     },
     "result-bar": components.createResultBarData(translation, navigation, query, SORT_OPTIONS, count),
     "pagination": components.createPaginationData(navigation, query, count),

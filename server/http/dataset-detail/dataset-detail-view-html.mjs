@@ -149,6 +149,7 @@ export function prepareTemplateData(configuration, translation, navigation, lang
     "distributions": prepareDistributions(configuration, translation, navigation, query, data),
     "applications": prepareApplications(navigation, data),
     "datasetSeries": prepareDatasetSeries(navigation, data),
+    "metadataAsString": JSON.stringify(prepareDatasetMetadata(data), null, 2)
   };
 }
 
@@ -510,7 +511,6 @@ function prepareDataService(configuration, distribution, dataService) {
   };
 }
 
-
 function prepareApplications(navigation, { applications }) {
   const applicationDetailNavigation = navigation.changeView(ROUTE.APPLICATION_DETAIL);
   return {
@@ -538,4 +538,30 @@ function prepareDatasetSeries(navigation, { dataset, series }) {
       "isPartOf": dataset.iri,
     })
   };
+}
+
+function prepareDatasetMetadata({ dataset, distributions }) {
+  return {
+    "@context": "http://schema.org/",
+    "@type": "Dataset",
+    "name": dataset.title,
+    "description": dataset.description,
+    "url": dataset.iri,
+    "keywords": dataset.keywords,
+    // "includedInDataCatalog"
+    // "spatialCoverage": dataset["spatial"]["@id"]
+    // context["temporalCoverage"]: dataset["temporal"]["startDate"] + "/" + dataset["temporal"]["endDate"] + "\"\n"
+    "creator": {
+      "@type": "Organization",
+      "url": dataset.publisher.iri,
+      "name": dataset.publisher.label,
+    },
+    "distribution": distributions.items
+      .filter(distribution => distribution.type === "Distribution")
+      .map(distribution => ({
+        "@type": "DataDownload",
+        "contentUrl": distribution.downloadURL?.[0] ?? distribution.accessURL,
+        "encodingFormat": distribution.format.label,
+    })),
+  }
 }
