@@ -1,4 +1,4 @@
-import apiV1HandleRequest from "./api/v1/applications-for-dataset/api-v1-applications-for-dataset.mjs";
+import createV2Statistics from "./api/v2/statistics/api-v2-statistics.mjs";
 import createV2Quality from "./api/v2/quality/api-v2-quality-presenter.mjs";
 
 import createApplicationList from "./application-list/application-list-presenter.mjs";
@@ -18,21 +18,16 @@ export function registerHttpRoutes(server, services) {
   const templateCs = createAndPreloadTemplateService("cs");
   const templateEn = createAndPreloadTemplateService("en");
 
-  server.route({
-    method: "GET",
-    url: "/api/aplikace/v1/applications-for-datasets",
-    handler: (request, reply) => apiV1HandleRequest(services, request, reply),
-  });
-
-  // TODO Consider split to dataset and distribution quality.
-  const quality = createV2Quality(services);
-  registerHandler(server, quality);
-
   const httpStatusHandlers = createStatusHandlers([templateCs, templateEn]);
   const webServices = {
     ...services,
     "http": httpStatusHandlers,
   };
+
+  // API version 2.
+
+  registerHandler(server, createV2Quality(services));
+  registerHandler(server, createV2Statistics(services))
 
   // Application list.
 
@@ -115,12 +110,6 @@ export function registerHttpRoutes(server, services) {
   registerHandler(server, datasetDetailEn);
 
   //
-
-  server.route({
-    method: "GET",
-    url: "/",
-    handler: (_, reply) => reply.redirect("/" + applicationListCs.path),
-  });
 
   server.setErrorHandler(function (error, request, reply) {
     this.log.error(error);
