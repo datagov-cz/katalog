@@ -1,7 +1,7 @@
 
 const DEFAULT_PAGE = 1;
 
-const DEFAULT_DISTRIBUTION_PAGE_SIZE = 2;
+const DEFAULT_DISTRIBUTION_PAGE_SIZE = 25;
 
 export function parseClientQuery(navigation, query) {
   const distributionPage = navigation.queryArgumentFromClient(query, "distribution-page");
