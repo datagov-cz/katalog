@@ -12,6 +12,11 @@
   }
 }
 
+/* Unify header with data portal style. */
+.gov-header>gov-container {
+  padding-top: 1rem;
+}
+
 .alright {
   color: #198754;
 }
