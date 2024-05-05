@@ -5,10 +5,33 @@ const CORE = "dcat-ap-viewer";
 
 export function createSolrDataset(solrConnector) {
   return {
+    "fetchStatistics": (language) =>
+      fetchStatistics(solrConnector, language),
     "fetchDatasets": (languages, query) =>
       fetchDatasets(solrConnector, languages, query),
     "fetchDatasetsForDatasetsDetail": (languages, query) =>
       fetchDatasetsForDatasetsDetail(solrConnector, languages, query),
+  };
+}
+
+async function fetchStatistics(solrConnector, language) {
+  const solrQuery = {
+    "facet": true,
+    "facet.field": [
+      `keyword_${language}`,
+      "publisher",
+    ],
+    "facet.limit": -1,
+    "start": 0,
+    "rows": 0,
+    "q": "*:*",
+  };
+  const response = await solrConnector.fetch(CORE, solrQuery);
+  const facetFields = response["facet_counts"]["facet_fields"];
+  return {
+    "datasetsCount": response["response"]["numFound"],
+    "keywordsCount": facetFields[`keyword_${language}`].length / 2,
+    "publishersCount": facetFields["publisher"].length / 2,
   };
 }
 
