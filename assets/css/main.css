@@ -29,45 +29,53 @@
   color: #dc3545
 }
 
-.distribution {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+.dataset-detail a {
+  text-decoration: none;
+}
+
+.distribution-list {
+  margin-bottom: 1rem;
   justify-content: space-evenly;
-
-  &>div {
-    width: 48%;
-    padding: .25rem;
-    border: 1px solid black;
-    margin: 0 .25rem;
-  }
 }
 
-.distribution .distribution-column {
+.distribution-list .distribution {
+  padding: .5em;
+  border: 1px solid var(--gov-color-secondary-600);
+  border-radius: 1em;
+  margin: .25em .25em;
+}
+
+.distribution-list .distribution .distribution-column {
   display: flex;
   flex-direction: row;
+}
 
-  &>div {
-    width: 50%;
-    margin: .25rem;
+.distribution-list .distribution .distribution-column>div {
+  width: 50%;
+  margin: .25rem;
 
-    >h5 {
-      padding: .25rem;
-      border: 1px solid black;
-    }
+  >h5 {
+    padding: .25rem;
+    border: 1px solid var(--gov-color-secondary-600);
+    border-radius: .5em .5em 0 0;
+  }
 
-    >ul {
-      padding: 0;
-      list-style-type: none;
-    }
+  >ul {
+    padding: 0;
+    list-style-type: none;
+  }
 
-    >ul>li {
-      padding: .25rem;
-      border: 1px solid black;
-      margin-top: -1px;
-    }
+  >ul>li {
+    padding: .25rem;
+    border: 1px solid var(--gov-color-secondary-600);
+    margin-top: -1px;
+  }
+
+  >ul>li:last-of-type {
+    border-radius: 0 0 .5em .5em;
   }
 }
+
 
 .extended-search{
 
