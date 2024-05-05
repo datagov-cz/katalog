@@ -21,10 +21,10 @@
       <gov-nav-item href="/datov%C3%A1-kvalita">
         Datová kvalita
       </gov-nav-item>
-      <gov-nav-item href="/datov%C3%A9-sady">
+      <gov-nav-item href="/datov%C3%A9-sady" {{#if datasetsActive}}class="active" {{/if}}>
         Datové sady
       </gov-nav-item>
-      <gov-nav-item href="/aplikace">
+      <gov-nav-item href="/aplikace" {{#if applicationsActive}}class="active" {{/if}}>
         Aplikace
       </gov-nav-item>
       <gov-nav-dropdown>
@@ -41,10 +41,10 @@
           <li>
             <a href="https://opendata.gov.cz/">Pro poskytovatele dat</a>
           </li>
-          <li>
+          <li {{#if localCatalogsActive}}class="active" {{/if}}>
             <a href="/lok%C3%A1ln%C3%AD-katalogy">Lokální katalogy</a>
           </li>
-          <li>
+          <li {{#if suggestionsActive}}class="active" {{/if}}>
             <a href="/n%C3%A1vrhy-na-datov%C3%A9-sady-k-otev%C5%99en%C3%AD">Návrhy na datové sady k otevření</a>
           </li>
         </ul>

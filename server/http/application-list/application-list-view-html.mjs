@@ -26,7 +26,7 @@ export function prepareTemplateData(translation, navigation, languages, query, d
   prepareDocumentsInPlace(navigation, documents);
   const applicationCount = data["found"]["documents"];
   return {
-    "navigation": components.createNavigationData(navigation, languages, query, { "applications": true }),
+    "navigation": components.createNavigationData(navigation, languages, query, { applicationsActive: true }),
     "footer": components.createFooterData(),
     "search": {
       "value": query.searchQuery,

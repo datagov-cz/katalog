@@ -4,19 +4,22 @@ export function registerNavigation(templateService, language) {
 }
 
 export function createNavigationData(
-  navigationService, languages, query, links
+  navigationService, languages, query, options
 ) {
-  const applicationsActive = links?.applications ?? false;
-  const suggestionsActive = links?.suggestions ?? false;
-
   // Create links for all languages.
   const result = {};
   for (const language of languages) {
     result[language] = navigationService.changeLanguage(language).linkFromServer(query);
   }
   return {
-    applicationsActive,
-    suggestionsActive,
+    //
+    datasetsActive: false,
+    applicationsActive: false,
+    localCatalogsActive: false,
+    suggestionsActive: false,
+    publishersActive: false,
+    //
+    ...options,
     ...result
   };
 }

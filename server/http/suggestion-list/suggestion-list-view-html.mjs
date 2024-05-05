@@ -26,12 +26,12 @@ export function prepareTemplateData(translation, navigation, languages, query, d
   prepareDocumentsInPlace(navigation, documents);
   const applicationCount = data["found"]["documents"];
   return {
-    "navigation": components.createNavigationData(navigation, languages, query, { "suggestions": true }),
+    "navigation": components.createNavigationData(navigation, languages, query, { suggestionsActive: true }),
     "footer": components.createFooterData(),
     "search": {
       "value": query.searchQuery,
       "clear-href": navigation.linkFromServer({}),
-      "search-href": navigation.linkFromServer({...query, "searchQuery": "_QUERY_", "page": 0}),
+      "search-href": navigation.linkFromServer({ ...query, "searchQuery": "_QUERY_", "page": 0 }),
     },
     "result-bar": components.createResultBarData(translation, navigation, query, SORT_OPTIONS, applicationCount),
     "pagination": components.createPaginationData(navigation, query, applicationCount),

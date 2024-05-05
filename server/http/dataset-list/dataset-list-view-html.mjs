@@ -25,7 +25,7 @@ export function prepareTemplateData(translation, navigation, languages, query, d
   prepareDocumentsInPlace(navigation, documents);
   const count = data["found"]["documents"];
   return {
-    "navigation": components.createNavigationData(navigation, languages, query),
+    "navigation": components.createNavigationData(navigation, languages, query, { datasetsActive: true }),
     "footer": components.createFooterData(),
     "search": {
       "clear-href": navigation.linkFromServer({}),
@@ -45,7 +45,7 @@ export function prepareTemplateData(translation, navigation, languages, query, d
         "publicData": query.vdfPublicData,
         "codelist": query.vdfCodelist,
       },
-      "queryObjectAsString" : JSON.stringify({
+      "queryObjectAsString": JSON.stringify({
         "searchQuery": query.searchQuery,
         "temporalFrom": query.temporalStart,
         "temporalTo": query.temporalEnd,

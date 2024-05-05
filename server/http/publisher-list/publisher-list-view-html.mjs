@@ -15,7 +15,7 @@ export function renderHtml(services, languages, query, data, reply) {
 export function prepareTemplateData(configuration, navigation, translation, languages, query, data) {
   preparePublishersInPlace(configuration, navigation, translation, data["publishers"])
   return {
-    "navigation": components.createNavigationData(navigation, languages, query),
+    "navigation": components.createNavigationData(navigation, languages, query, { publishersActive: true }),
     "footer": components.createFooterData(),
     "message": translation.translate("items-found", data["publishers"].length),
     "publishers": data["publishers"],
