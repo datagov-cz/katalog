@@ -42,7 +42,7 @@ function buildSuggestionQuery(iri) {
   };
 }
 
-function parseSuggestionResponse( response) {
+function parseSuggestionResponse(response) {
   const documentCount = response["response"]["numFound"];
   if (documentCount == 0) {
     return null;
