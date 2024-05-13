@@ -25,13 +25,17 @@ export async function prepareData(services, languages, query) {
     dataset.frequency,
     ...dataset.spatial,
     ...distributions.items.map(item => item.format),
+  ];
+
+  const resourcesToAddLabelsToWithNoDefault = [
+    ...dataset.conformsTo,
     ...distributions.items.map(item => item.mediaType),
   ];
 
   await services.label.addLabelToResources(languages, resourcesToAddLabelsTo);
 
   // Resources without the need for default value.
-  await services.label.addLabelToResources(languages, dataset.conformsTo, () => null);
+  await services.label.addLabelToResources(languages, resourcesToAddLabelsToWithNoDefault, () => null);
 
   return {
     dataset,

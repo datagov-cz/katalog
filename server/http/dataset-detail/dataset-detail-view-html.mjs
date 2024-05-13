@@ -156,6 +156,7 @@ export function prepareTemplateData(configuration, translation, navigation, lang
 function prepareDataset(configuration, translation, navigation, { dataset }) {
   const datasetListNavigation = navigation.changeView(ROUTE.DATASET_LIST);
   return {
+    "iri": dataset.iri,
     "heading": {
       "title": dataset.title,
       "openUrl": configuration.client.dereferenceTemplate
@@ -369,6 +370,7 @@ function prepareDistributions(configuration, translation, navigation, query, dat
       }).replace("_PAGE_", "{PAGE}") // We need '{PAGE}' in link template.
     },
     "items": data.distributions.items.map(item => ({
+      "iri": item.iri,
       "title": item.title,
       "format": item.format?.label ?? null,
       ...prepareLegal(translation, item),
@@ -442,7 +444,7 @@ function prepareDistribution(distribution) {
     };
   }
   let downloadArray = distribution.downloadURL;
-  if (downloadArray === null && distribution.accessURL !== null) {
+  if (downloadArray.length === 0 && distribution.accessURL !== null) {
     downloadArray = [distribution.accessURL];
   }
   let mediaType;
@@ -456,14 +458,9 @@ function prepareDistribution(distribution) {
     "distribution": {
       "downloadArrayVisible": downloadArray.length > 0,
       "downloadArray": downloadArray,
-      // QUALITY.download, verified_user / link_off
-      // QUALITY.downloadCors, http / http
       "schemaArrayVisible": distribution.conformsTo.length > 0,
       "schemaArray": distribution.conformsTo,
-      // QUALITY.schema, verified_user / link_off
-      // QUALITY.schemaCors, http / http
       "mediaType": mediaType,
-      // QUALITY.mediaType, verified_user / link_off
       "compressFormat": distribution.compressFormat,
       "packageFormat": distribution.packageFormat,
     },
@@ -489,11 +486,7 @@ function prepareDataService(configuration, distribution, dataService) {
   return {
     "dataService": {
       "endpointDescription": dataService.endpointDescription,
-      // QUALITY.endpointDescription, verified_user / link_off
-      // QUALITY.endpointDescriptionCors, http / http
-      "endpointURL": dataService.endpointURL, // endpointURL
-      // QUALITY.endpointUrl, verified_user / link_off
-      // QUALITY.endpointUrlCors, http / http
+      "endpointUrl": dataService.endpointURL,
       "sparqlEditor": showSparqlEditor
         ? `${client.sparqlEditorUrl}#query=${client.sparqlDefaultQuery}&endpoint=${dataService.endpointURL}`
         : null,
@@ -502,9 +495,7 @@ function prepareDataService(configuration, distribution, dataService) {
         : null,
       "schemaArrayVisible": dataService.conformsTo.length > 0,
       "schemaArray": dataService.conformsTo,
-      // QUALITY.schema, verified_user / link_off
       "mediaType": mediaType,
-      // QUALITY.mediaType, verified_user / link_off
       "compressFormat": distribution.compressFormat,
       "packageFormat": distribution.packageFormat,
     },

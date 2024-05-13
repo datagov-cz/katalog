@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="cs">
 
 <head>
   {{> head }}
@@ -7,13 +7,13 @@
   <link rel="canonical" href="/dataset">
   <link rel="alternate" href="/datová-sada" hreflang="cs">
   <link rel="alternate" href="/dataset" hreflang="en">
-  <script src="/aplikace/assets/js/dataset-detail.js"></script>
+  <script src="/assets/catalog/js/dataset-detail.js"></script>
 </head>
 
 <body class="dataset-detail">
   {{#with navigation}} {{> navigation }} {{/with}}
   {{#with dataset}}
-  <gov-container>
+  <gov-container class="dataset" data-iri="{{iri}}">
     {{#with heading}}
     <h1 style="display: inline;">{{title}}</h1>
     <span style="font-size: x-large;">
@@ -119,8 +119,9 @@
         <dl>
           <dt>Dokumentace</dt>
           {{#each documentation}}
-          <dd>
+          <dd class="documentation">
             <a href="{{href}}">Zobrazit dokumentaci</a>
+            <spam class="quality"></spam>
           </dd>
           {{/each}}
         </dl>
@@ -139,8 +140,9 @@
         <dl>
           <dt>Dokumentace</dt>
           {{#each conformsTo}}
-          <dd>
+          <dd class="conformsTo">
             <a href="{{href}}">{{label}}</a>
+            <spam class="quality"></spam>
           </dd>
           {{/each}}
         </dl>
@@ -172,7 +174,7 @@
     <gov-grid class="distribution-list">
       {{#each items}}
       <gov-grid-item size-sm="12/12" size-md="6/12" size-lg="4/12">
-        <div class="distribution">
+        <div class="distribution" data-iri="{{iri}}">
           <h3 class="gov-text--xl">{{title}}</h3>
           <h4 class="gov-text--xl gov-color--secondary-700">{{format}}</h4>
           <div class="distribution-column">
@@ -256,25 +258,28 @@
               <h5 class="gov-text--l gov-color--secondary-700">Soubor ke stažení</h5>
               <ul>
                 {{#if downloadArrayVisible}}
-                <li>
+                <li class="download">
                   {{#each downloadArray}}
                   <a href="{{this}}">Stáhnout</a>
+                  <spam class="quality"></spam>
                   {{/each}}
                 </li>
                 {{/if}}
                 {{#if schemaArrayVisible}}
-                <li>
+                <li class="schema">
                   {{#each schemaArray}}
                   <a href="{{this}}">Schéma</a>
+                  <spam class="quality"></spam>
                   {{/each}}
                 </li>
                 {{/if}}
                 <li>
-                  <div>
+                  <div class="mediaType">
                     {{mediaType.label}}
                     <a href="{{mediaType.iri}}">
                       <gov-icon name="box-arrow-up-right"></gov-icon>
                     </a>
+                    <spam class="quality"></spam>
                   </div>
                   Typ média
                 </li>
@@ -287,11 +292,13 @@
             <div>
               <h5 class="gov-text--l gov-color--secondary-700">Datová služba</h5>
               <ul>
-                <li>
+                <li class="endpointDescription">
                   <a href="{{endpointDescription}}">Popis endpointu</a>
+                  <spam class="quality"></spam>
                 </li>
-                <li>
-                  <a href="{{endpointURL}}">Endpoint</a>
+                <li class="endpointUrl">
+                  <a href="{{endpointUrl}}">Endpoint</a>
+                  <spam class="quality"></spam>
                   {{#if sparqlEditor}}
                   <br/>
                   <a href="{{sparqlEditor}}">SPARQL dotazování</a>
@@ -302,19 +309,22 @@
                   {{/if}}
                 </li>
                 {{#if schemaArrayVisible}}
-                <li>
+                <li class="schema">
                   {{#each schemaArray}}
                   <a href="{{this}}">Schéma</a>
+                  <spam class="quality"></spam>
                   {{/each}}
                 </li>
                 {{/if}}
                 {{#if mediaType}}
                 <li>
-                  {{mediaType.label}}
-                  <a href="{{mediaType.iri}}">
-                    <gov-icon name="box-arrow-up-right"></gov-icon>
-                  </a>
-                  <br/>
+                  <div class="mediaType">
+                    {{mediaType.label}}
+                    <a href="{{mediaType.iri}}">
+                      <gov-icon name="box-arrow-up-right"></gov-icon>
+                    </a>
+                    <spam class="quality"></spam>
+                  </div>
                   Typ média
                 </li>
                 {{/if}}
@@ -386,6 +396,8 @@
   {{/with}}
   {{#with footer}} {{> footer }} {{/with}}
   <script type="application/ld+json">{{{metadataAsString}}}</script>
+  <!--  -->
+  <gov-modal id="modal" label=""></gov-modal>
 </body>
 
 </html>

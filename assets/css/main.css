@@ -76,6 +76,10 @@
   }
 }
 
+.distribution-list .distribution .quality {
+  font-size: larger;
+  float: right;
+}
 
 .extended-search{
 
