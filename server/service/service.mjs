@@ -22,9 +22,8 @@ import { createCronService } from "./cron-service.mjs";
 import { createLinkService } from "./link-service.mjs";
 
 export async function createServices(configuration, http) {
-  const solr = createSolrConnector(configuration, http);
-  const couchdb = createCouchDbConnector(configuration, http);
-  const sparql = createSparqlConnector(configuration, http);
+  const solr = createSolrConnector(configuration.solrUrl, http);
+  const couchdb = createCouchDbConnector(configuration.couchDbUrl, http);
 
   const couchDbDataset = createCouchDbDataset(couchdb);
   const couchDbLabel = createCouchDbLabel(couchdb);
@@ -38,14 +37,15 @@ export async function createServices(configuration, http) {
   const solrPublisher = createSolrPublisher(solr);
   const solrDataset = createSolrDataset(solr);
 
-  const sparqlQuality = createSparqlQuality(sparql);
+  const sparqlQuality = createSparqlQuality(
+    createSparqlConnector(configuration.qualitySparqlUrl, http));
 
   const navigation = createNavigationService();
   const label = createLabelService(
     [couchDbLabel, couchDbSuggestions],
     [couchDbStatic, couchDbSuggestions]);
   const facet = createFacetService(label);
-  const dataset = createDatasetService(couchDbDataset); // TODO Add solrDataset.
+  const dataset = createDatasetService(couchDbDataset);
   const link = createLinkService(configuration);
 
   // Initialize static data.

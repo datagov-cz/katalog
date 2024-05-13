@@ -4,8 +4,7 @@ import {ConnectorError} from "./connector-error.mjs";
 
 const STATUS_CODE_INVALID_QUERY = 400;
 
-export function createSolrConnector(configuration, http) {
-  const solrUrl = configuration.solrUrl;
+export function createSolrConnector(solrUrl, http) {
   return {
     "fetch": (core, query) =>
       executeSolrQuery(solrUrl, http, core, query),

@@ -1,5 +1,4 @@
-export function createCouchDbConnector(configuration, http) {
-  const couchDbUrl = configuration.couchDbUrl;
+export function createCouchDbConnector(couchDbUrl, http) {
   return {
     "fetch": (database, identifier) =>
       executeQuery(couchDbUrl, http, database, identifier),

@@ -14,7 +14,7 @@ const configuration = {
   reloadTemplates: process.env.NODE_ENV === "development",
   labelReloadCron: process.env.LABEL_CACHE_RELOAD_CRON,
   designSystemFolder: stripTrailingSlash(process.env.DESIGN_SYSTEM_FOLDER),
-  sparqlUrl: process.env.SPARQL_URL,
+  qualitySparqlUrl: process.env.QUALITY_SPARQL_URL,
   client: { // Used for rendering.
     catalogFormUrl: process.env.CLIENT_CATALOG_FORM_URL ?? "",
     applicationFormUrl: process.env.CLIENT_APPLICATION_FORM_URL ?? "",

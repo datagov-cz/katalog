@@ -3,8 +3,7 @@ import jsonld from "jsonld";
 
 import logger from "../logger.mjs";
 
-export function createSparqlConnector(configuration, http) {
-  const sparqlUrl = configuration.sparqlUrl;
+export function createSparqlConnector(sparqlUrl, http) {
   return {
     "executeSparqlConstruct": (query) =>
       executeSparqlConstruct(sparqlUrl, http, query),
@@ -32,7 +31,7 @@ async function executeSparqlConstruct(sparqlUrl, http, query) {
     });
     const endTime = performance.now();
     const durationMs = endTime - startTime;
-    if (durationMs > 150) {
+    if (durationMs > 100) {
       logger.warn("SPARQL query execution took %i ms.", durationMs);
     }
     const content = await response.json();
