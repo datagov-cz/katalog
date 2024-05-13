@@ -4,35 +4,14 @@ import { SKOS, DQV, SDMX, SCHEMA } from "./shared/vocabulary.mjs";
 
 const QUALITY_PREFIX = "https://data.gov.cz/zdroj/datová-kvalita/metriky/";
 
-// TODO Split quality !
-
-export const QUALITY_DATASET = {
-
-};
-
-export const QUALITY_DISTRIBUTION = {
-
-};
-
-export const QUALITY = {
+const QUALITY_DATASET = {
   "documentation":
     QUALITY_PREFIX + "metrikaDostupnostiDokumentace",
-  "documentationCors":
-    QUALITY_PREFIX + "metrikaDostupnostiCORSDokumentace",
-  "download":
-    QUALITY_PREFIX + "metrikaDostupnostiDownloadURL",
-  "downloadCors":
-    QUALITY_PREFIX + "metrikaDostupnostiCORSDownloadURL",
-  "mediaType":
-    QUALITY_PREFIX + "metrikaSprávnostiMediaTypu",
-  "schema":
-    QUALITY_PREFIX + "metrikaDostupnostiSchématu",
-  "schemaCors":
-    QUALITY_PREFIX + "metrikaDostupnostiCORSSchématu",
   "specification":
     QUALITY_PREFIX + "metrikaDostupnostiSpecifikace",
-  "specificationCors":
-    QUALITY_PREFIX + "metrikaDostupnostiCORSSpecifikace",
+};
+
+const LEGAL_QUALITY = {
   "authorship":
     QUALITY_PREFIX + "metrikaDostupnostiPodmínekUžitíAutorskéDílo",
   "authorshipCors":
@@ -47,6 +26,22 @@ export const QUALITY = {
   "specialDatabaseAuthorshipCors":
     QUALITY_PREFIX + "metrikaDostupnostiCORSPodmínekUžití"
     + "ZvláštníPrávoPořizovateleDatabáze",
+};
+
+const QUALITY_DISTRIBUTION = {
+  "download":
+    QUALITY_PREFIX + "metrikaDostupnostiDownloadURL",
+  "downloadCors":
+    QUALITY_PREFIX + "metrikaDostupnostiCORSDownloadURL",
+  "schema":
+    QUALITY_PREFIX + "metrikaDostupnostiSchématu",
+  "schemaCors":
+    QUALITY_PREFIX + "metrikaDostupnostiCORSSchématu",
+  "mediaType":
+    QUALITY_PREFIX + "metrikaSprávnostiMediaTypu",
+};
+
+const QUALITY_DATA_SERVICE = {
   "endpointDescription":
     QUALITY_PREFIX + "metrikaDostupnostiEndpointDescription",
   "endpointDescriptionCors":
@@ -59,6 +54,15 @@ export const QUALITY = {
     QUALITY_PREFIX + "metrikaDostupnostiServiceConformsTo",
   "conformsToCors":
     QUALITY_PREFIX + "metrikaDostupnostiCORSServiceConformsTo",
+  "mediaType":
+    QUALITY_PREFIX + "metrikaSprávnostiMediaTypu",
+}
+
+const QUALITY = {
+  ...QUALITY_DATASET,
+  ...LEGAL_QUALITY,
+  ...QUALITY_DISTRIBUTION,
+  ...QUALITY_DATA_SERVICE
 };
 
 export function createSparqlQuality(sparqlConnector) {

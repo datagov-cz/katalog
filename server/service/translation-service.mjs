@@ -5,27 +5,36 @@ export function createTranslationService(serverToLocal) {
   return {
     /**
      * @param {string} serverMessage
-     * @param {number | undefined} number
+     * @param {number | object | undefined} args
      */
-    "translate": (serverMessage, number) =>
-      translate(serverToLocal, serverMessage, number),
+    "translate": (serverMessage, args) =>
+      translate(serverToLocal, serverMessage, args),
   };
 }
 
-function translate(serverToLocal, serverMessage, number) {
+function translate(serverToLocal, serverMessage, args) {
   let result;
   const entry = serverToLocal[serverMessage];
+  // When given a function we do not care about anything else.
+  if (entry instanceof Function) {
+    return entry(args);
+  }
+  // We allow for simple "{}" substitution.
   if (Array.isArray(entry)) {
     // Initial value.
     result = entry[0][1];
     for (let [separator, localizedMessage] of entry) {
-      if (separator > number) {
+      if (separator > args) {
         break;
       }
       result = localizedMessage;
     }
   } else {
     result = entry;
+    if (result === undefined) {
+      console.error("Missing localization entry.", {serverMessage});
+      result = "";
+    }
   }
-  return result.replace("{}", number);
+  return result.replace("{}", args);
 }
