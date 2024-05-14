@@ -13,6 +13,14 @@ export async function prepareData(services, languages, query) {
     return null;
   }
 
+  if (dataset.parentDataset !== null) {
+    const parentDataset = await services.couchDbDataset.fetchDatasetPreview(languages, dataset.parentDataset);
+    dataset.parentDataset = {
+      iri: dataset.parentDataset,
+      title: parentDataset?.title ?? dataset.parentDataset,
+    };
+  }
+
   prepareDataset(dataset);
   const distributions = prepareDistributions(dataset);
 

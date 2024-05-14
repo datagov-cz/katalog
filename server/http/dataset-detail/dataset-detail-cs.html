@@ -163,6 +163,12 @@
         {{/if}}
       </gov-grid-item>
     </gov-grid>
+    {{#if parentDataset}}
+    <p>
+      Tato datová sada je součástí datové série
+      <a href="{{parentDataset.href}}" title="Přejít na datovou sérii.">{{parentDataset.label}}</a>.
+    </p>
+    {{/if}}
     <br />
   </gov-container>
   {{/with}}

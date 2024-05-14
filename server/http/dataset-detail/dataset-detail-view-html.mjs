@@ -154,6 +154,7 @@ export function prepareTemplateData(configuration, translation, navigation, lang
 }
 
 function prepareDataset(configuration, translation, navigation, { dataset }) {
+  const datasetDetailNavigation = navigation.changeView(ROUTE.DATASET_DETAIL);
   const datasetListNavigation = navigation.changeView(ROUTE.DATASET_LIST);
   return {
     "iri": dataset.iri,
@@ -223,6 +224,13 @@ function prepareDataset(configuration, translation, navigation, { dataset }) {
     "frequency": {
       "iri": dataset.frequency?.iri,
       "label": dataset.frequency?.label,
+    },
+    //
+    "parentDataset": dataset.parentDataset === null ? null : {
+      "href": datasetDetailNavigation.linkFromServer({
+        "iri": dataset.parentDataset.iri
+      }),
+      "label": dataset.parentDataset.title,
     },
   };
 }
