@@ -217,7 +217,7 @@ function loadDatasetOptional(entity, dataset) {
 
 function loadDatasetNationalCatalog(jsonld, entity, dataset) {
   dataset.datasets = getResources(entity, DCTERMS.hasPart);
-  dataset.parentDataset = getResource(entity, DCTERMS.isPartOf);
+  dataset.parentDataset = getResource(entity, DCAT.inSeries);
   const catalog = getEntityByType(jsonld, DCAT.Catalog);
   if (catalog !== null) {
     dataset.catalog = getId(catalog);

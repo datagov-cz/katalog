@@ -60,6 +60,7 @@ export const DCAT = {
   "startDate": DCAT_PREFIX + "startDate",
   "endDate": DCAT_PREFIX + "endDate",
   "accessService": DCAT_PREFIX + "accessService",
+  "inSeries": DCAT_PREFIX + "inSeries",
 };
 
 const FOAF_PREFIX = "http://xmlns.com/foaf/0.1/";
