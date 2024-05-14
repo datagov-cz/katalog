@@ -211,7 +211,11 @@
                     <gov-icon name="{{icon}}" class="{{iconStyle}}" title="{{iconTitle}}" type="bootstrap"></gov-icon>
                   </div>
                   {{/with}}
-                  Autorské dílo
+                  {{#if authorship.author}}
+                    {{authorship.author}}
+                  {{else}}
+                    Autorské dílo
+                  {{/if}}
                 </li>
                 <li>
                   {{#with databaseAuthorship}}
