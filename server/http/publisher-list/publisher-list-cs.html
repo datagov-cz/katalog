@@ -1,15 +1,18 @@
-<html lang="cs">
+<!DOCTYPE html>
+<html dir="ltr" lang="cs">
 
 <head>
   {{> head }}
-  <!-- Site specific. -->
-  <title>Poskytovatelé - Národní katalog otevřených dat (NKOD)</title>
+  <title>Lokální katalogy - Národní katalog otevřených dat (NKOD)</title>
   <meta name="description" content="Portál otevřených dat a Národní katalog otevřených dat České republiky" />
+  <link rel="canonical" href="/publishers">
+  <link rel="alternate" href="/poskytovatelé" hreflang="cs">
+  <link rel="alternate" href="/publishers" hreflang="en">
 </head>
 
 <body>
   {{#with navigation}} {{> navigation }} {{/with}}
-  <gov-container>
+  <gov-container class="publishers-container">
     <br/>
     <h1>Poskytovatelé</h1>
     <p>
@@ -17,19 +20,19 @@
     </p>
     <gov-grid>
       {{#each publishers}}
-      <gov-grid-item size-sm="12/12" size-md="6/12" size-md="6/12" size-lg="4/12" size-xl="3/12" style="padding: .25rem">
+      <gov-grid-item size-sm="12/12" size-md="6/12" size-md="6/12" size-lg="4/12" size-xl="3/12" class="p-1">
         <gov-card>
           <div class="gov-card__header">
-            <a href="{{href}}" style="text-decoration: none;">
-              <h3 class="gov-card__title">
+            <a href="{{href}}">
+              <h3 class="gov-card__title inline">
                 {{label}}
-                <gov-icon name="chevron-right"></gov-icon>
               </h3>
+              <gov-icon name="box-arrow-up-right"></gov-icon>
             </a>
           </div>
           <div class="gov-card__inner">
             <div class="gov-card__main">
-              <div style="font-size: x-large; display: flex; flex-direction: row; gap: 1em;">
+              <div class="flex-row x-large gap-4">
                 <a href="{{dashboardMonthly}}" title="Dashboard - měsíční průměry">
                   <gov-icon name="clipboard2-data" type="bootstrap" ></gov-icon>
                 </a>
@@ -37,7 +40,7 @@
                   <gov-icon name="clipboard2-pulse" type="bootstrap"></gov-icon>
                 </a>
               </div>
-              <div style="display: flex; flex-direction: row; gap: .5em;">
+              <div class="flex-row gap-2">
                 {{#with badges}}
                 {{#if vdf}}
                 <gov-chip variant="primary" type="outlined" size="xs">
@@ -46,12 +49,12 @@
                 {{/if}}
                 {{#if vdfOriginator}}
                 <gov-chip variant="primary" type="outlined" size="xs">
-                  poskytovatel
+                  Poskytovatel
                 </gov-chip>
                 {{/if}}
                 {{#if vdfPublisher}}
                 <gov-chip variant="primary" type="outlined" size="xs">
-                  původce
+                  Původce
                 </gov-chip>
                 {{/if}}
                 {{/with}}

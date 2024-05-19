@@ -1,5 +1,29 @@
 window.addEventListener("load", () => {
-  const modalElement = document.getElementById("modal");
+  initializeApplicableLegislation();
+  initializeQuality();
+});
+
+function initializeApplicableLegislation() {
+  const modalElement = document.getElementById("legislation-list-modal");
+  let originalParent = null;
+  //
+  const showModal = (event) => {
+    if (originalParent !== null) {
+      // We need to move current content back.
+      originalParent.appendChild(modalElement.querySelector(".gov-modal__content ul"));
+    }
+    // Move selected content into the dialog.
+    const content = event.target.querySelector("ul");
+    originalParent = content.parentElement;
+    modalElement.querySelector(".gov-modal__content").replaceChildren(content);
+    modalElement.setAttribute("open", "true");
+  };
+  document.querySelectorAll(".applicable-legislation .legislation-list")
+  .forEach(element => element.addEventListener("gov-click", showModal));
+}
+
+function initializeQuality() {
+  const modalElement = document.getElementById("quality-modal");
 
   const openModal = (label) => {
     modalElement.setAttribute("label", label);
@@ -7,12 +31,12 @@ window.addEventListener("load", () => {
   };
 
   const language = document.documentElement.lang;
-  const datasetElement = document.querySelector(".dataset[data-iri]");
+  const datasetElement = document.querySelector(".dataset-container[data-iri]");
   fetchAndRenderDatasetQuality(openModal, language, datasetElement, datasetElement.dataset.iri);
 
   const distributionElements = document.querySelectorAll(".distribution[data-iri]");
   distributionElements.forEach(element => fetchAndRenderDistributionQuality(openModal, language, element, element.dataset.iri));
-});
+}
 
 async function fetchAndRenderDatasetQuality(openModal, language, element, iri) {
   const response = await fetchQuality(language, iri);

@@ -3,13 +3,17 @@
 
 <head>
   {{> head }}
-  <!-- Site specific. -->
   <title>Aplikace - Národní katalog otevřených dat (NKOD)</title>
+  <meta name="description" content="Portál otevřených dat a Národní katalog otevřených dat České republiky" />
+  <link rel="canonical" href="/application">
+  <link rel="alternate" href="/detail-aplikace" hreflang="cs">
+  <link rel="alternate" href="/application" hreflang="en">
+  <link type="text/css" rel="stylesheet" href="/assets/catalog/css/resource-list.css">
 </head>
 
 <body>
   {{#with navigation}} {{> navigation }} {{/with}}
-  <gov-container>
+  <gov-container class="application-container">
     {{#with application}}
     <div>
       {{#if author.titleVisible}}
@@ -121,9 +125,9 @@
     {{#if visible}}
     <h2>Využívané datové sady</h2>
     <br/>
-    <div class="list">
+    <div class="resource-list">
       {{#each items}}
-      <div class="list-item">
+      <div class="resource-list-item">
         <a href="{{href}}" rel="nofollow noopener noreferrer">
           <h3>{{title}}</h3>
         </a>

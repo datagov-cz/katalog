@@ -1,121 +1,86 @@
-.list {
-  & .list-item {
-    & a {
-      text-decoration: none;
-
-      & h3 {
-        display: flex;
-        justify-content: space-between;
-        padding: 0.25rem;
-      }
-    }
-  }
-}
-
 /* Unify header with data portal style. */
+
 .gov-header>gov-container {
   padding-top: 1rem;
 }
 
-.alright {
-  color: #198754;
-}
+/* Global styles. */
 
-.warning {
-  color: #ffc107
-}
-
-.danger {
-  color: #dc3545
-}
-
-.dataset-detail a {
+a {
   text-decoration: none;
 }
 
-.distribution-list {
+.gov-header {
   margin-bottom: 1rem;
-  justify-content: space-evenly;
 }
 
-.distribution-list .distribution {
-  padding: .5em;
-  border: 1px solid var(--gov-color-secondary-600);
-  border-radius: 1em;
-  margin: .25em .25em;
+.gov-footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
 }
 
-.distribution-list .distribution .distribution-column {
+/* Custom component styles. */
+
+.chip-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* General layout styles. */
+
+.flex-row {
   display: flex;
   flex-direction: row;
 }
 
-.distribution-list .distribution .distribution-column>div {
-  width: calc(50% - .5rem);
+.flex-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-space-evenly {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.flex-justify-end {
+  display: flex;
+  justify-content: end;
+}
+
+.gap-2 {
+  gap: .5em;
+}
+
+.gap-4 {
+  gap: 1em;
+}
+
+.inline {
+  display: inline;
+}
+
+.x-large {
+  font-size: x-large;
+}
+
+.m-1 {
   margin: .25rem;
-
-  >h5 {
-    padding: .25rem;
-    border: 1px solid var(--gov-color-secondary-600);
-    border-radius: .5em .5em 0 0;
-  }
-
-  >ul {
-    padding: 0;
-    list-style-type: none;
-  }
-
-  >ul>li {
-    padding: .25rem;
-    border: 1px solid var(--gov-color-secondary-600);
-    margin-top: -1px;
-  }
-
-  >ul>li:last-of-type {
-    border-radius: 0 0 .5em .5em;
-  }
 }
 
-.distribution-list .distribution .quality {
-  font-size: larger;
-  float: right;
+.mb-1 {
+  margin-bottom: .25rem;
 }
 
-.extended-search{
+.mb-2 {
+  margin-bottom: .5rem;
+}
 
-  &>div.time {
-    display: flex;
-    flex-flow: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
+.p-0 {
+  padding: 0;
+}
 
-    &>div  {
-      display: flex;
-      flex-flow: row;
-      flex-wrap: wrap;
-      gap: 1em;
-      align-items: center;
-      margin-bottom: 1rem;
-
-      gov-form-input {
-        width: 10em;
-      }
-    }
-  }
-
-  &>div.vdf {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-  }
-
-  .flex-space-between {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .flex-justify-end {
-    display: flex;
-    justify-content: end;
-  }
+.p-2 {
+  padding: .5rem;
 }

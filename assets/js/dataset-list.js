@@ -56,6 +56,10 @@ window.addEventListener("load", () => {
       urlQuery, localization.publicData, query.publicData);
     addToUrlQueryWhenTrue(
       urlQuery, localization.codelist, query.codelist);
+    addToUrlQueryWhenTrue(
+      urlQuery, localization.hvdDataset, query.hvdDataset);
+    addToUrlQueryWhenTrue(
+      urlQuery, localization.dynamicData, query.dynamicData);
 
     let url = searchElement.dataset.baseUrl;
     // Prepare URL for adding query.
@@ -65,7 +69,6 @@ window.addEventListener("load", () => {
       url += "?";
     }
     url += urlQuery.join("&");
-
     window.location.href = url;
   }
 
@@ -104,6 +107,10 @@ window.addEventListener("load", () => {
       query.publicData = event.target.checked;
     } else if (type === "codelist") {
       query.codelist = event.target.checked;
+    } else if (type === "high-value-dataset") {
+      query.hvdDataset = event.target.checked;
+    } else if (type === "dynamic-data") {
+      query.dynamicData = event.target.checked;
     }
   }
 
