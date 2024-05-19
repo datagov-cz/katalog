@@ -28,9 +28,12 @@ export function parseClientQuery(navigation, query) {
   const themeLimit = navigation.queryArgumentFromClient(query, "theme-limit");
   const keywordLimit = navigation.queryArgumentFromClient(query, "keyword-limit");
   const formatLimit = navigation.queryArgumentFromClient(query, "format-limit");
+  const hvdCategoryLimit = navigation.queryArgumentFromClient(query, "hvd-category-limit");
 
   const vdfPublicData = navigation.queryArgumentFromClient(query, "vdf-public-data") === "1";
   const vdfCodelist = navigation.queryArgumentFromClient(query, "vdf-codelist") === "1";
+  const hdfDataset = navigation.queryArgumentFromClient(query, "hdf-dataset") === "1";
+  const dynamicData = navigation.queryArgumentFromClient(query, "dynamic-data") === "1";
 
   return {
     "searchQuery": navigation.queryArgumentFromClient(query, "query"),
@@ -53,6 +56,11 @@ export function parseClientQuery(navigation, query) {
     "sortDirection": sortDirection,
     "page": asPositiveNumber(page, 1) - 1,
     "pageSize": asPositiveNumber(pageSize, DEFAULT_PAGE_SIZE),
+    //
+    "hvdDataset": hdfDataset,
+    "hvdCategory": navigation.queryArgumentArrayFromClient(query, "hvd-category"),
+    "hvdCategoryLimit": asPositiveNumber(hvdCategoryLimit, DEFAULT_FACET_SIZE),
+    "dynamicData": dynamicData,
   };
 }
 
@@ -97,6 +105,11 @@ export function beforeLinkCallback(navigation, serverQuery) {
   setIfTrue(result, "vdf-public-data", serverQuery.vdfPublicData);
   setIfTrue(result, "vdf-codelist", serverQuery.vdfCodelist);
   setIfNotEmpty(result, "is-part-of", serverQuery.isPartOf);
+  setIfTrue(result, "hdf-dataset", serverQuery.hvdDataset);
+  setIfNotEmpty(result, "hvd-category", serverQuery.hvdCategory);
+  setIfNotDefault(result, "hvd-category-limit", serverQuery.hvdCategoryLimit, DEFAULT_FACET_SIZE);
+  setIfTrue(result, "dynamic-data", serverQuery.dynamicData);
+
   if (serverQuery.sort !== DEFAULT_SORT) {
     result["sort"] = navigation.argumentFromServer(serverQuery.sort);
   }

@@ -1,6 +1,6 @@
 import { getId, getTypes, getEntityByIri, getString, getStrings, getResource, getResources, getPlainStrings, getPlainString, getEntityByType, getValue } from "./shared/jsonld.mjs";
 import { selectForLanguages } from "./shared/couchdb-response.mjs";
-import { DCTERMS, DCAT, VCARD, SKOS, SGOV, EUA, ADMS, FOAF, OWL, NKOD, PU, SPDX } from "./shared/vocabulary.mjs";
+import { DCTERMS, DCAT, VCARD, SKOS, SGOV, EUA, ADMS, FOAF, OWL, NKOD, PU, SPDX , EUROPE} from "./shared/vocabulary.mjs";
 
 export function createCouchDbDataset(couchDbConnector) {
   return {
@@ -72,6 +72,7 @@ function jsonldToDataset(jsonld, iri) {
   loadDatasetTemporal(jsonld, entity, result);
   loadDatasetOptional(entity, result);
   loadDatasetNationalCatalog(jsonld, entity, result);
+  loadDatasetHighValueDatasets(entity, result);
   return result;
 }
 
@@ -121,6 +122,8 @@ function createEmptyDataset(iri) {
     "isFromVdf": false,
     "isCodelist": false,
     "vdfOriginator": null,
+    "applicableLegislation": [],
+    "hvdCategory": [],
   }
 }
 
@@ -230,9 +233,14 @@ function loadDatasetNationalCatalog(jsonld, entity, dataset) {
   const types = getTypes(entity);
   dataset.isFromForm = types.includes(NKOD.SourceForm);
   dataset.isFromCatalog = types.includes(NKOD.SourceLkod);
-  dataset.isFromVDF = types.includes(NKOD.Vdf);
+  dataset.isFromVdf = types.includes(NKOD.Vdf);
   dataset.isCodelist = types.includes(NKOD.CodeList);
   dataset.vdfOriginator = getResource(entity, NKOD.originator);
+}
+
+function loadDatasetHighValueDatasets(entity, dataset) {
+  dataset.applicableLegislation = getResources(entity, EUROPE.applicableLegislation);
+  dataset.hvdCategory = getResources(entity, EUROPE.hvdCategory);
 }
 
 function jsonldToDistribution(jsonld, iri) {
@@ -263,6 +271,7 @@ function jsonldToDistribution(jsonld, iri) {
     "compressFormat": getResource(entity, DCAT.compressFormat),
     "type": "Distribution",
     "legal": loadDistributionLegal(jsonld, entity),
+    "applicableLegislation": getResources(entity, EUROPE.applicableLegislation),
   };
 
   const accessServiceIri = getResource(entity, DCAT.accessService);
@@ -304,6 +313,7 @@ function loadDistributionDataService(jsonld, iri) {
     "endpointDescription": getResource(entity, DCAT.endpointDescription),
     "endpointURL": getResource(entity, DCAT.endpointURL),
     "conformsTo": getResources(entity, DCTERMS.conformsTo),
+    "applicableLegislation": getResources(entity, EUROPE.applicableLegislation),
   }
 }
 
@@ -314,6 +324,7 @@ function createEmptyDataService() {
     "endpointDescription": null,
     "endpointURL": null,
     "conformsTo": [],
+    "applicableLegislation": [],
   };
 }
 

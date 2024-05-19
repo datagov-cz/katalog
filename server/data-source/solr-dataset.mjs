@@ -57,7 +57,9 @@ function buildDatasetsQuery(language, query) {
     sort,
     sortDirection,
     offset,
-    limit
+    limit,
+    hvdCategory,
+    applicableLegislation,
   } = query;
   const fq = [
     ...prepareFieldQuery("publisher", publisher),
@@ -66,6 +68,8 @@ function buildDatasetsQuery(language, query) {
     ...prepareFieldQuery("file_type", format),
     ...prepareFieldQuery("data_service_type", dataServiceType),
     ...prepareFieldQuery("is_part_of", isPartOf),
+    ...prepareFieldQuery("hvd_category", hvdCategory),
+    ...prepareFieldQuery("applicable_legislation", applicableLegislation),
   ];
   if (temporalStart !== null) {
     fq.push(`temporal_start:[* TO ${temporalStart}T00:00:00Z]`);
@@ -86,6 +90,7 @@ function buildDatasetsQuery(language, query) {
       "data_service_type",
       "publisher",
       "theme",
+      "hvd_category",
     ],
     "fl": [
       "iri",
@@ -94,6 +99,7 @@ function buildDatasetsQuery(language, query) {
       "description_cs",
       "description_en",
       "file_type",
+      "applicable_legislation",
     ],
     "fq": fq,
     "sort": prepareSort(language, sort, sortDirection),
@@ -116,6 +122,7 @@ function parseDatasetsResponse(languages, response) {
     "title": selectLanguage(document, "title_", languages),
     "description": selectLanguage(document, "description_", languages),
     "file_type": document["file_type"] ?? [],
+    "applicable_legislation": document["applicable_legislation"] ?? [],
   }));
 
   const facet_fields = response["facet_counts"]["facet_fields"];
@@ -125,6 +132,7 @@ function parseDatasetsResponse(languages, response) {
     "dataServiceType": parseFacet(facet_fields["data_service_type"]),
     "publisher": parseFacet(facet_fields["publisher"]),
     "theme": parseFacet(facet_fields["theme"]),
+    "hvdCategory": parseFacet(facet_fields["hvd_category"]),
   };
 
   return {

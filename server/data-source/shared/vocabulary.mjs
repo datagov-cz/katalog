@@ -201,3 +201,10 @@ export const LP = {
 export const SGOV = {
   "ObjectType": "https://slovník.gov.cz/základní/pojem/typ-objektu",
 };
+
+const EUROPE_PREFIX = "http://data.europa.eu/r5r/";
+
+export const EUROPE = {
+  "applicableLegislation": EUROPE_PREFIX + "applicableLegislation",
+  "hvdCategory": EUROPE_PREFIX + "hvdCategory",
+};

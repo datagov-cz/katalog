@@ -3,7 +3,7 @@ import * as components from "../../component/index.mjs";
 
 const FACET_SERIES = "datasetSeries";
 
-const FACETS = ["publisher", "theme", "keyword", "format", "dataServiceType"];
+const FACETS = ["publisher", "theme", "hvdCategory", "dataServiceType", "format", "keyword"];
 
 const SORT_OPTIONS = [
   ["title", "asc"],
@@ -30,6 +30,8 @@ export function prepareTemplateData(translation, navigation, languages, query, d
     "search": {
       "clear-href": navigation.linkFromServer({}),
       // Empty query used by client-side JavaScript search functionality.
+      // We need to remove values for all in the search box as that is assembled
+      // at the client side.
       "base-url": navigation.linkFromServer({
         ...query,
         "page": 0,
@@ -37,6 +39,8 @@ export function prepareTemplateData(translation, navigation, languages, query, d
         "temporalEnd": null,
         "vdfPublicData": false,
         "vdfCodelist": false,
+        "hvdDataset": false,
+        "dynamicData": false,
       }),
       "query": {
         "searchQuery": query.searchQuery,
@@ -44,6 +48,8 @@ export function prepareTemplateData(translation, navigation, languages, query, d
         "temporalTo": query.temporalEnd,
         "publicData": query.vdfPublicData,
         "codelist": query.vdfCodelist,
+        "hvdDataset": query.hvdDataset,
+        "dynamicData": query.dynamicData,
       },
       "queryObjectAsString": JSON.stringify({
         "searchQuery": query.searchQuery,
@@ -51,6 +57,8 @@ export function prepareTemplateData(translation, navigation, languages, query, d
         "temporalTo": query.temporalEnd,
         "publicData": query.vdfPublicData,
         "codelist": query.vdfCodelist,
+        "hvdDataset": query.hvdDataset,
+        "dynamicData": query.dynamicData,
       })
     },
     "result-bar": components.createResultBarData(translation, navigation, query, SORT_OPTIONS, count),

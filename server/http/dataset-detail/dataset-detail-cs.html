@@ -1,44 +1,64 @@
-<html lang="cs">
+<!DOCTYPE html>
+<html dir="ltr" lang="cs">
 
 <head>
   {{> head }}
-  <!-- Site specific. -->
   <title>{{dataset.heading.title}} - Národní katalog otevřených dat (NKOD)</title>
+  <meta name="description" content="Portál otevřených dat a Národní katalog otevřených dat České republiky" />
   <link rel="canonical" href="/dataset">
   <link rel="alternate" href="/datová-sada" hreflang="cs">
   <link rel="alternate" href="/dataset" hreflang="en">
+  <link type="text/css" rel="stylesheet" href="/assets/catalog/css/dataset-detail.css">
   <script src="/assets/catalog/js/dataset-detail.js"></script>
 </head>
 
 <body class="dataset-detail">
   {{#with navigation}} {{> navigation }} {{/with}}
   {{#with dataset}}
-  <gov-container class="dataset" data-iri="{{iri}}">
+  <gov-container class="dataset-container" data-iri="{{iri}}">
     {{#with heading}}
-    <h1 style="display: inline;">{{title}}</h1>
-    <span style="font-size: x-large;">
-      <a href="{{openUrl}}"><gov-icon name="box-arrow-up-right"></gov-icon></a>
-      <a href="{{copyUrl}}"><gov-icon name="files"></gov-icon></a>
-      <a href="{{deleteUrl}}"><gov-icon name="trash"></gov-icon></a>
-    </span>
-    {{/with}}
-    {{#with publisher}}
-    <a href="{{href}}">
-      <h2>{{label}}</h2>
-    </a>
-    {{/with}}
-    <br />
-    <p>
-      {{breaklines description}}
-    </p>
     <div>
+      <h1 class="inline">{{title}}</h1>
+      <span class="x-large">
+        <a href="{{openUrl}}"><gov-icon name="box-arrow-up-right" title="Přejít na odkaz"></gov-icon></a>
+        <a href="{{copyUrl}}"><gov-icon name="files" title="Zkopírovat jako novou datovou sadu"></gov-icon></a>
+        <a href="{{deleteUrl}}"><gov-icon name="trash" title="Smazat"></gov-icon></a>
+      </span>
+      {{/with}}
+      {{#with publisher}}
+      <a href="{{href}}">
+        <h2>{{label}}</h2>
+      </a>
+    </div>
+    {{/with}}
+    {{#if applicableLegislationVisible}}
+    <div class="applicable-legislation chip-container mb-2">
+      {{#each applicableLegislation}}
+        {{#if chip}}<gov-chip variant="{{chip.variant}}" type="outlined" size="s">{{chip.label}}</gov-chip>{{/if}}
+      {{/each}}
+      <gov-chip variant="primary" type="outlined" size="s" class="legislation-list" tag="button">
+        <gov-icon name="info" title="Zobrazit příslušné právní předpisy"></gov-icon>
+        <ul>
+          {{#each applicableLegislation}}
+          <li>
+            {{#if chip}}<gov-chip variant="{{chip.variant}}" type="outlined" size="s">{{chip.label}}</gov-chip>{{/if}}
+            <a href="{{url}}" rel="nofollow noopener noreferrer" target="_blank">{{label}}</a>
+          </li>
+          {{/each}}
+        </ul>
+      </gov-chip>
+    </div>
+    {{/if}}
+    <div class="chip-container mb-2"> <!-- TODO: Add visibility check. -->
       {{#each keywords}}
-      <gov-chip variant="primary" type="outlined" size="xs" href="{{href}}">
+      <gov-chip variant="primary" type="outlined" size="s" href="{{href}}">
         {{label}}
       </gov-chip>
       {{/each}}
     </div>
-    <br />
+    <p>
+      {{breaklines description}}
+    </p>
     <gov-grid>
       <gov-grid-item size-sm="6/12" size-md="3/12">
         {{#if themesVisible}}
@@ -121,7 +141,7 @@
           {{#each documentation}}
           <dd class="documentation">
             <a href="{{href}}">Zobrazit dokumentaci</a>
-            <spam class="quality"></spam>
+            <span class="quality"></span>
           </dd>
           {{/each}}
         </dl>
@@ -142,7 +162,7 @@
           {{#each conformsTo}}
           <dd class="conformsTo">
             <a href="{{href}}">{{label}}</a>
-            <spam class="quality"></spam>
+            <span class="quality"></span>
           </dd>
           {{/each}}
         </dl>
@@ -161,6 +181,22 @@
           </dd>
         </dl>
         {{/if}}
+        {{#if hvdCategoryVisible}}
+        <dl>
+          <dt>Kategorie HVD</dt>
+          {{#each hvdCategory}}
+          <dd>
+            <a href="{{href}}">
+              {{label}}
+            </a>
+            &nbsp;
+            <a href="{{iri}}" title="Přejít na odkaz" rel="nofollow noopener noreferrer" target="_blank">
+              <gov-icon name="box-arrow-up-right"></gov-icon>
+            </a>
+          </dd>
+          {{/each}}
+        </dl>
+        {{/if}}
       </gov-grid-item>
     </gov-grid>
     {{#if parentDataset}}
@@ -174,31 +210,50 @@
   {{/with}}
   {{#with distributions}}
   {{#if visible}}
-  <gov-container>
+  <gov-container class="distribution-container">
     <h2>Distribuce datové sady</h2>
-    <br />
-    <gov-grid class="distribution-list">
+    <gov-grid>
       {{#each items}}
       <gov-grid-item size-sm="12/12" size-md="6/12" size-lg="4/12">
-        <div class="distribution" data-iri="{{iri}}">
+        <div class="distribution-item-wrap m-1 p-2" data-iri="{{iri}}">
           <h3 class="gov-text--xl">{{title}}</h3>
           <h4 class="gov-text--xl gov-color--secondary-700">{{format}}</h4>
-          <div class="distribution-column">
+          {{#if applicableLegislationVisible}}
+          <div class="applicable-legislation chip-container mb-2">
+            {{#each applicableLegislation}}
+              {{#if chip}}<gov-chip variant="{{chip.variant}}" type="outlined" size="s">{{chip.label}}</gov-chip>{{/if}}
+            {{/each}}
+            <gov-chip variant="primary" type="outlined" size="s" class="legislation-list" tag="button">
+              <gov-icon name="info" title="Zobrazit příslušné právní předpisy"></gov-icon>
+              <ul>
+                {{#each applicableLegislation}}
+                <li>
+                  {{#if chip}}<gov-chip variant="{{chip.variant}}" type="outlined" size="s">{{chip.label}}</gov-chip>{{/if}}
+                  <a href="{{url}}" rel="nofollow noopener noreferrer" target="_blank">{{label}}</a>
+                </li>
+                {{/each}}
+              </ul>
+            </gov-chip>
+          </div>
+          {{/if}}
+          <div class="flex-row">
             {{#if missingLegal}}
-            <div>
+            <div class="distribution-item-wrap-column">
               <h5 class="gov-text--l gov-color--secondary-700">Podmínky užití distribuce nejsou specifikovány</h5>
             </div>
             {{/if}}
             {{#if dcatApLegal}}
-            <div>
+            <div class="distribution-item-wrap-column">
               <a href="{{license}}" rel="nofollow noopener noreferrer" target="_blank">
                 Podmínky užití distribuce
               </a>
             </div>
             {{/if}}
             {{#if dcatApCzLegal}}{{#with dcatApCzLegal}}
-            <div>
-              <h5 class="gov-text--l gov-color--secondary-700">Podmínky užití distribuce</h5>
+            <div class="distribution-item-wrap-column">
+              <div>
+                <h5 class="gov-text--l gov-color--secondary-700">Podmínky užití distribuce</h5>
+              </div>
               <ul>
                 <li>
                   {{#with authorship}}
@@ -264,14 +319,16 @@
             </div>
             {{/with}}{{/if}}
             {{#if distribution}}{{#with distribution}}
-            <div>
-              <h5 class="gov-text--l gov-color--secondary-700">Soubor ke stažení</h5>
+            <div class="distribution-item-wrap-column">
+              <div>
+                <h5 class="gov-text--l gov-color--secondary-700">Soubor ke stažení</h5>
+              </div>
               <ul>
                 {{#if downloadArrayVisible}}
                 <li class="download">
                   {{#each downloadArray}}
                   <a href="{{this}}">Stáhnout</a>
-                  <spam class="quality"></spam>
+                  <span class="quality"></span>
                   {{/each}}
                 </li>
                 {{/if}}
@@ -279,7 +336,7 @@
                 <li class="schema">
                   {{#each schemaArray}}
                   <a href="{{this}}">Schéma</a>
-                  <spam class="quality"></spam>
+                  <span class="quality"></span>
                   {{/each}}
                 </li>
                 {{/if}}
@@ -289,26 +346,68 @@
                     <a href="{{mediaType.iri}}">
                       <gov-icon name="box-arrow-up-right"></gov-icon>
                     </a>
-                    <spam class="quality"></spam>
+                    <span class="quality"></span>
                   </div>
                   Typ média
                 </li>
-                <!-- compressFormat -->
-                <!-- packageFormat -->
+                {{#if compressFormat}}
+                <li>
+                  <div>
+                    {{compressFormat.label}}
+                    <a href="{{compressFormat.iri}}">
+                      <gov-icon name="box-arrow-up-right"></gov-icon>
+                    </a>
+                  </div>
+                  Formát komprese
+                </li>
+                {{/if}}
+                {{#if packageFormat}}
+                <li>
+                  <div>
+                    {{packageFormat.label}}
+                    <a href="{{packageFormat.iri}}">
+                      <gov-icon name="box-arrow-up-right"></gov-icon>
+                    </a>
+                  </div>
+                  Formát balíčku
+                </li>
+                {{/if}}
               </ul>
             </div>
             {{/with}}{{/if}}
             {{#if dataService}}{{#with dataService}}
-            <div>
-              <h5 class="gov-text--l gov-color--secondary-700">Datová služba</h5>
+            <div class="distribution-item-wrap-column">
+              <div>
+                <h5 class="gov-text--l gov-color--secondary-700">
+                  Datová služba
+                </h5>
+                {{#if applicableLegislationVisible}}
+                <div class="applicable-legislation chip-container mb-2">
+                  {{#each applicableLegislation}}
+                    {{#if chip}}<gov-chip variant="{{chip.variant}}" type="outlined" size="s">{{chip.label}}</gov-chip>{{/if}}
+                  {{/each}}
+                  <gov-chip variant="primary" type="outlined" size="s" class="legislation-list" tag="button">
+                    <gov-icon name="info" title="Zobrazit příslušné právní předpisy"></gov-icon>
+                    <ul>
+                      {{#each applicableLegislation}}
+                      <li>
+                        {{#if chip}}<gov-chip variant="{{chip.variant}}" type="outlined" size="s">{{chip.label}}</gov-chip>{{/if}}
+                        <a href="{{url}}" rel="nofollow noopener noreferrer" target="_blank">{{label}}</a>
+                      </li>
+                      {{/each}}
+                    </ul>
+                  </gov-chip>
+                </div>
+                {{/if}}
+              </div>
               <ul>
                 <li class="endpointDescription">
                   <a href="{{endpointDescription}}">Popis endpointu</a>
-                  <spam class="quality"></spam>
+                  <span class="quality"></span>
                 </li>
                 <li class="endpointUrl">
                   <a href="{{endpointUrl}}">Endpoint</a>
-                  <spam class="quality"></spam>
+                  <span class="quality"></span>
                   {{#if sparqlEditor}}
                   <br/>
                   <a href="{{sparqlEditor}}">SPARQL dotazování</a>
@@ -322,7 +421,7 @@
                 <li class="schema">
                   {{#each schemaArray}}
                   <a href="{{this}}">Schéma</a>
-                  <spam class="quality"></spam>
+                  <span class="quality"></span>
                   {{/each}}
                 </li>
                 {{/if}}
@@ -333,13 +432,33 @@
                     <a href="{{mediaType.iri}}">
                       <gov-icon name="box-arrow-up-right"></gov-icon>
                     </a>
-                    <spam class="quality"></spam>
+                    <span class="quality"></span>
                   </div>
                   Typ média
                 </li>
                 {{/if}}
-                <!-- compressFormat -->
-                <!-- packageFormat -->
+                {{#if compressFormat}}
+                <li>
+                  <div>
+                    {{compressFormat.label}}
+                    <a href="{{compressFormat.iri}}">
+                      <gov-icon name="box-arrow-up-right"></gov-icon>
+                    </a>
+                  </div>
+                  Formát komprese
+                </li>
+                {{/if}}
+                {{#if packageFormat}}
+                <li>
+                  <div>
+                    {{packageFormat.label}}
+                    <a href="{{packageFormat.iri}}">
+                      <gov-icon name="box-arrow-up-right"></gov-icon>
+                    </a>
+                  </div>
+                  Formát balíčku
+                </li>
+                {{/if}}
               </ul>
             </div>
             {{/with}}{{/if}}
@@ -363,12 +482,12 @@
   {{/with}}
   {{#with datasetSeries}}
   {{#if visible}}
-  <gov-container>
+  <gov-container class="dataset-list-container">
     <h2>Datové sady této datové série</h2>
     <br />
-    <div class="list">
+    <div class="resource-list">
       {{#each items}}
-      <div class="list-item">
+      <div class="resource-list-item">
         <a href="{{href}}" rel="nofollow noopener noreferrer">
           <h3>{{title}}</h3>
         </a>
@@ -386,12 +505,12 @@
   {{/with}}
   {{#with applications}}
   {{#if visible}}
-  <gov-container>
+  <gov-container class="application-list-container">
     <h2>Aplikace využívající tuto datovou sadu</h2>
     <br />
-    <div class="list">
+    <div class="document-list">
       {{#each items}}
-      <div class="list-item">
+      <div class="document-list-item">
         <a href="{{href}}" rel="nofollow noopener noreferrer">
           <h3>{{title}}</h3>
         </a>
@@ -407,7 +526,8 @@
   {{#with footer}} {{> footer }} {{/with}}
   <script type="application/ld+json">{{{metadataAsString}}}</script>
   <!--  -->
-  <gov-modal id="modal" label=""></gov-modal>
+  <gov-modal id="quality-modal" label=""></gov-modal>
+  <gov-modal id="legislation-list-modal" label="Příslušné právní předpisy"></gov-modal>
 </body>
 
 </html>

@@ -21,7 +21,7 @@ export async function prepareData(services, languages, query) {
     };
   }
 
-  prepareDataset(dataset);
+  prepareDatasetInPlace(dataset);
   const distributions = prepareDistributions(dataset);
 
   const resourcesToAddLabelsTo = [
@@ -33,11 +33,14 @@ export async function prepareData(services, languages, query) {
     dataset.frequency,
     ...dataset.spatial,
     ...distributions.items.map(item => item.format),
+    ...dataset.hvdCategory,
   ];
 
   const resourcesToAddLabelsToWithNoDefault = [
     ...dataset.conformsTo,
     ...distributions.items.map(item => item.mediaType),
+    ...distributions.items.map(item => item.compressFormat),
+    ...distributions.items.map(item => item.packageFormat),
   ];
 
   await services.label.addLabelToResources(languages, resourcesToAddLabelsTo);
@@ -53,10 +56,11 @@ export async function prepareData(services, languages, query) {
   };
 };
 
-function prepareDataset(dataset) {
+function prepareDatasetInPlace(dataset) {
   dataset.themes = dataset.themes.map(iri => ({ iri }));
   dataset.euroVocThemes = dataset.euroVocThemes.map(iri => ({ iri }));
   dataset.semanticThemes = dataset.semanticThemes.map(iri => ({ iri }));
+  dataset.hvdCategory = dataset.hvdCategory.map(iri => ({ iri }));
 
   dataset.accessRights = dataset.accessRights.map(iri => ({ iri }));
   if (dataset.frequency !== null) {
@@ -66,7 +70,7 @@ function prepareDataset(dataset) {
     "iri": dataset.publisher,
   };
   dataset.spatial = dataset.spatial.map(iri => ({ iri }));
-  dataset.conformsTo = dataset.conformsTo.map(iri => ({iri}));
+  dataset.conformsTo = dataset.conformsTo.map(iri => ({ iri }));
 }
 
 function prepareDistributions(dataset) {
@@ -79,8 +83,11 @@ function prepareDistributions(dataset) {
   for (const distribution of distributions.items) {
     distribution.format = { "iri": distribution.format };
     distribution.mediaType = distribution.mediaType === null
-      ? null
-      : { "iri": distribution.mediaType };
+      ? null : { "iri": distribution.mediaType };
+    distribution.compressFormat = distribution.compressFormat === null
+      ? null : { "iri": distribution.compressFormat };
+    distribution.packageFormat = distribution.packageFormat === null
+      ? null : { "iri": distribution.packageFormat };
   }
   return distributions;
 }
@@ -117,3 +124,4 @@ async function fetchDatasetSeries(services, languages, datasetIri) {
     })),
   }
 }
+

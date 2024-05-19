@@ -127,6 +127,10 @@ const PERSONAL_DATA_MAP = {
   }),
 }
 
+const LEGISLATION_HVD = "http://data.europa.eu/eli/reg_impl/2023/138/oj";
+
+const LEGISLATION_DYNAMIC_DATA = "https://www.e-sbirka.cz/eli/cz/sb/1999/106/2024-01-01/dokument/norma/cast_1/par_3a/odst_6";
+
 export function renderHtml(services, languages, query, data, reply) {
   if (data == null) {
     services.http.handleNotFound(services, reply);
@@ -138,7 +142,8 @@ export function renderHtml(services, languages, query, data, reply) {
   const template = services.template.view(ROUTE.DATASET_DETAIL);
   reply
     .code(200)
-    .header("Content-Type", "text/html; charset=utf-8").send(template(templateData));
+    .header("Content-Type", "text/html; charset=utf-8")
+    .send(template(templateData));
 }
 
 export function prepareTemplateData(configuration, translation, navigation, languages, query, data) {
@@ -232,6 +237,15 @@ function prepareDataset(configuration, translation, navigation, { dataset }) {
       }),
       "label": dataset.parentDataset.title,
     },
+    //
+    "hvdCategoryVisible": dataset.hvdCategory.length > 0,
+    "hvdCategory": dataset.hvdCategory.map(item => ({
+      "iri": item.iri,
+      "href": datasetListNavigation.linkFromServer({ "hvdCategory": [item.iri] }),
+      "label": item.label,
+    })),
+    "applicableLegislationVisible": dataset.applicableLegislation.length > 0,
+    "applicableLegislation": prepareApplicableLegislation(dataset.applicableLegislation),
   };
 }
 
@@ -359,6 +373,41 @@ function prepareContactPoints(contactPoints) {
   }));
 }
 
+function prepareApplicableLegislation(applicableLegislation) {
+  const result = applicableLegislation.map(url => ({
+    url: url,
+    label: url,
+    chip: createChipForApplicableLegislation(url),
+  }));
+  result.sort((left, right) => {
+    if (left.chip !== null && right.chip === null) {
+      return -1;
+    }
+    if (left.chip === null && right.chip ==! null) {
+      return 1;
+    }
+    return left.url.localeCompare(right.url, 'en');
+  });
+  return result;
+}
+
+function createChipForApplicableLegislation(url) {
+  switch (url) {
+    case LEGISLATION_HVD:
+      return {
+        variant: "error",
+        label: "HVD",
+      };
+    case LEGISLATION_DYNAMIC_DATA:
+      return {
+        variant: "warning",
+        label: "Dynamická",
+      };
+    default:
+      return null;
+  }
+}
+
 function prepareDistributions(configuration, translation, navigation, query, data) {
   if (data.distributions.items.length === 0) {
     return {
@@ -381,6 +430,10 @@ function prepareDistributions(configuration, translation, navigation, query, dat
       "iri": item.iri,
       "title": item.title,
       "format": item.format?.label ?? null,
+      // We have one on level of a distribution, another on a level of data service.
+      "applicableLegislationVisible": item.applicableLegislation.length > 0,
+      "applicableLegislation": prepareApplicableLegislation(item.applicableLegislation),
+      //
       ...prepareLegal(translation, item),
       ...prepareDistribution(item),
       ...prepareDataService(configuration, item, item.dataService)
@@ -506,6 +559,8 @@ function prepareDataService(configuration, distribution, dataService) {
       "mediaType": mediaType,
       "compressFormat": distribution.compressFormat,
       "packageFormat": distribution.packageFormat,
+      "applicableLegislationVisible": dataService.applicableLegislation.length > 0,
+      "applicableLegislation": prepareApplicableLegislation(dataService.applicableLegislation),
     },
   };
 }
@@ -561,6 +616,6 @@ function prepareDatasetMetadata({ dataset, distributions }) {
         "@type": "DataDownload",
         "contentUrl": distribution.downloadURL?.[0] ?? distribution.accessURL,
         "encodingFormat": distribution.format.label,
-    })),
+      })),
   }
 }
