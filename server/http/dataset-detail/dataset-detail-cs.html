@@ -381,24 +381,6 @@
                 <h5 class="gov-text--l gov-color--secondary-700">
                   Datová služba
                 </h5>
-                {{#if applicableLegislationVisible}}
-                <div class="applicable-legislation chip-container mb-2">
-                  {{#each applicableLegislation}}
-                    {{#if chip}}<gov-chip variant="{{chip.variant}}" type="outlined" size="s">{{chip.label}}</gov-chip>{{/if}}
-                  {{/each}}
-                  <gov-chip variant="primary" type="outlined" size="s" class="legislation-list" tag="button">
-                    <gov-icon name="info" title="Zobrazit příslušné právní předpisy"></gov-icon>
-                    <ul>
-                      {{#each applicableLegislation}}
-                      <li>
-                        {{#if chip}}<gov-chip variant="{{chip.variant}}" type="outlined" size="s">{{chip.label}}</gov-chip>{{/if}}
-                        <a href="{{url}}" rel="nofollow noopener noreferrer" target="_blank">{{label}}</a>
-                      </li>
-                      {{/each}}
-                    </ul>
-                  </gov-chip>
-                </div>
-                {{/if}}
               </div>
               <ul>
                 <li class="endpointDescription">

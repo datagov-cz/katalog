@@ -560,7 +560,6 @@ function prepareDataService(configuration, distribution, dataService) {
       "compressFormat": distribution.compressFormat,
       "packageFormat": distribution.packageFormat,
       "applicableLegislationVisible": dataService.applicableLegislation.length > 0,
-      "applicableLegislation": prepareApplicableLegislation(dataService.applicableLegislation),
     },
   };
 }
