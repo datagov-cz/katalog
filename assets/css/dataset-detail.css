@@ -68,6 +68,10 @@
   border-radius: 0 0 .5em .5em;
 }
 
+.distribution-container gov-grid gov-grid-item {
+  margin-bottom: 1rem;
+}
+
 /* Applicable legislation modal. */
 
 #legislation-list-modal ul li {
