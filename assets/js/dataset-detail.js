@@ -110,8 +110,6 @@ function renderLegalQuality(element, response) {
   const specialDatabaseElement = element.querySelector(".protectedDatabaseAuthorship .quality");
   const specialDatabaseAuthorship = response.specialDatabaseAuthorship;
   renderQualityMeasure(specialDatabaseElement, specialDatabaseAuthorship, "award", "bug");
-
-  console.log("legal", { authorship, databaseAuthorship, specialDatabaseAuthorship })
 }
 
 function renderShared(element, response) {

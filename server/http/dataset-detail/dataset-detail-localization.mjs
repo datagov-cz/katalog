@@ -8,6 +8,7 @@ export default {
     "argument": {
     },
     "translation": {
+      "url-edit-dataset": "registrace-datové-sady?datová-sada=",
       "url-copy-dataset": "registrace-datové-sady?kopírovat-z-datové-sady=",
       "url-delete-dataset": "odstranění-datové-sady?dataset=",
       "url-delete-catalog": "odstranění-lokálního-katalogu?catalog=",
@@ -87,6 +88,7 @@ export default {
     "argument": {
     },
     "translation": {
+      "url-edit-dataset": "database-registration?dataset=",
       "url-copy-dataset": "database-registration?copy-from-dataset=",
       "url-delete-dataset": "database-withdrawn?dataset=",
       "url-delete-catalog": "local-catalog-withdrawn?catalog=",

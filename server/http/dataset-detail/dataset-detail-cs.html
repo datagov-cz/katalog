@@ -21,8 +21,10 @@
       <h1 class="inline">{{title}}</h1>
       <span class="x-large">
         <a href="{{openUrl}}"><gov-icon name="box-arrow-up-right" title="Přejít na odkaz"></gov-icon></a>
-        <a href="{{copyUrl}}"><gov-icon name="files" title="Zkopírovat jako novou datovou sadu"></gov-icon></a>
-        <a href="{{deleteUrl}}"><gov-icon name="trash" title="Smazat"></gov-icon></a>
+        {{#if editUrl}}<a href="{{editUrl}}"><gov-icon name="pencil" type="bootstrap" title="Upravit datovou sadu"></gov-icon></a>{{/if}}
+        {{#if copyUrl}}<a href="{{copyUrl}}"><gov-icon name="copy" title="Zkopírovat jako novou datovou sadu"></gov-icon></a>{{/if}}
+        {{#if deleteDatasetUrl}}<a href="{{deleteDatasetUrl}}"><gov-icon name="trash" title="Smaž datovou sadu"></gov-icon></a>{{/if}}
+        {{#if deleteCatalogUrl}}<a href="{{deleteCatalogUrl}}"><gov-icon name="trash" title="Smaž katalog"></gov-icon></a>{{/if}}
       </span>
       {{/with}}
       {{#with publisher}}
@@ -140,7 +142,7 @@
           <dt>Dokumentace</dt>
           {{#each documentation}}
           <dd class="documentation">
-            <a href="{{href}}">Zobrazit dokumentaci</a>
+            <a href="{{this}}">Zobrazit dokumentaci</a>
             <span class="quality"></span>
           </dd>
           {{/each}}
@@ -158,9 +160,9 @@
         {{/if}}
         {{#if conformsToVisible}}
         <dl>
-          <dt>Dokumentace</dt>
+          <dt>Specifikace</dt>
           {{#each conformsTo}}
-          <dd class="conformsTo">
+          <dd class="specification">
             <a href="{{href}}">{{label}}</a>
             <span class="quality"></span>
           </dd>
@@ -212,6 +214,7 @@
   {{#if visible}}
   <gov-container class="distribution-container">
     <h2>Distribuce datové sady</h2>
+    <br/>
     <gov-grid>
       {{#each items}}
       <gov-grid-item size-sm="12/12" size-md="6/12" size-lg="4/12">

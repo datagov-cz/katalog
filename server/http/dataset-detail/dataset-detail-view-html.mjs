@@ -164,19 +164,33 @@ export function prepareTemplateData(configuration, translation, navigation, lang
 function prepareDataset(configuration, translation, navigation, { dataset }) {
   const datasetDetailNavigation = navigation.changeView(ROUTE.DATASET_DETAIL);
   const datasetListNavigation = navigation.changeView(ROUTE.DATASET_LIST);
+  // heading section
+  const heading = {
+    "title": dataset.title,
+    "openUrl": configuration.client.dereferenceTemplate
+      .replace("{}", encodeURIComponent(dataset.iri)),
+    "copyUrl": configuration.client.catalogFormUrl
+      + translation.translate("url-copy-dataset")
+      + encodeURIComponent(dataset.iri),
+  }
+  if (dataset.isFromForm) {
+    heading.editUrl = configuration.client.catalogFormUrl
+    + translation.translate("url-edit-dataset")
+    + encodeURIComponent(dataset.iri);
+    heading.deleteDatasetUrl = configuration.client.catalogFormUrl
+      + translation.translate("url-delete-dataset")
+      + encodeURIComponent(dataset.iri);
+  } else if (dataset.isFromCatalog) {
+    heading.deleteCatalogUrl = configuration.client.catalogFormUrl
+      + translation.translate("url-delete-catalog")
+      + encodeURIComponent(dataset.iri);
+  } else {
+    // No actions.
+  }
+  //
   return {
     "iri": dataset.iri,
-    "heading": {
-      "title": dataset.title,
-      "openUrl": configuration.client.dereferenceTemplate
-        .replace("{}", encodeURIComponent(dataset.iri)),
-      "copyUrl": configuration.client.catalogFormUrl
-        + translation.translate("url-copy-dataset")
-        + encodeURIComponent(dataset.iri),
-      "deleteUrl": configuration.client.catalogFormUrl
-        + translation.translate("url-delete-dataset")
-        + encodeURIComponent(dataset.iri),
-    },
+    "heading": heading,
     "publisher": {
       "label": dataset.publisher.label,
       "href": datasetListNavigation.linkFromServer({
@@ -386,7 +400,7 @@ function prepareApplicableLegislation(applicableLegislation) {
     if (left.chip !== null && right.chip === null) {
       return -1;
     }
-    if (left.chip === null && right.chip ==! null) {
+    if (left.chip === null && right.chip !== null) {
       return 1;
     }
     return left.url.localeCompare(right.url, 'en');

@@ -72,6 +72,12 @@
   margin-bottom: 1rem;
 }
 
+/* Section spacing. */
+
+.distribution-container, .dataset-list-container, .application-list-container {
+  margin-bottom: 1rem;
+}
+
 /* Applicable legislation modal. */
 
 #legislation-list-modal ul li {
