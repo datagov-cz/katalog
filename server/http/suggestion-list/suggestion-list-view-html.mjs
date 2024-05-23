@@ -2,7 +2,11 @@
 import { ROUTE } from "../route-name.mjs";
 import * as components from "../../component/index.mjs";
 
-const FACETS = ["state", "theme", "publisher"];
+const FACETS = [
+  { "name": "state", "tooltip": "stateTooltip" },
+  { "name": "theme", "tooltip": "themeTooltip" },
+  { "name": "publisher", "tooltip": "publisherTooltip" },
+];
 
 const SORT_OPTIONS = [
   ["title", "asc"],
@@ -51,11 +55,13 @@ function prepareDocumentsInPlace(navigation, suggestions) {
 
 function prepareFacets(translation, navigation, query, facets, counts) {
   const result = [];
-  for (const name of FACETS) {
+  for (const { name, tooltip } of FACETS) {
     const facetData = facets[name];
-    const facerLabel = translation.translate(name);
+    const facetLabel = translation.translate(name);
+    const facetTooltip = translation.translate(tooltip);
     result.push(components.createFacetData(
-      navigation, query, facetData, name, facerLabel, counts[name]))
+      navigation, query, facetData, name, facetLabel, facetTooltip,
+      counts[name]));
   }
   return result;
 }

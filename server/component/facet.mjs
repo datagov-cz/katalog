@@ -4,12 +4,13 @@ export function registerFacet(templateService, language) {
   templateService.syncAddComponent("facet", "facet-" + language + ".html");
 }
 
-export function createFacetData(navigationService, query, facetData, facetName, facetLabel, count) {
+export function createFacetData(navigationService, query, facetData, facetName, facetLabel, tooltipMessage, count) {
   facetData.forEach(item => prepareFacetItemInPlace(navigationService, facetName, query, item))
   const result = {
     "label": facetLabel,
     "count": count,
     "items": facetData,
+    "tooltipMessage": tooltipMessage,
   };
   if (count > facetData.length) {
     result["showMoreHref"] = navigationService.linkFromServer({

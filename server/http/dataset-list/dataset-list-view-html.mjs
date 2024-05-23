@@ -1,9 +1,19 @@
 import { ROUTE } from "../route-name.mjs";
 import * as components from "../../component/index.mjs";
 
-const FACET_SERIES = "datasetSeries";
+const FACET_SERIES = {
+  "name": "datasetSeries",
+  "tooltip": "datasetSeriesTooltip"
+};
 
-const FACETS = ["publisher", "theme", "hvdCategory", "dataServiceType", "format", "keyword"];
+const FACETS = [
+  { "name": "publisher", "tooltip": "publisherTooltip" },
+  { "name": "theme", "tooltip": "themeTooltip" },
+  { "name": "hvdCategory", "tooltip": "hvdCategoryTooltip" },
+  { "name": "dataServiceType", "tooltip": "dataServiceTypeTooltip" },
+  { "name": "format", "tooltip": "formatTooltip" },
+  { "name": "keyword", "tooltip": "keywordTooltip" },
+];
 
 const SORT_OPTIONS = [
   ["title", "asc"],
@@ -82,16 +92,20 @@ function prepareFacets(translation, navigation, query, facets, counts) {
   if (query.isPartOf.length > 0) {
     const name = "isPartOf";
     const facetData = facets[name];
-    const facetLabel = translation.translate(FACET_SERIES);
+    const facetLabel = translation.translate(FACET_SERIES.name);
+    const facetTooltip = translation.translate(FACET_SERIES.tooltip);
     //
     result.push(components.createFacetData(
-      navigation, query, facetData, name, facetLabel, query.isPartOf.length));
+      navigation, query, facetData, name, facetLabel, facetTooltip,
+      query.isPartOf.length));
   }
-  for (const name of FACETS) {
+  for (const { name, tooltip } of FACETS) {
     const facetData = facets[name];
     const facetLabel = translation.translate(name);
+    const facetTooltip = translation.translate(tooltip);
     result.push(components.createFacetData(
-      navigation, query, facetData, name, facetLabel, counts[name]))
+      navigation, query, facetData, name, facetLabel, facetTooltip,
+      counts[name]));
   }
   return result;
 }

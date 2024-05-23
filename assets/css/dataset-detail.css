@@ -16,6 +16,18 @@
   float: right;
 }
 
+.quality>*{
+  margin-left: .5rem;
+}
+
+.dataset-container .quality {
+  margin-right: 1em;
+}
+
+.distribution-item-wrap .quality {
+  margin-right: .5rem;
+}
+
 /* Legislation list. */
 
 .legislation-list .element > ul {

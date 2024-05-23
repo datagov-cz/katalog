@@ -39,6 +39,7 @@ const AUTHORSHIP_CUSTOM = (authorship) => ({
   "iconStyle": "warning",
   "iconTitle": "custom-authorship-comment",
   "href": authorship,
+  "showQuality": true,
 });
 
 const DATABASE_AUTHORSHIP_MAP = {
@@ -69,6 +70,7 @@ const DATABASE_AUTHORSHIP_CUSTOM = (authorship) => ({
   "iconStyle": "warning",
   "iconTitle": "custom-database-authorship-comment",
   "href": authorship,
+  "showQuality": true,
 });
 
 const PROTECTED_DATABASE_AUTHORSHIP_MAP = {
@@ -98,6 +100,7 @@ const PROTECTED_DATABASE_AUTHORSHIP_CUSTOM = (authorship) => ({
   "iconStyle": "warning",
   "iconTitle": "custom-protected-database-comment",
   "href": authorship,
+  "showQuality": true,
 });
 
 const PERSONAL_DATA_MAP = {

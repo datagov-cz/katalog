@@ -49,6 +49,10 @@ a {
   justify-content: end;
 }
 
+.align-items-center {
+  align-items: center;
+}
+
 .gap-2 {
   gap: .5em;
 }
@@ -65,8 +69,24 @@ a {
   font-size: x-large;
 }
 
+.larger {
+  font-size: larger;
+}
+
 .m-1 {
   margin: .25rem;
+}
+
+.m-2 {
+  margin: .5rem;
+}
+
+.m-3 {
+  margin: .75rem;
+}
+
+.m-4 {
+  margin: 1rem;
 }
 
 .mb-1 {

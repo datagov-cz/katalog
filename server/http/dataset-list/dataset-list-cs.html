@@ -46,13 +46,31 @@
                   <gov-button variant="primary" size="m" data-type="last-year">Minulý rok</gov-button>
                 </div>
               </div>
-              <div class="flex-row flex-space-evenly mb-2">
-                <gov-form-switch data-type="high-value-dataset" {{#if query.hvdDataset}}checked{{/if}}>
-                  <gov-form-label slot="label">HVD Datové sady</gov-form-label>
-                </gov-form-switch>
-                <gov-form-switch data-type="dynamic-data" {{#if query.dynamicData}}checked{{/if}}>
-                  <gov-form-label slot="label">Dynamické data</gov-form-label>
-                </gov-form-switch>
+              <div class="flex-row flex-space-evenly m-4">
+                <div class="flex-row align-items-center">
+                  <gov-form-switch data-type="high-value-dataset" {{#if query.hvdDataset}}checked{{/if}}>
+                    <gov-form-label slot="label">HVD Datové sady</gov-form-label>
+                  </gov-form-switch>
+                  &nbsp;
+                  <gov-tooltip>
+                    <gov-icon name="question-circle" type="bootstrap" class="larger"></gov-icon>
+                    <gov-tooltip-content>
+                      TODO-TEXT Nápověda pro HVD Datové sady
+                    </gov-tooltip-content>
+                  </gov-tooltip>
+                </div>
+                <div class="flex-row align-items-center">
+                  <gov-form-switch data-type="dynamic-data" {{#if query.dynamicData}}checked{{/if}}>
+                    <gov-form-label slot="label">Dynamické data</gov-form-label>
+                  </gov-form-switch>
+                  &nbsp;
+                  <gov-tooltip>
+                    <gov-icon name="question-circle" type="bootstrap" class="larger"></gov-icon>
+                    <gov-tooltip-content>
+                      TODO-TEXT Nápověda pro Dynamické data
+                    </gov-tooltip-content>
+                  </gov-tooltip>
+                </div>
               </div>
               <div class="flex-space-between">
                 <gov-button variant="warning" size="m" href="{{clear-href}}" wcag-label="Smaž filtry">

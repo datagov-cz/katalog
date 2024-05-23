@@ -255,8 +255,9 @@
                 <h5 class="gov-text--l gov-color--secondary-700">Podmínky užití distribuce</h5>
               </div>
               <ul>
-                <li>
+                <li class="authorship">
                   {{#with authorship}}
+                  {{#if showQuality}}<span class="quality"></span>{{/if}}
                   <div>
                     {{#if href}}
                       <a href="{{href}}" rel="nofollow noopener noreferrer" target="_blank">{{label}}</a>
@@ -272,8 +273,9 @@
                     Autorské dílo
                   {{/if}}
                 </li>
-                <li>
+                <li class="databaseAuthorship">
                   {{#with databaseAuthorship}}
+                  {{#if showQuality}}<span class="quality"></span>{{/if}}
                   <div>
                     {{#if href}}
                       <a href="{{href}}" rel="nofollow noopener noreferrer" target="_blank">{{label}}</a>
@@ -289,8 +291,9 @@
                     Originální databáze
                   {{/if}}
                 </li>
-                <li>
+                <li class="protectedDatabaseAuthorship">
                   {{#with protectedDatabaseAuthorship}}
+                  {{#if showQuality}}<span class="quality"></span>{{/if}}
                   <div>
                     {{#if href}}
                       <a href="{{href}}" rel="nofollow noopener noreferrer" target="_blank">{{label}}</a>
@@ -305,6 +308,7 @@
                   {{else}}
                     Zvláštní právo pořizovatele databáze
                   {{/if}}
+                  <span class="quality"></span>
                 </li>
                 <li>
                   {{#with personalData}}
@@ -508,7 +512,6 @@
   {{#with footer}} {{> footer }} {{/with}}
   <script type="application/ld+json">{{{metadataAsString}}}</script>
   <!--  -->
-  <gov-modal id="quality-modal" label=""></gov-modal>
   <gov-modal id="legislation-list-modal" label="Příslušné právní předpisy"></gov-modal>
 </body>
 

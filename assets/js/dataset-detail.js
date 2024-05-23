@@ -19,123 +19,135 @@ function initializeApplicableLegislation() {
     modalElement.setAttribute("open", "true");
   };
   document.querySelectorAll(".applicable-legislation .legislation-list")
-  .forEach(element => element.addEventListener("gov-click", showModal));
+    .forEach(element => element.addEventListener("gov-click", showModal));
 }
 
 function initializeQuality() {
-  const modalElement = document.getElementById("quality-modal");
-
-  const openModal = (label) => {
-    modalElement.setAttribute("label", label);
-    modalElement.setAttribute("open", "true");
-  };
-
   const language = document.documentElement.lang;
   const datasetElement = document.querySelector(".dataset-container[data-iri]");
-  fetchAndRenderDatasetQuality(openModal, language, datasetElement, datasetElement.dataset.iri);
+  fetchAndRenderDatasetQuality(language, datasetElement, datasetElement.dataset.iri);
 
-  const distributionElements = document.querySelectorAll(".distribution[data-iri]");
-  distributionElements.forEach(element => fetchAndRenderDistributionQuality(openModal, language, element, element.dataset.iri));
+  const distributionElements = document.querySelectorAll(".distribution-item-wrap[data-iri]");
+  distributionElements.forEach(element => fetchAndRenderDistributionQuality(language, element, element.dataset.iri));
 }
 
-async function fetchAndRenderDatasetQuality(openModal, language, element, iri) {
+async function fetchAndRenderDatasetQuality(language, element, iri) {
   const response = await fetchQuality(language, iri);
 
   const documentationElement = element.querySelector(".documentation .quality");
   const documentation = response.documentation;
-  renderQualityMeasure(openModal, documentationElement, documentation, "link", "link-45deg");
+  renderQualityMeasure(documentationElement, documentation, "link", "link-45deg");
 
   const specificationElement = element.querySelector(".specification .quality");
   const specification = response.specification;
-  renderQualityMeasure(openModal, specificationElement, specification, "link", "link-45deg");
+  renderQualityMeasure(specificationElement, specification, "link", "link-45deg");
 }
 
 function fetchQuality(language, iri) {
   const url = "/api/v2/quality?iri=" + encodeURIComponent(iri) + "&language=" + encodeURIComponent(language);
-  return fetch(url).then(response => response.json());
+  return fetch(url)
+    .then(response => response.json())
+    .then(content => {
+      console.log({ iri, content });
+      return content;
+    })
 }
 
-function renderQualityMeasure(openModal, element, measure, successIconName, failedIconName) {
+function renderQualityMeasure(element, measure, successIconName, failedIconName) {
   if (element === null || measure === undefined || measure === null) {
     return;
   }
-  let icon = measure.value ? createAlrightQualityIcon(successIconName) : createFailedQualityIcon(failedIconName);
-  icon.setAttribute("title", measure.message);
+  let icon;
+  if (measure.value) {
+    icon = createAlrightQualityIcon(successIconName, measure.message);
+  } else {
+    icon = createFailedQualityIcon(failedIconName, measure.message);
+  }
   element.appendChild(icon);
-  element.addEventListener("click", () => openModal(measure.message));
 }
 
-function createAlrightQualityIcon(name) {
-  const element = document.createElement("gov-icon");
-  element.setAttribute("name", name);
-  element.setAttribute("type", "bootstrap")
-  element.classList.add("alright");
-  return element;
+function createAlrightQualityIcon(name, message) {
+  return createQualityIcon(name, "alright", message);
 }
 
-function createFailedQualityIcon(name) {
-  const element = document.createElement("gov-icon");
-  element.setAttribute("name", name);
-  element.setAttribute("type", "bootstrap")
-  element.classList.add("danger");
-  return element;
+function createQualityIcon(iconName, iconClass, message) {
+  const iconElement = document.createElement("gov-icon");
+  iconElement.setAttribute("name", iconName);
+  iconElement.setAttribute("type", "bootstrap");
+  iconElement.classList.add(iconClass);
+
+  const contentElement = document.createElement("gov-tooltip-content");
+  contentElement.textContent = message;
+
+  const tooltipElement = document.createElement("gov-tooltip");
+  tooltipElement.appendChild(iconElement);
+  tooltipElement.appendChild(contentElement);
+  return tooltipElement;
 }
 
-async function fetchAndRenderDistributionQuality(openModal, language, element, iri) {
+function createFailedQualityIcon(name, message) {
+  return createQualityIcon(name, "danger", message);
+}
+
+async function fetchAndRenderDistributionQuality(language, element, iri) {
   const response = await fetchQuality(language, iri);
-  renderLegalQuality(openModal, element, response);
-  renderShared(openModal, element, response);
-  renderDistributionQuality(openModal, element, response);
-  renderDataServiceQuality(openModal, element, response);
+  renderLegalQuality(element, response);
+  renderShared(element, response);
+  renderDistributionQuality(element, response);
+  renderDataServiceQuality(element, response);
 }
 
-function renderLegalQuality(openModal, element, response) {
+function renderLegalQuality(element, response) {
+
+  const authorshipElement = element.querySelector(".authorship .quality");
   const authorship = response.authorship;
-  const authorshipCors = response.authorshipCors;
+  renderQualityMeasure(authorshipElement, authorship, "award", "bug");
 
+  const databaseAuthorshipElement = element.querySelector(".databaseAuthorship .quality");
   const databaseAuthorship = response.databaseAuthorship;
-  const databaseAuthorshipCors = response.databaseAuthorshipCors;
+  renderQualityMeasure(databaseAuthorshipElement, databaseAuthorship, "award", "bug");
 
+  const specialDatabaseElement = element.querySelector(".protectedDatabaseAuthorship .quality");
   const specialDatabaseAuthorship = response.specialDatabaseAuthorship;
-  const specialDatabaseAuthorshipCors = response.specialDatabaseAuthorshipCors;
+  renderQualityMeasure(specialDatabaseElement, specialDatabaseAuthorship, "award", "bug");
 
-  console.log("legal", { authorship, authorshipCors, databaseAuthorship, databaseAuthorshipCors, specialDatabaseAuthorship, specialDatabaseAuthorshipCors, })
+  console.log("legal", { authorship, databaseAuthorship, specialDatabaseAuthorship })
 }
 
-function renderShared(openModal, element, response) {
+function renderShared(element, response) {
   const mediaTypeElement = element.querySelector(".mediaType .quality");
   const mediaType = response.mediaType;
-  renderQualityMeasure(openModal, mediaTypeElement, mediaType, "award", "bug");
+  renderQualityMeasure(mediaTypeElement, mediaType, "award", "bug");
 }
 
-function renderDistributionQuality(openModal, element, response) {
+function renderDistributionQuality(element, response) {
   const downloadElement = element.querySelector(".download .quality");
   const download = response.download;
   const downloadCors = response.downloadCors;
-  renderQualityMeasure(openModal, downloadElement, download, "award", "bug");
-  renderQualityMeasure(openModal, downloadElement, downloadCors, "globe2", "globe2");
+  renderQualityMeasure(downloadElement, download, "award", "bug");
+  renderQualityMeasure(downloadElement, downloadCors, "globe2", "globe2");
 
   const schemaElement = element.querySelector(".schema .quality");
   const schema = response.schema;
   const schemaCors = response.schemaCors;
-  renderQualityMeasure(openModal, schemaElement, schema, "award", "bug");
-  renderQualityMeasure(openModal, schemaElement, schemaCors, "globe2", "globe2");
+  renderQualityMeasure(schemaElement, schema, "award", "bug");
+  renderQualityMeasure(schemaElement, schemaCors, "globe2", "globe2");
 }
 
-function renderDataServiceQuality(openModal, element, response) {
+function renderDataServiceQuality(element, response) {
   const endpointDescriptionElement = element.querySelector(".endpointDescription .quality");
   const endpointDescription = response.endpointDescription;
   const endpointDescriptionCors = response.endpointDescriptionCors;
-  renderQualityMeasure(openModal, endpointDescriptionElement, endpointDescription, "award", "bug");
-  renderQualityMeasure(openModal, endpointDescriptionElement, endpointDescriptionCors, "globe2", "globe2");
+  renderQualityMeasure(endpointDescriptionElement, endpointDescription, "award", "bug");
+  renderQualityMeasure(endpointDescriptionElement, endpointDescriptionCors, "globe2", "globe2");
 
   const endpointUrlElement = element.querySelector(".endpointUrl .quality");
   const endpointUrl = response.endpointUrl;
   const endpointUrlCors = response.endpointUrlCors;
-  renderQualityMeasure(openModal, endpointUrlElement, endpointUrl, "award", "bug");
-  renderQualityMeasure(openModal, endpointUrlElement, endpointUrlCors, "globe2", "globe2");
+  renderQualityMeasure(endpointUrlElement, endpointUrl, "award", "bug");
+  renderQualityMeasure(endpointUrlElement, endpointUrlCors, "globe2", "globe2");
 
   const conformsToElement = element.querySelector(".conformsTo .quality");
   const conformsTo = response.conformsTo;
-  renderQualityMeasure(openModal, conformsToElement, conformsTo, "award", "bug");
+  renderQualityMeasure(conformsToElement, conformsTo, "award", "bug");
 }
