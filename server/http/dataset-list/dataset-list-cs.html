@@ -117,19 +117,34 @@
             </p>
             <div>
               {{#if hvd}}
-              <gov-chip variant="error" type="outlined" size="xs">
-                HVD
-              </gov-chip>
+              <gov-tooltip>
+                <gov-chip variant="error" type="outlined" size="xs" style="">
+                  HVD
+                </gov-chip>
+                <gov-tooltip-content>
+                  Datová sada s vysokou socioekonomickou hodnotou.
+                </gov-tooltip-content>
+              </gov-tooltip>
               {{/if}}
               {{#if dynamicData}}
-              <gov-chip variant="warning" type="outlined" size="xs">
-                Dynamická
-              </gov-chip>
+              <gov-tooltip>
+                <gov-chip variant="warning" type="outlined" size="xs" style="">
+                  Dynamická
+                </gov-chip>
+                <gov-tooltip-content>
+                  Datová sada obsahuje dynamická data.
+                </gov-tooltip-content>
+              </gov-tooltip>
               {{/if}}
               {{#each format}}
-              <gov-chip variant="primary" type="outlined" size="xs">
-                {{label}}
-              </gov-chip>
+              <gov-tooltip>
+                <gov-chip variant="primary" type="outlined" size="xs">
+                  {{label}}
+                </gov-chip>
+                <gov-tooltip-content>
+                  Datová sada je distribuovaná ve formátu {{label}}.
+                </gov-tooltip-content>
+              </gov-tooltip>
               {{/each}}
             </div>
           </div>

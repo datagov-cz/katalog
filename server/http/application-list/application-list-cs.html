@@ -57,9 +57,14 @@
             </p>
             <div>
               {{#each themes}}
-              <gov-chip variant="primary" type="outlined" size="xs">
-                {{label}}
-              </gov-chip>
+              <gov-tooltip>
+                <gov-chip variant="primary" type="outlined" size="xs">
+                  {{label}}
+                </gov-chip>
+                <gov-tooltip-content>
+                  Datová sada náleží k tématu {{label}}.
+                </gov-tooltip-content>
+              </gov-tooltip>
               {{/each}}
             </div>
           </div>
