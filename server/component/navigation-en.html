@@ -1,3 +1,52 @@
 <header class="gov-header">
-  <!-- TODO -->
+  <gov-container>
+    <gov-branding>
+      <div class="heading">
+        <a href="/">Czech Data Portal</a>
+      </div>
+      <div class="language">
+        <a href="{{cs}}">Čeština</a>
+      </div>
+    </gov-branding>
+    <gov-nav wcag-label="Hlavní navigace">
+      <gov-nav-item href="/news">
+        News
+      </gov-nav-item>
+      <gov-nav-dropdown>
+        <span slot="label">National Open Data Catalog</span>
+        <ul slot="dropdown">
+          <li>
+            <a href="/datasets" {{#if datasetsActive}}class="active" {{/if}}>Datasets</a>
+          </li>
+          <li>
+            <a href="/applications" {{#if applicationsActive}}class="active" {{/if}}>Applications</a>
+          </li>
+          <li>
+            <a href="/publishers">Publishers</a>
+          </li>
+          <li>
+            <a href="/local-catalogs" {{#if localCatalogsActive}}class="active" {{/if}}>Local catalogs</a>
+          </li>
+          <li>
+            <a href="/suggestions-for-datasets-to-be-opened" {{#if suggestionsActive}}class="active" {{/if}}>Suggestions for data to be opened</a>
+          </li>
+        </ul>
+      </gov-nav-dropdown>
+      <gov-nav-dropdown>
+        <span slot="label">More</span>
+        <ul slot="dropdown">
+          <li>
+            <a href="/informace/základy-otevřených-dat-pro-zájemce/">Interested in opening data (in Czech)</a>
+          </li>
+          <li>
+            <a href="https://opendata.gov.cz/informace:základy-otevřených-dat-pro-programátory">Users and programmers (in Czech)</a>
+          </li>
+          <li>
+            <a href="https://opendata.gov.cz/">Data publishers (in Czech)</a>
+          </li>
+        </ul>
+      </gov-nav-dropdown>
+    </gov-nav>
+  </gov-container>
 </header>
+</gov-container>

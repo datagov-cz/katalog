@@ -24,8 +24,7 @@
         <!-- Search. -->
         {{#with search}}
         <gov-form-search variant="primary" id="search" data-query="dotaz" data-base-url="{{base-url}}">
-          <gov-form-input slot="input" size="m" placeholder="Co hledáte" wcag-label="vyhledávání" value="{{query.searchQuery}}"
-            data-type="query"></gov-form-input>
+          <gov-form-input slot="input" size="m" placeholder="Co hledáte" wcag-label="vyhledávání" value="{{query.searchQuery}}" data-type="query"></gov-form-input>
           <gov-button slot="button" variant="primary" size="s" wcag-label="hledat" data-type="submit">
             Hledat
           </gov-button>
@@ -68,7 +67,6 @@
                     <gov-icon name="question-circle" type="bootstrap" class="larger"></gov-icon>
                     <gov-tooltip-content>
                       Dynamická data - data měnící se nepravidelně, či velmi rychle, například v reálném čase.
-                      <!--Dynamic data - data that is frequently updated, e.g. real-time data-->
                     </gov-tooltip-content>
                   </gov-tooltip>
                 </div>
@@ -118,7 +116,7 @@
             <div>
               {{#if hvd}}
               <gov-tooltip>
-                <gov-chip variant="error" type="outlined" size="xs" style="">
+                <gov-chip variant="error" type="outlined" size="xs">
                   HVD
                 </gov-chip>
                 <gov-tooltip-content>
@@ -128,7 +126,7 @@
               {{/if}}
               {{#if dynamicData}}
               <gov-tooltip>
-                <gov-chip variant="warning" type="outlined" size="xs" style="">
+                <gov-chip variant="warning" type="outlined" size="xs">
                   Dynamická
                 </gov-chip>
                 <gov-tooltip-content>

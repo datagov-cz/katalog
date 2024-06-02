@@ -30,7 +30,7 @@ export function beforeLinkCallback(navigation, serverQuery) {
     "iri": serverQuery.iri,
   };
 
-  if (serverQuery.distributionPage !== undefined) {
+  if (serverQuery.distributionPage ?? DEFAULT_PAGE !== DEFAULT_PAGE) {
     // We use the input as we need get value in to the template.
     result["distribution-page"] =  serverQuery.distributionPage;
   }

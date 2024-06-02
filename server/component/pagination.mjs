@@ -1,6 +1,6 @@
 
 export function registerPagination(templateService, language) {
-  templateService.syncAddComponent("pagination", "pagination.html");
+  templateService.syncAddComponent("pagination", "pagination-" + language + ".html");
 }
 
 export function createPaginationData(navigation, query, documentsCount) {
@@ -12,7 +12,7 @@ export function createPaginationData(navigation, query, documentsCount) {
     "linkTemplate": navigation.linkFromServer({
       ...query,
       "page": "_PAGE_"
-    }).replace("_PAGE_", "{PAGE}"), // We need '{PAGE}' in link template.
+    }).replace("_PAGE_", "{PAGE}"), // We need '{PAGE}' in link template for design-system.
     "pageSizeHref": navigation.linkFromServer({
       ...query,
       "page": 0,

@@ -1,18 +1,75 @@
-<html lang="en">
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
 
 <head>
   {{> head }}
-  <!-- Site specific. -->
-  <title>Publishers - Národní katalog otevřených dat (NKOD)</title>
-  <meta name="description" content="Portál otevřených dat a Národní katalog otevřených dat České republiky"/>
-  <!--  -->
+  <title>Publishers - National open data catalog (NKOD)</title>
+  <meta name="description" content="Open data portal and National open data catalog of the Czech Republic" />
+  <link rel="canonical" href="/publishers">
+  <link rel="alternate" href="/poskytovatelé" hreflang="cs">
+  <link rel="alternate" href="/publishers" hreflang="en">
 </head>
 
 <body>
   {{#with navigation}} {{> navigation }} {{/with}}
-  <gov-container>
-    <!-- TODO -->
+  <gov-container class="publishers-container">
+    <br/>
+    <h1>Publishers</h1>
+    <p>
+      {{message}}
+    </p>
+    <gov-grid>
+      {{#each publishers}}
+      <gov-grid-item size-sm="12/12" size-md="6/12" size-md="6/12" size-lg="4/12" size-xl="3/12" class="p-1">
+        <gov-card>
+          <div class="gov-card__header">
+            <a href="{{href}}">
+              <h3 class="gov-card__title inline">
+                {{label}}
+              </h3>
+              <gov-icon name="box-arrow-up-right"></gov-icon>
+            </a>
+          </div>
+          <div class="gov-card__inner">
+            <div class="gov-card__main">
+              <div class="flex-row x-large gap-4">
+                <a href="{{dashboardMonthly}}" title="Dashboard - monthly averages">
+                  <gov-icon name="clipboard2-data" type="bootstrap" ></gov-icon>
+                </a>
+                <a href="{{dashboardDaily}}" title="Dashboard - daily measures">
+                  <gov-icon name="clipboard2-pulse" type="bootstrap"></gov-icon>
+                </a>
+              </div>
+              <div class="flex-row gap-2">
+                {{#with badges}}
+                {{#if vdf}}
+                <gov-chip variant="primary" type="outlined" size="xs">
+                  VDF
+                </gov-chip>
+                {{/if}}
+                {{#if vdfOriginator}}
+                <gov-chip variant="primary" type="outlined" size="xs">
+                  VDF Originator
+                </gov-chip>
+                {{/if}}
+                {{#if vdfPublisher}}
+                <gov-chip variant="primary" type="outlined" size="xs">
+                  VDF Publisher
+                </gov-chip>
+                {{/if}}
+                {{/with}}
+              </div>
+            </div>
+            <div class="gov-card__footer">
+              {{message}}
+            </div>
+          </div>
+        </gov-card>
+      </gov-grid-item>
+      {{/each}}
+    </gov-grid>
   </gov-container>
+  <br/>
   {{#with footer}} {{> footer }} {{/with}}
 </body>
 
