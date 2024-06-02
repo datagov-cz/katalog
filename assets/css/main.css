@@ -1,7 +1,27 @@
+
+/* Branding */
+
+.gov-header gov-branding a {
+  color: var(--gov-nav-color, var(--gov-color-neutral-white));
+  text-decoration: none;
+}
+
+.gov-header gov-branding .heading {
+  font-weight: var(--gov-text-3xl-font-weight);
+  font-size: var(--gov-text-3xl-font-size);
+  line-height: var(--gov-text-3xl-line-height);
+  letter-spacing: var(--gov-text-3xl-letter-spacing);
+}
+
+.gov-header gov-branding .language {
+  display: flex;
+  align-items: center;
+}
+
 /* Unify header with data portal style. */
 
 .gov-header>gov-container {
-  padding-top: 1rem;
+  padding-top: .5rem;
 }
 
 /* Global styles. */
