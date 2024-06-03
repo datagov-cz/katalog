@@ -1,7 +1,7 @@
 
 export async function prepareData(services, languages, query) {
   const data = await services.solrApplication.fetchApplications(languages, {
-    "searchQuery": query.query,
+    "searchQuery": query.searchQuery,
     "state": query.state,
     "platform": query.platform,
     "theme": query.theme,

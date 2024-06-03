@@ -60,6 +60,7 @@ export const DCAT = {
   "startDate": DCAT_PREFIX + "startDate",
   "endDate": DCAT_PREFIX + "endDate",
   "accessService": DCAT_PREFIX + "accessService",
+  "inSeries": DCAT_PREFIX + "inSeries",
 };
 
 const FOAF_PREFIX = "http://xmlns.com/foaf/0.1/";
@@ -199,4 +200,11 @@ export const LP = {
 
 export const SGOV = {
   "ObjectType": "https://slovník.gov.cz/základní/pojem/typ-objektu",
+};
+
+const EUROPE_PREFIX = "http://data.europa.eu/r5r/";
+
+export const EUROPE = {
+  "applicableLegislation": EUROPE_PREFIX + "applicableLegislation",
+  "hvdCategory": EUROPE_PREFIX + "hvdCategory",
 };

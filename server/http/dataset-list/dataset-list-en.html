@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  {{> head }}
+  <title>Datasets - National open data catalog (NKOD)</title>
+  <meta name="description" content="Open data portal and National open data catalog of the Czech Republic" />
+  <link rel="canonical" href="/datasets">
+  <link rel="alternate" href="/datové-sady" hreflang="cs">
+  <link rel="alternate" href="/datasets" hreflang="en">
+  <link type="text/css" rel="stylesheet" href="/assets/catalog/css/resource-list.css">
+  <link type="text/css" rel="stylesheet" href="/assets/catalog/css/dataset-list.css">
+  <script src="/assets/catalog/js/dataset-list.js"></script>
+</head>
+
+<body>
+  {{#with navigation}} {{> navigation }} {{/with}}
+  <gov-container class="datasets-container">
+    <gov-grid>
+      <gov-grid-item size-sm="12/12" size-md="4/12">
+        {{#each facets}} {{>facet}} {{/each}}
+      </gov-grid-item>
+      <gov-grid-item size-sm="12/12" size-md="8/12" class="p-2">
+        <!-- Search. -->
+        {{#with search}}
+        <gov-form-search variant="primary" id="search" data-query="dotaz" data-base-url="{{base-url}}">
+          <gov-form-input slot="input"size="m" placeholder="What you're looking for" wcag-label="search" value="{{value}}"></gov-form-input>
+          <gov-button slot="button" variant="primary" size="s" wcag-label="hledat" data-type="submit">
+            Search
+          </gov-button>
+        </gov-form-search>
+        <gov-accordion size="xs" wcag-label="Rozšířené vyhledávání">
+          <gov-accordion-item>
+            <h3 slot="label">Extended search</h3>
+            <div class="extended-search">
+              <div class="time-coverage mb-2">
+                <div class="time-inputs">
+                  Temporal coverage from
+                  <gov-form-input input-type="date" data-type="time-from" value="{{query.temporalFrom}}"></gov-form-input>
+                  to
+                  <gov-form-input input-type="date" data-type="time-to" value="{{query.temporalTo}}"></gov-form-input>
+                </div>
+                <div class="flex-justify-end time-buttons">
+                  <gov-button variant="primary" size="m" data-type="this-year">This year</gov-button>
+                  <gov-button variant="primary" size="m" data-type="last-year">Last year</gov-button>
+                </div>
+              </div>
+              <div class="flex-row flex-space-evenly m-4">
+                <div class="flex-row align-items-center">
+                  <gov-form-switch data-type="high-value-dataset" {{#if query.hvdDataset}}checked{{/if}}>
+                    <gov-form-label slot="label">
+                      High-Value Datasets (HVD)
+                    </gov-form-label>
+                  </gov-form-switch>
+                  &nbsp;
+                  <gov-tooltip>
+                    <gov-icon name="question-circle" type="bootstrap" class="larger"></gov-icon>
+                    <gov-tooltip-content>
+                      High-Value Datasets
+                    </gov-tooltip-content>
+                  </gov-tooltip>
+                </div>
+                <div class="flex-row align-items-center">
+                  <gov-form-switch data-type="dynamic-data" {{#if query.dynamicData}}checked{{/if}}>
+                    <gov-form-label slot="label">Dynamic data</gov-form-label>
+                  </gov-form-switch>
+                  &nbsp;
+                  <gov-tooltip>
+                    <gov-icon name="question-circle" type="bootstrap" class="larger"></gov-icon>
+                    <gov-tooltip-content>
+                      Dynamic data - data that is frequently updated, e.g. real-time data.
+                    </gov-tooltip-content>
+                  </gov-tooltip>
+                </div>
+              </div>
+              <div class="flex-space-between">
+                <gov-button slot="button" variant="warning" size="m" href="{{clear-href}}" wcag-label="Clear filters">
+                  Clear filters
+                </gov-button>
+                <gov-button variant="primary" size="m" wcag-label="Search" data-type="submit">
+                  Search
+                </gov-button>
+              </div>
+            </div>
+          </gov-accordion-item>
+        </gov-accordion>
+        <script>
+          window.search = {
+            "localization": {
+              "searchQuery": "query",
+              "temporalFrom": "temporal-start",
+              "temporalTo": "temporal-end",
+              "publicData": "vdf-public-data",
+              "codelist": "vdf-codelist",
+              "hvdDataset": "hvd",
+              "dynamicData": "dynamic-data",
+            },
+            "query": {{{queryObjectAsString}}},
+          };
+        </script>
+        {{/with}}
+        <!-- Result bar. -->
+        {{#with result-bar}} {{> result-bar }} {{/with}}
+        <!-- Datasets -->
+        <hr />
+        <div class="p-2 resource-list">
+          {{#each documents}}
+          <div class="p-2 resource-list-item">
+            <a href="{{href}}" class="flex-space-between">
+              <h3 class="inline">
+                {{title}}
+              </h3>
+              <gov-icon name="chevron-right"></gov-icon>
+            </a>
+            <p class="description-preview">
+              {{breaklines description}}
+            </p>
+            <div>
+              {{#if hvd}}
+              <gov-tooltip>
+                <gov-chip variant="error" type="outlined" size="xs">
+                  HVD
+                </gov-chip>
+                <gov-tooltip-content>
+                  High value dataset.
+                </gov-tooltip-content>
+              </gov-tooltip>
+              {{/if}}
+              {{#if dynamicData}}
+              <gov-tooltip>
+                <gov-chip variant="warning" type="outlined" size="xs">
+                  Dynamic
+                </gov-chip>
+                <gov-tooltip-content>
+                  Dataset with dynamic data.
+                </gov-tooltip-content>
+              </gov-tooltip>
+              {{/if}}
+              {{#each format}}
+              <gov-tooltip>
+                <gov-chip variant="primary" type="outlined" size="xs">
+                  {{label}}
+                </gov-chip>
+                <gov-tooltip-content>
+                  Dataset is distributed using {{label}}.
+                </gov-tooltip-content>
+              </gov-tooltip>
+              {{/each}}
+            </div>
+          </div>
+          <hr />
+          {{/each}}
+        </div>
+        {{#with pagination}} {{> pagination }} {{/with}}
+      </gov-grid-item>
+    </gov-grid>
+  </gov-container>
+  {{#with footer}} {{> footer }} {{/with}}
+</body>
+
+</html>

@@ -4,14 +4,12 @@ import {registerHead} from "./head.mjs";
 import {registerNavigation} from "./navigation.mjs";
 import {registerPagination} from "./pagination.mjs";
 import {registerResultBar} from "./result-bar.mjs";
-import {registerSearch} from "./search.mjs";
 
 export {createFacetData} from "./facet.mjs";
 export {createFooterData} from "./footer.mjs";
 export {createNavigationData} from "./navigation.mjs";
 export {createPaginationData} from "./pagination.mjs";
 export {createResultBarData} from "./result-bar.mjs";
-export {createSearchData} from "./search.mjs";
 
 export function registerComponents(templateService, language) {
   registerFacet(templateService, language)
@@ -20,5 +18,4 @@ export function registerComponents(templateService, language) {
   registerNavigation(templateService, language);
   registerPagination(templateService, language);
   registerResultBar(templateService, language);
-  registerSearch(templateService, language);
 }

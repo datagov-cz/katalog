@@ -7,20 +7,31 @@ export function createFacetService(labelService) {
      * @param {Object[]} items Items.
      * @param {String[]} active IRIs of active facets.
      * @param {Number} limit Number of facets to prepare.
+     * @param {} labelCallback
      * @returns {}
      */
-    "updateFacetInPlace": (languages, items, active, limit) =>
-      updateFacetInPlace(labelService, languages, items, active, limit),
+    "updateFacetInPlace": (languages, items, active, limit, labelCallback = null) =>
+      updateFacetInPlace(labelService, languages, items, active, limit, labelCallback),
   }
 }
 
 async function updateFacetInPlace(
-  labelService, languages, items, active, limit
+  labelService, languages, items, active, limit, labelCallback
 ) {
   addActivityAndActive(items, active);
-  await labelService.addLabelToResources(languages, items);
+  // We should not load labels for all facets as that can be a lot of requests.
+  // To tackle this issue we first sort by activity and count.
+  partialSortByActivityAndCount(items);
+  softSizeLengthByCount(items, limit);
+  // Fetch labels.
+  if (labelCallback == null) {
+    await labelService.addLabelToResources(languages, items);
+  } else {
+    items.forEach(labelCallback);
+  }
+  // Apply final sort of remove items after limit.
   items.sort(createCompareFacetItems(languages[0]));
-  if (limit !== -1) {
+  if (limit !== -1 && limit < items.length) {
     items.length = limit;
   }
 }
@@ -41,16 +52,43 @@ function addActivityAndActive(items, active) {
   }
 }
 
-function createCompareFacetItems(language) {
-  return (left, right) => {
-    // If returns < 0 then left comes before right.
+function partialSortByActivityAndCount(items) {
+  items.sort((left, right) => {
     if (left.active && !right.active) {
       return -1;
     }
     if (!left.active && right.active) {
       return 1;
     }
-    const count = left.count - right.count;
+    return right.count - left.count;
+  });
+}
+
+function softSizeLengthByCount(items, softLimit)  {
+  if (softLimit === -1 || softLimit > items.length) {
+    return;
+  }
+  // Start at soft limit
+  let nextLength = softLimit;
+  const countLimit = items[softLimit].count;
+  for (let index = softLimit; index < items.length; ++index) {
+    if (items[index].count < countLimit) {
+      nextLength = index;
+      break;
+    }
+  }
+  items.length = nextLength;
+}
+
+function createCompareFacetItems(language) {
+  return (left, right) => {
+    if (left.active && !right.active) {
+      return -1;
+    }
+    if (!left.active && right.active) {
+      return 1;
+    }
+    const count = right.count - left.count;
     if (count === 0) {
       return left.label.localeCompare(right.label, language);
     }

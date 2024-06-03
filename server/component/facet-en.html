@@ -1,0 +1,32 @@
+<div class="facet">
+  <div class="flex-space-between align-items-center">
+    <h3 class="facet-title inline">
+      {{label}} ({{count}})
+    </h3>
+    <gov-tooltip>
+      <gov-icon name="question-circle" type="bootstrap" class="larger"></gov-icon>
+      <gov-tooltip-content>
+        {{tooltipMessage}}
+      </gov-tooltip-content>
+    </gov-tooltip>
+  </div>
+  <ul class="facet-list">
+    {{#each items}}
+    <li class="facet-item {{#if active}}active{{/if}}">
+      <a href="{{href}}">
+        {{label}} ({{count}})
+      </a>
+    </li>
+    {{/each}}
+    {{#if showMoreHref}}
+    <li class="facet-item">
+      <a href="{{showMoreHref}}">Show more</a>
+    </li>
+    {{/if}}
+    {{#if showInitialHref}}
+    <li class="facet-item">
+      <a href="{{showInitialHref}}">Show popular only</a>
+    </li>
+    {{/if}}
+  </ul>
+</div>

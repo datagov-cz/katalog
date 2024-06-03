@@ -1,15 +1,19 @@
-<html lang="en">
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
 
 <head>
   {{> head }}
-  <!-- Site specific. -->
-  <title>Application - Národní katalog otevřených dat (NKOD)</title>
+  <title>Applications - National open data catalog (NKOD)</title>
+  <meta name="description" content="Open data portal and National open data catalog of the Czech Republic" />
+  <link rel="canonical" href="/application">
+  <link rel="alternate" href="/detail-aplikace" hreflang="cs">
+  <link rel="alternate" href="/application" hreflang="en">
+  <link type="text/css" rel="stylesheet" href="/assets/catalog/css/resource-list.css">
 </head>
 
 <body>
   {{#with navigation}} {{> navigation }} {{/with}}
-
-  <div class="container">
+  <gov-container class="application-container">
     {{#with application}}
     <div>
       {{#if author.titleVisible}}
@@ -22,7 +26,7 @@
       {{/if}}
       {{#if author.iriVisible}}
       <a href="{{author.iri}}" title="Go to link" rel="nofollow noopener noreferrer" target="_blank">
-        <i class="bi bi-arrow-up-right-square"></i>
+        <gov-icon name="box-arrow-up-right"></gov-icon>
       </a>
       {{/if}}
     </div>
@@ -30,8 +34,8 @@
     <p>
       {{breaklines description}}
     </p>
-    <div class="row">
-      <div class="col-12 col-sm-6 col-md-3">
+    <gov-grid>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
         <dl>
           <dt>State</dt>
           {{#each states}}
@@ -41,13 +45,13 @@
             </a>
             &nbsp;
             <a href="{{iri}}" title="Go to link" rel="nofollow noopener noreferrer" target="_blank">
-              <i class="bi bi-arrow-up-right-square"></i>
+              <gov-icon name="box-arrow-up-right"></gov-icon>
             </a>
           </dd>
           {{/each}}
         </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
+      </gov-grid-item>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
         <dl>
           <dt>Theme</dt>
           {{#each themes}}
@@ -55,29 +59,31 @@
             <a href="{{href}}">
               {{label}}
             </a>
+            &nbsp;
             <a href="{{iri}}" title="Go to link" rel="nofollow noopener noreferrer" target="_blank">
-              <i class="bi bi-arrow-up-right-square"></i>
+              <gov-icon name="box-arrow-up-right"></gov-icon>
             </a>
           </dd>
           {{/each}}
         </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
+      </gov-grid-item>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
         <dl>
           <dt>Platform</dt>
-          {{#each platform}}
+          {{#each platforms}}
           <dd>
             <a href="{{href}}">
               {{label}}
             </a>
+            &nbsp;
             <a href="{{iri}}" title="Go to link" rel="nofollow noopener noreferrer" target="_blank">
-              <i class="bi bi-arrow-up-right-square"></i>
+              <gov-icon name="box-arrow-up-right"></gov-icon>
             </a>
           </dd>
           {{/each}}
         </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
+      </gov-grid-item>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
         <dl>
           <dt>Type</dt>
           {{#each types}}
@@ -85,46 +91,45 @@
             <a href="{{href}}">
               {{label}}
             </a>
+            &nbsp;
             <a href="{{iri}}" title="Go to link" rel="nofollow noopener noreferrer" target="_blank">
-              <i class="bi bi-arrow-up-right-square"></i>
+              <gov-icon name="box-arrow-up-right"></gov-icon>
             </a>
           </dd>
           {{/each}}
         </dl>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-12 col-sm-6 col-md-3">
+    </gov-grid>
+    <gov-grid>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
         <dl>
           <dt>Publication date</dt>
           <dd>{{published}}</dd>
         </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
+      </gov-grid-item>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
         <dl>
           <dt>Date last modified</dt>
           <dd>{{modified}}</dd>
         </dl>
-      </div>
-    </div>
-    <div class="d-grid gap-2">
-      <a class="btn btn-outline-success  btn-lg" href="{{link}}" rel="nofollow noopener noreferrer">
+      </gov-grid-item>
+    </gov-grid>
+    <div>
+      <gov-button variant="primary" type="outlined" href="{{link}}" expanded="true" rel="nofollow noopener noreferrer">
         Navigate to application
-      </a>
+      </gov-button>
     </div>
-    <br/>
     {{/with}}
-
     <br/>
     {{#with datasets}}
     {{#if visible}}
-    <h2>Used datasets</h2>      
+    <h2>Used datasets</h2>
     <br/>
-    <div>      
+    <div class="resource-list">
       {{#each items}}
-      <div class="dataset">
+      <div class="resource-list-item">
         <a href="{{href}}" rel="nofollow noopener noreferrer">
-          <h4>{{title}}</h4>
+          <h3>{{title}}</h3>
         </a>
         <p>
           {{description}}
@@ -134,7 +139,7 @@
     </div>
     {{/if}}
     {{/with}}
-
+  </gov-container>
   {{#with footer}} {{> footer }} {{/with}}
 </body>
 

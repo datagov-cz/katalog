@@ -1,14 +1,19 @@
-<html lang="cs">
+<!DOCTYPE html>
+<html dir="ltr" lang="cs">
 
 <head>
   {{> head }}
-  <!-- Site specific. -->
-  <title>Návrh - Národní katalog otevřených dat (NKOD)</title>
+  <title>Žádost - Národní katalog otevřených dat (NKOD)</title>
+  <meta name="description" content="Portál otevřených dat a Národní katalog otevřených dat České republiky" />
+  <link rel="canonical" href="/suggestion-for-dataset-to-be-opened">
+  <link rel="alternate" href="/návrh-na-datovou-sadu-k-otevření" hreflang="cs">
+  <link rel="alternate" href="/suggestion-for-dataset-to-be-opened" hreflang="en">
+  <link type="text/css" rel="stylesheet" href="/assets/catalog/css/resource-list.css">
 </head>
 
 <body>
   {{#with navigation}} {{> navigation }} {{/with}}
-  <div class="container">
+  <gov-container class="suggestion-container">
     {{#with suggestion}}
     <div>
       <h1>{{title}}</h1>
@@ -16,15 +21,15 @@
         {{publisher.title}}
       </h2>
       <a href="{{publisher.iri}}" title="Přejít na odkaz" rel="nofollow noopener noreferrer" target="_blank">
-        <i class="bi bi-arrow-up-right-square"></i>
+        <gov-icon name="box-arrow-up-right"></gov-icon>
       </a>
     </div>
-    <br/>
+    <br />
     <p>
       {{breaklines description}}
     </p>
-    <div class="row">
-      <div class="col-12 col-sm-6 col-md-3">
+    <gov-grid>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
         <dl>
           <dt>Téma</dt>
           {{#each themes}}
@@ -34,64 +39,64 @@
             </a>
             &nbsp;
             <a href="{{iri}}" title="Přejít na odkaz" rel="nofollow noopener noreferrer" target="_blank">
-              <i class="bi bi-arrow-up-right-square"></i>
+              <gov-icon name="box-arrow-up-right"></gov-icon>
             </a>
           </dd>
           {{/each}}
         </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
+      </gov-grid-item>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
         <dl>
           <dt>Vytvořeno</dt>
           <dd>{{created}}</dd>
         </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
+      </gov-grid-item>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
         <dl>
           <dt>Stav</dt>
           <dd>{{state.label}}</dd>
         </dl>
-      </div>
+      </gov-grid-item>
       {{#if publication_plan_visible}}
-      <div class="col-12 col-sm-6 col-md-3">
+      <gov-grid-item size-sm="6/12" size-md="3/12">
         <dl>
           <dt>Plán zveřejnění</dt>
           <dd>{{publication_plan}}</dd>
         </dl>
-      </div>
+      </gov-grid-item>
       {{/if}}
-    </div>
-    <div class="row">
-      <div class="col-12 col-sm-6 col-md-3">
+    </gov-grid>
+    <gov-grid>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
         <dl>
           <dt>Povinným subjektem dle z. 106/1999 Sb.</dt>
           <dd>{{#if mandatory_106}}Ano{{else}}Ne{{/if}}</dd>
         </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
+      </gov-grid-item>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
         <dl>
           <dt>Existuje překážka dle zvláštního předpisu</dt>
           <dd>{{#if obstacle_special_regulation}}Ano{{else}}Ne{{/if}}</dd>
         </dl>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
+      </gov-grid-item>
+      <gov-grid-item size-sm="6/12" size-md="3/12">
         <dl>
           <dt>Existuje překážka dle z. 106/1999 Sb.</dt>
           <dd>{{#if obstacle_106}}Ano{{else}}Ne{{/if}}</dd>
         </dl>
-      </div>
-    </div>
+      </gov-grid-item>
+    </gov-grid>
     {{/with}}
-    <br/>
+    <br />
     {{#with datasets}}
     {{#if visible}}
     <h2>Datové sady</h2>
     <br/>
-    <div>
+    <div class="p-2 resource-list">
       {{#each items}}
-      <div class="dataset">
+      <div class="resource-list-item">
         <a href="{{href}}" rel="nofollow noopener noreferrer">
-          <h4>{{title}}</h4>
+          <h3>{{title}}</h3>
         </a>
         <p>
           {{description}}
@@ -101,8 +106,7 @@
     </div>
     {{/if}}
     {{/with}}
-  </div>
-  
+  </gov-container>
   {{#with footer}} {{> footer }} {{/with}}
 </body>
 

@@ -1,3 +1,5 @@
+import {DEFAULT_FACET_SIZE, DEFAULT_PAGE_SIZE} from "../../constants.mjs";
+
 const SORT_OPTIONS = ["title", "modified"]
 
 const SORT_DIRECTION_OPTIONS = ["asc", "desc"];
@@ -7,8 +9,6 @@ const DEFAULT_SORT = "title";
 const DEFAULT_SORT_DIRECTION = "asc";
 
 const DEFAULT_PAGE = 0;
-
-const DEFAULT_PAGE_SIZE = 10;
 
 export function parseClientQuery(navigation, query) {
   const clientSort = navigation.queryArgumentFromClient(query, "sort");
@@ -23,20 +23,22 @@ export function parseClientQuery(navigation, query) {
     DEFAULT_SORT_DIRECTION);
 
   const page = navigation.queryArgumentFromClient(query, "page");
-
   const pageSize = navigation.queryArgumentFromClient(query, "page-size");
+  const stateLimit = navigation.queryArgumentFromClient(query, "state-limit");
+  const platformLimit = navigation.queryArgumentFromClient(query, "platform-limit");
+  const themeLimit = navigation.queryArgumentFromClient(query, "theme-limit");
+  const typeLimit = navigation.queryArgumentFromClient(query, "type-limit");
 
   return {
-    "query": navigation.queryArgumentFromClient(query, "query"),
+    "searchQuery": navigation.queryArgumentFromClient(query, "query"),
     "state": navigation.queryArgumentArrayFromClient(query, "state"),
-    "stateLimit": -1,
+    "stateLimit": asPositiveNumber(stateLimit, DEFAULT_FACET_SIZE),
     "platform": navigation.queryArgumentArrayFromClient(query, "platform"),
-    "platformLimit": -1,
+    "platformLimit": asPositiveNumber(platformLimit, DEFAULT_FACET_SIZE),
     "theme": navigation.queryArgumentArrayFromClient(query, "theme"),
-    "themeLimit": -1,
+    "themeLimit": asPositiveNumber(themeLimit, DEFAULT_FACET_SIZE),
     "type": navigation.queryArgumentArrayFromClient(query, "type"),
-    "typeLimit": -1,
-    "author": navigation.queryArgumentArrayFromClient(query, "author"),
+    "typeLimit": asPositiveNumber(typeLimit, DEFAULT_FACET_SIZE),
     "sort": sort,
     "sortDirection": sortDirection,
     "page": asPositiveNumber(page, 1) - 1,
@@ -56,40 +58,6 @@ function selectArgumentFromClientQueryOrDefault(
   return defaultValue;
 }
 
-export function beforeLinkCallback(navigation, serverQuery) {
-  const result = { ...serverQuery };
-
-  const sort = result["sort"];
-  if (sort === DEFAULT_SORT) {
-    delete result["sort"];
-  } else {
-    result["sort"] = navigation.argumentFromServer(sort);
-  }
-
-  const sortDirection = result["sortDirection"];
-  delete result["sortDirection"];
-  if (sortDirection !== DEFAULT_SORT_DIRECTION) {
-    result["sort-direction"] = navigation.argumentFromServer(sortDirection);
-  }
-
-  if (result["page"] === DEFAULT_PAGE) {
-    delete result["page"];
-  }
-
-  const pageSize = result["pageSize"];
-  delete result["pageSize"];
-  if (pageSize !== DEFAULT_PAGE_SIZE) {
-    result["page-size"] = pageSize;
-  }
-
-  delete result["stateLimit"];
-  delete result["platformLimit"];
-  delete result["themeLimit"];
-  delete result["typeLimit"];
-
-  return result;
-}
-
 function asPositiveNumber(value, defaultValue) {
   if (value === undefined || value === null) {
     return defaultValue;
@@ -99,5 +67,47 @@ function asPositiveNumber(value, defaultValue) {
     return defaultValue;
   } else {
     return result;
+  }
+}
+
+export function beforeLinkCallback(navigation, serverQuery) {
+  const result = {};
+  setIfNotEmpty(result, "query", serverQuery.searchQuery);
+  setIfNotEmpty(result, "state", serverQuery.state);
+  setIfNotDefault(result, "state-limit", serverQuery.stateLimit, DEFAULT_FACET_SIZE);
+  setIfNotEmpty(result, "platform", serverQuery.platform);
+  setIfNotDefault(result, "platform-limit", serverQuery.platformLimit, DEFAULT_FACET_SIZE);
+  setIfNotEmpty(result, "theme", serverQuery.theme);
+  setIfNotDefault(result, "theme-limit", serverQuery.themeLimit, DEFAULT_FACET_SIZE);
+  setIfNotEmpty(result, "type", serverQuery.type);
+  setIfNotDefault(result, "type-limit", serverQuery.typeLimit, DEFAULT_FACET_SIZE);
+  if (serverQuery.sort !== DEFAULT_SORT) {
+    result["sort"] = navigation.argumentFromServer(serverQuery.sort);
+  }
+  if (serverQuery.sortDirection !== DEFAULT_SORT_DIRECTION) {
+    result["sort-direction"] = navigation.argumentFromServer(serverQuery.sortDirection);
+  }
+  setIfNotDefault(result, "page", serverQuery.page, DEFAULT_PAGE);
+  setIfNotDefault(result, "page-size", serverQuery.pageSize, DEFAULT_PAGE_SIZE);
+  return result;
+}
+
+function setIfNotDefault(query, key, value, defaultValue) {
+  if (value === undefined || value === null || value === defaultValue) {
+    return;
+  }
+  query[key] = value;
+}
+
+function setIfNotEmpty(query, key, value) {
+  if (value === undefined || value === null || value.length === 0) {
+    return;
+  }
+  query[key] = value;
+}
+
+function setIfTrue(query, key, value) {
+  if (value === true) {
+    query[key] = value;
   }
 }

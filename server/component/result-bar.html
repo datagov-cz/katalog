@@ -1,15 +1,19 @@
-<div style="display: flex; justify-content: space-between; padding-right: 8px;">
-  <h4>{{message}}</h4>
+<gov-grid class="p-2">
+  <gov-grid-item size-sm="12/12" size-md="8/12">
+    {{message}}
+  </gov-grid-item>
   {{#with ordering}}
-  <div class="dropdown">              
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdown-ordering" data-bs-toggle="dropdown" aria-expanded="false">
-      {{active}}
-    </button>
-    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdown-ordering">
+  <gov-grid-item size-sm="12/12" size-md="4/12">
+    <gov-form-select wcag-label="Seřadit dle" id="order-by" value="{{active}}">
       {{#each items}}
-      <li><a class="dropdown-item" href="{{href}}">{{label}}</a></li>
+        <option value="{{href}}">{{label}}</option>
       {{/each}}
-    </ul>
-  </div>
+    </gov-form-select>
+  </gov-grid-item>
+  <script>
+    document.getElementById("order-by").addEventListener("gov-change", (event) => {
+      window.location= event.target.value;
+    });
+  </script>
   {{/with}}
-</div>
+</gov-grid>

@@ -1,10 +1,12 @@
 import { getString } from "./jsonld.mjs";
 
 /**
- * Return object {language: string}.
+ * @param {*} languages Unused as we retrieve all data.
+ * @param {*} response Response object with "jsonld" field.
+ * @param {string | string[]} predicate Single predicate or array.
+ * @returns {language: string}
  */
 export function parseLabelResponse(languages, response, predicate) {
-  // 'languages' as not used as we get all the data anyway
   if (response["error"] !== undefined) {
     return null;
   }
@@ -16,20 +18,34 @@ export function parseLabelResponse(languages, response, predicate) {
   if (resource === undefined) {
     return {};
   }
-  return getString(resource, predicate);
+  if (Array.isArray(predicate)) {
+    let result = {};
+    for (const item of predicate) {
+      result = {
+        ...result,
+        ...getString(resource, item),
+      };
+    }
+    return result;
+  } else {
+    return getString(resource, predicate);
+  }
 }
 
 /**
- * @param {string[]} languages 
+ * @param {string[] | null | undefined} languages
  * @param {object} values With {language: string}.
- * @returns {string}
+ * @returns {string | null} Null only for null and undefined.
  */
 export function selectForLanguages(languages, values) {
+  if (values === null | values === undefined) {
+    return null;
+  }
   for (const language of languages) {
     if (values[language] === undefined) {
       continue;
     }
     return values[language];
   }
-  return Object.values(values)[0];
+  return Object.values(values)[0] ?? null;
 }

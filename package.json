@@ -16,6 +16,7 @@
     "dotenv": "^16.3.1",
     "fastify": "^4.24.3",
     "handlebars": "^4.7.8",
+    "jsonld": "^8.3.2",
     "node-cron": "^3.0.3",
     "pino": "^8.16.1",
     "pino-pretty": "^10.2.3",

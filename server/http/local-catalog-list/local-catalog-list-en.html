@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="cs">
+
+<head>
+  {{> head }}
+  <title>Local catalogs - National open data catalog (NKOD)</title>
+  <meta name="description" content="Open data portal and National open data catalog of the Czech Republic" />
+  <link rel="canonical" href="/local-catalogs">
+  <link rel="alternate" href="/lokální-katalogy" hreflang="cs">
+  <link rel="alternate" href="/local-catalogs" hreflang="en">
+</head>
+
+<body>
+  {{#with navigation}} {{> navigation }} {{/with}}
+  <gov-container class="catalogs-container">
+    <br/>
+    <h1>Local catalogs</h1>
+    <p>
+      {{message}}
+    </p>
+    <gov-grid>
+      {{#each catalogs}}
+      <gov-grid-item size-sm="12/12" size-md="6/12" size-md="6/12" size-lg="4/12" size-xl="3/12" class="p-1">
+        <gov-card>
+          <div class="gov-card__header">
+            <a href="{{publisher.iri}}">
+              <h3 class="gov-card__title inline">{{publisher.label}}</h3>
+              <gov-icon name="box-arrow-up-right"></gov-icon>
+            </a>
+          </div>
+          <div class="gov-card__inner">
+            <div class="gov-card__main">
+              <div>
+                {{title}}
+                <a href="{{iri}}">
+                  <gov-icon name="box-arrow-up-right"></gov-icon>
+                </a>
+              </div>
+              <div>
+                <a href="{{contactPoint.email}}">
+                  <gov-icon name="envelope"></gov-icon>
+                  {{contactPoint.name}}
+                </a>
+              </div>
+            </div>
+            <div class="gov-card__footer" style="font-size: x-large;">
+              <a href="{{homepage}}" title="Home page of the catalog"><gov-icon name="house-door-fill"></gov-icon></a>
+              <a href="{{endpointURL}}" title="SPARQL endpoint"><gov-icon name="link-45deg"></gov-icon></a>
+              <a href="{{deleteUrl}}" title="Delete the catalog"><gov-icon name="trash"></gov-icon></a>
+            </div>
+          </div>
+        </gov-card>
+      </gov-grid-item>
+      {{/each}}
+    </gov-grid>
+  </gov-container>
+  <br/>
+  {{#with footer}} {{> footer }} {{/with}}
+</body>
+
+</html>

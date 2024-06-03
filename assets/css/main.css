@@ -1,237 +1,126 @@
-:root {
-	--color-background: white;
-	--color-background-footer: white;
-	--color-text-default: black;
-	--color-text-inverted: white;
-	--color-text-accent: #057fa5;
-	--color-text-accent-inverted: black;
-	--color-base: #057fa5;
-	--color-border: rgba(0, 0, 0, 0.125);
 
-	--list-group-action-active: #111;
-	--list-group-action-active-bg: #e9ecef;
+/* Branding */
+
+.gov-header gov-branding a {
+  color: var(--gov-nav-color, var(--gov-color-neutral-white));
+  text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		--color-background: #111;
-		--color-background-footer: #222;
-		--color-text-default: white;
-		--color-text-inverted: #222;
-		--color-text-accent: #3bb5dc;
-		--color-text-accent-inverted: white;
-		--color-base: #057fa544;
-		--color-border: rgba(255, 255, 255, 0.125);
-
-		--list-group-action-active: #111;
-		--list-group-action-active-bg: #3bb5dc;
-	}
+.gov-header gov-branding .heading {
+  font-weight: var(--gov-text-3xl-font-weight);
+  font-size: var(--gov-text-3xl-font-size);
+  line-height: var(--gov-text-3xl-line-height);
+  letter-spacing: var(--gov-text-3xl-letter-spacing);
 }
 
-a:hover {
-	border-color: var(--color-text-accent-inverted);
+.gov-header gov-branding .language {
+  display: flex;
+  align-items: center;
 }
 
-hr {
-	border: 1px dotted var(--color-text-accent);
+/* Unify header with data portal style. */
+
+.gov-header>gov-container {
+  padding-top: .5rem;
 }
 
-.navbar-light .navbar-nav .show>.nav-link {
-	color: var(--color-text-accent-inverted);
+/* Global styles. */
+
+a {
+  text-decoration: none;
 }
 
-::-webkit-scrollbar {
-	background-color: #1c1e1f;
-	color: #c5c1b9;
+.gov-header {
+  margin-bottom: 1rem;
 }
 
-::-webkit-scrollbar-corner {
-	background-color: #181a1b;
+.gov-footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
 }
 
-::-webkit-scrollbar-thumb {
-	background-color: #2a2c2e;
+/* Custom component styles. */
+
+.chip-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
-::selection {
-	background-color: #3bb5dc;
-	color: #ffffff;
+/* General layout styles. */
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
 }
 
-.card {
-	border-color: var(--color-base);
+.flex-space-between {
+  display: flex;
+  justify-content: space-between;
 }
 
-.navbar-light .navbar-toggler-icon {
-	background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='gray' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
+.flex-space-evenly {
+  display: flex;
+  justify-content: space-evenly;
 }
 
-.navbar-light .navbar-toggler {
-	border-color: gray;
+.flex-justify-end {
+  display: flex;
+  justify-content: end;
 }
 
-pre {
-	color: var(--color-text-accent);
-	background-color: var(--color-background-footer);
+.align-items-center {
+  align-items: center;
 }
 
-body,
-.card-body,
-.list-group-item,
-div.card {
-	color: var(--color-text-default);
-	background-color: var(--color-background);
+.gap-2 {
+  gap: .5em;
 }
 
-input.form-control {
-	background-color: var(--color-background-footer);
-	color: var(--color-text-default);
-}
-
-footer,
-.card-header,
-.card-footer {
-	background-color: var(--color-background-footer);
-}
-
-div.dropdown-menu.show {
-	background-color: var(--color-background);
-}
-
-.navbar-light .navbar-nav .nav-link:hover,
-a:hover,
-.navbar-light .navbar-nav .nav-link.active {
-	color: var(--color-text-accent-inverted);
-}
-
-a,
-a.dropdown-item,
-a.nav-item:focus,
-.navbar-light .navbar-nav .nav-link,
-.navbar-light .navbar-nav .nav-link:focus {
-	color: var(--color-text-accent);
-}
-
-a.btn.btn-primary,
-button.btn.btn-primary {
-	background-color: var(--color-text-accent);
-	border-color: var(--color-text-inverted);
-	color: var(--color-text-inverted);
-}
-
-a.btn.btn-primary:hover,
-button.btn.btn-primary:hover,
-a.dropdown-item:hover {
-	background-color: var(--color-text-inverted);
-	border-color: var(--color-base);
-	color: var(--color-text-accent-inverted);
-}
-
-.btn-secondary {
-	background-color: var(--color-text-inverted);
-	border-color: var(--color-text-accent);
-	color: var(--color-text-accent);
-}
-
-.btn-secondary:hover {
-	background-color: var(--color-text-accent);
-	border-color: var(--color-text-inverted);
-	color: var(--color-text-inverted);
-}
-
-ol>li>ol>li {
-	list-style-type: lower-alpha;
-}
-
-dl>dd>ol>li {
-	list-style-type: lower-alpha;
-}
-
-ol>li>ol>li>ol>li {
-	list-style-type: lower-roman;
-}
-
-div.language-drop-down.dropdown-menu.lang-menu.show {
-	min-width: 0;
-}
-
-.facet h3 {
-	color: var(--color-text-default)
-}
-
-.facet li {
-	border-color: var(--color-border);
-	padding: 0;
-	display: flex;
-}
-
-.facet li a {
-	color: var(--color-text-default);
-	text-decoration: none;
-	padding: 8px 16px;
-	flex-grow: 1;
-}
-
-.facet li:hover, .facet li.active{		
-	background-color: var(--list-group-action-active-bg);
-	border-color: var(--list-group-action-active-bg);
-}
-
-.facet li:hover a {
-	color: var(--list-group-action-active);
-}
-
-.document>a {
-	text-decoration: none;
-}
-
-.document>a:hover {
-	text-decoration: underline;
-}
-
-#search .rbt {
-	outline: none;
-	position: relative;
-	flex-grow: 1;
-	margin-right: 1rem;
-}
-
-#search .rbt>div {
-	display: flex;
-	flex: 1 1 0%;
-	height: 100%;
-	position: relative;
-}
-
-#search input {
-	border-radius: 0;
-}
-
-
-#search  span.input-group-text {
-	font-weight: bold;
-}
-
-.document .badge {
-	background-color: var(--color-background-footer)!important;
-	border: 1px solid var(--color-text-accent);
-	color: var(--color-text-default)!important;
-}
-
-/* Detail. */
-
-.dataset {
-	margin-bottom: 1rem;
-}
-
-.dataset a {
-	text-decoration: none;
-}
-
-.dataset a:hover {
-	text-decoration: underline;
+.gap-4 {
+  gap: 1em;
 }
 
 .inline {
-	display:inline;
+  display: inline;
+}
+
+.x-large {
+  font-size: x-large;
+}
+
+.larger {
+  font-size: larger;
+}
+
+.m-1 {
+  margin: .25rem;
+}
+
+.m-2 {
+  margin: .5rem;
+}
+
+.m-3 {
+  margin: .75rem;
+}
+
+.m-4 {
+  margin: 1rem;
+}
+
+.mb-1 {
+  margin-bottom: .25rem;
+}
+
+.mb-2 {
+  margin-bottom: .5rem;
+}
+
+.p-0 {
+  padding: 0;
+}
+
+.p-2 {
+  padding: .5rem;
 }

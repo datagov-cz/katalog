@@ -19,8 +19,8 @@ class NavigationService {
 
   /**
    * Return navigation for given view.
-   * @param {String} language 
-   * @param {String} viewName 
+   * @param {String} language
+   * @param {String} viewName
    * @returns {ViewBoundNavigation}
    */
   view(language, viewName) {
@@ -71,20 +71,36 @@ class ViewBoundNavigation {
    * Return array value from query for given key.
    */
   queryArgumentArrayFromClient(clientQuery, serverKey) {
-    const clientKey = this.data.query[serverKey];
-    const value = clientQuery[clientKey] ?? null;
+    const value = this.getClientQueryValue(clientQuery, serverKey);
     if (Array.isArray(value)) {
       return value;
-    } 
+    }
     return asArray(value);
+  }
+
+  getClientQueryValue(clientQuery, serverKey) {
+    const clientKey = this.data.query[serverKey];
+    if (Array.isArray(clientKey)) {
+      // We have multiple options, we try them all in given order
+      // reading the first one.
+      for (const key of clientKey) {
+        const value = clientQuery[key];
+        if (value === undefined) {
+          continue;
+        }
+        return value;
+      }
+      return null;
+    } else {
+      return clientQuery[clientKey] ?? null;
+    }
   }
 
   /**
    * Return value from query for given key.
    */
   queryArgumentFromClient(clientQuery, serverKey) {
-    const clientKey = this.data.query[serverKey];
-    const value = clientQuery[clientKey] ?? null;
+    const value = this.getClientQueryValue(clientQuery, serverKey);
     if (Array.isArray(value)) {
       return clientQuery[0];
     }
@@ -123,7 +139,12 @@ class ViewBoundNavigation {
       if (isEmpty(value)) {
         continue;
       }
-      localized[this.data.query[key]] = value;
+      let queryName = this.data.query[key];
+      // Since we can have 1:m mapping, we check and use the first value.
+      if (Array.isArray(queryName)) {
+        queryName = queryName[0];
+      }
+      localized[queryName] = value;
     }
     return querystring.stringify(localized);
   }

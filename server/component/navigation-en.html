@@ -1,79 +1,52 @@
-<nav class="navbar navbar-expand-lg navbar-light">
-  <div class="container">
-    <a href="/" class="navbar-brand d-flex mr-auto">
-      <img width="174" height="30" class="d-inline-block align-top" src="/aplikace/assets/images/logo.png" alt="Otevřená data">
-    </a>
-    <button class="navbar-toggler navbar-toggler-end" type="button" data-bs-toggle="collapse"
-      data-bs-target="#collapsingNavbar" aria-controls="collapsingNavbar" aria-expanded="false"
-      aria-label="Show navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="collapsingNavbar">
-      <ul class="navbar-nav ml-auto w-100 justify-content-end">
-
-        <li class="nav-item">
-          <a class="nav-link" href="/vzd%C4%9Bl%C3%A1v%C3%A1n%C3%AD">Education</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="/%C4%8Dl%C3%A1nky">Articles</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="/datov%C3%A1-kvalita">Data quality</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="/datasets">Datasets</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="/publishers">Publishers</a>
-        </li>
-
-        <li class="nav-item">
-          {{#if applicationsActive}}
-          <span class="nav-link active">Applications</span>
-          {{else}}
-          <a class="nav-link" href="/applications">Applications</a>
-          {{/if}}
-        </li>
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
-            More
-          </a>
-          <div class="dropdown-menu" aria-labelledby="dropdown01">
-            <a class="dropdown-item" href="informace/z%C3%A1klady-otev%C5%99en%C3%BDch-dat-pro-z%C3%A1jemce/">
-              About Open Data
-            </a>
-            <a class="dropdown-item" href="https://opendata.gov.cz/informace:z%C3%A1klady-otev%C5%99en%C3%BDch-dat-pro-program%C3%A1tory">
-              For users and programmers
-            </a>
-            <a class="dropdown-item" href="https://opendata.gov.cz">
-              Data publishers
-            </a>
-            <a class="dropdown-item" href="/local-catalogs">
-              Local catalogs
-            </a>
-            <a class="dropdown-item" href="/suggestions-for-datasets-to-be-opened">
-              Suggestions for datasets to be opened
-            </a>
-          </div>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a data-bs-toggle="dropdown" aria-haspopup="true" href="#" class="dropdown-toggle nav-link" aria-expanded="false">
-            <img src="/aplikace/assets/images/flag-en.svg" alt="English" style="width: 1.3rem;">
-          </a>
-          <div tabindex="-1" aria-hidden="true" role="menu" class="language-drop-down dropdown-menu lang-menu">
-            <a href="{{cs}}" class="en dropdown-item" title="Čeština">
-              <img src="/aplikace/assets/images/flag-cs.svg" alt="Čeština" style="width: 1.3rem;"></a>
-          </div>
-        </li>
-
-      </ul>
-    </div>
-  </div>
-</nav>
+<header class="gov-header">
+  <gov-container>
+    <gov-branding>
+      <div class="heading">
+        <a href="/">Czech Data Portal</a>
+      </div>
+      <div class="language">
+        <a href="{{cs}}">Čeština</a>
+      </div>
+    </gov-branding>
+    <gov-nav wcag-label="Hlavní navigace">
+      <gov-nav-item href="/news">
+        News
+      </gov-nav-item>
+      <gov-nav-dropdown>
+        <span slot="label">National Open Data Catalog</span>
+        <ul slot="dropdown">
+          <li>
+            <a href="/datasets" {{#if datasetsActive}}class="active" {{/if}}>Datasets</a>
+          </li>
+          <li>
+            <a href="/applications" {{#if applicationsActive}}class="active" {{/if}}>Applications</a>
+          </li>
+          <li>
+            <a href="/publishers">Publishers</a>
+          </li>
+          <li>
+            <a href="/local-catalogs" {{#if localCatalogsActive}}class="active" {{/if}}>Local catalogs</a>
+          </li>
+          <li>
+            <a href="/suggestions-for-datasets-to-be-opened" {{#if suggestionsActive}}class="active" {{/if}}>Suggestions for data to be opened</a>
+          </li>
+        </ul>
+      </gov-nav-dropdown>
+      <gov-nav-dropdown>
+        <span slot="label">More</span>
+        <ul slot="dropdown">
+          <li>
+            <a href="/informace/základy-otevřených-dat-pro-zájemce/">Interested in opening data (in Czech)</a>
+          </li>
+          <li>
+            <a href="https://opendata.gov.cz/informace:základy-otevřených-dat-pro-programátory">Users and programmers (in Czech)</a>
+          </li>
+          <li>
+            <a href="https://opendata.gov.cz/">Data publishers (in Czech)</a>
+          </li>
+        </ul>
+      </gov-nav-dropdown>
+    </gov-nav>
+  </gov-container>
+</header>
+</gov-container>

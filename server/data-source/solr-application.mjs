@@ -4,8 +4,9 @@ import { selectLanguage, emptyAsNull, parseFacet, parseDate } from "./shared/sol
 const CORE = "applications";
 
 export function createSolrApplication(solrConnector) {
-
   return {
+    "fetchApplicationsCount": () =>
+      fetchApplicationsCount(solrConnector),
     "fetchApplication": (languages, iri) =>
       fetchApplication(solrConnector, languages, iri),
     "fetchApplications": (languages, query) =>
@@ -13,6 +14,16 @@ export function createSolrApplication(solrConnector) {
     "fetchApplicationsWithDatasets": (languages, datasets) =>
       fetchApplicationsWithDatasets(solrConnector, languages, datasets),
   };
+}
+
+async function fetchApplicationsCount(solrConnector) {
+  const solrQuery = {
+    "start": 0,
+    "rows": 0,
+    "q": "*:*",
+  };
+  const response = await solrConnector.fetch(CORE, solrQuery);
+  return response["response"]["numFound"];
 }
 
 async function fetchApplication(solrConnector, languages, iri) {
