@@ -65,7 +65,7 @@ function partialSortByActivityAndCount(items) {
 }
 
 function softSizeLengthByCount(items, softLimit)  {
-  if (softLimit === -1 || softLimit > items.length) {
+  if (softLimit === -1 || softLimit >= items.length) {
     return;
   }
   // Start at soft limit
