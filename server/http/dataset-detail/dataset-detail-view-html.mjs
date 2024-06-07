@@ -183,7 +183,7 @@ function prepareDataset(configuration, translation, navigation, { dataset }) {
   } else if (dataset.isFromCatalog) {
     heading.deleteCatalogUrl = configuration.client.catalogFormUrl
       + translation.translate("url-delete-catalog")
-      + encodeURIComponent(dataset.iri);
+      + encodeURIComponent(dataset.localCatalog);
   } else {
     // No actions.
   }
