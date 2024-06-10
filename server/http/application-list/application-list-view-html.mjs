@@ -6,7 +6,7 @@ const FACETS = [
   { "name": "theme", "tooltip": "themeTooltip" },
   { "name": "type", "tooltip": "typeTooltip" },
   { "name": "state", "tooltip": "stateTooltip" },
-  { "name": "theme", "tooltip": "platformTooltip" },
+  { "name": "platform", "tooltip": "platformTooltip" },
 ];
 
 const SORT_OPTIONS = [
