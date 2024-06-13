@@ -49,6 +49,10 @@ a {
 
 /* General layout styles. */
 
+.break-word-wrap {
+  word-wrap: break-word;
+}
+
 .flex-row {
   display: flex;
   flex-direction: row;

@@ -242,14 +242,18 @@
           <div class="flex-row">
             {{#if missingLegal}}
             <div class="distribution-item-wrap-column">
-              <h5 class="gov-text--l gov-color--secondary-700">Podmínky užití distribuce nejsou specifikovány</h5>
+              <div>
+                <h5 class="gov-text--l gov-color--secondary-700">Podmínky užití distribuce nejsou specifikovány</h5>
+              </div>
             </div>
             {{/if}}
             {{#if dcatApLegal}}
             <div class="distribution-item-wrap-column">
-              <a href="{{license}}" rel="nofollow noopener noreferrer" target="_blank">
-                Podmínky užití distribuce
-              </a>
+              <div>
+                <a href="{{license}}" rel="nofollow noopener noreferrer" target="_blank">
+                  Podmínky užití distribuce
+                </a>
+              </div>
             </div>
             {{/if}}
             {{#if dcatApCzLegal}}{{#with dcatApCzLegal}}
@@ -347,7 +351,7 @@
                 </li>
                 {{/if}}
                 <li>
-                  <div class="mediaType">
+                  <div class="mediaType break-word-wrap">
                     {{mediaType.label}}
                     <a href="{{mediaType.iri}}">
                       <gov-icon name="box-arrow-up-right"></gov-icon>
