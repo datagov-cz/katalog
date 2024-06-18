@@ -52,8 +52,10 @@ async function fetchDataset(couchDbConnector, languages, query) {
       distribution.dataService.title = selectForLanguages(languages, distribution.dataService.title);
     }
     const legal = distribution.legal;
-    legal.author = selectForLanguages(languages, legal.author);
-    legal.databaseAuthor = selectForLanguages(languages, legal.databaseAuthor);
+    if (legal !== null) {
+      legal.author = selectForLanguages(languages, legal.author);
+      legal.databaseAuthor = selectForLanguages(languages, legal.databaseAuthor);
+    }
   });
 
   return dataset;
