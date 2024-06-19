@@ -385,7 +385,7 @@ function removeTimeZone(dateAsStr) {
 
 function prepareContactPoints(contactPoints) {
   return contactPoints.map(contactPoint => ({
-    "label": contactPoint.title,
+    "label": contactPoint.title ?? contactPoint.email,
     "href": "mailto:" + contactPoint.email,
   }));
 }
