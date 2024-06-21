@@ -22,7 +22,7 @@ export function prepareTemplateData(services, languages, query, data) {
 
 function prepareCatalogsInPlace(configuration, link, translation, catalogs) {
   for (const catalog of catalogs) {
-    catalog.iri = link.wrapLink(catalog.iri);
+    catalog.url = link.wrapLink(catalog.iri);
     catalog.publisher.iri = link.wrapLink(catalog.publisher.iri);
     catalog.deleteUrl = configuration.client.catalogFormUrl
       + translation.translate("url-remove-link")
