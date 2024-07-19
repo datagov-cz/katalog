@@ -23,7 +23,6 @@ export const DCTERMS = {
   "type": DCTERMS_PREFIX + "type",
   "rights": DCTERMS_PREFIX + "rights",
   "hasPart": DCTERMS_PREFIX + "hasPart",
-  "isPartOf": DCTERMS_PREFIX + "isPartOf",
 };
 
 const DCELEMENTS_PREFIX = "http://purl.org/dc/elements/1.1/";
