@@ -44,6 +44,7 @@ export function prepareTemplateData(translation, navigation, languages, query, d
       // at the client side.
       "base-url": navigation.linkFromServer({
         ...query,
+        "searchQuery": null,
         "page": 0,
         "temporalStart": null,
         "temporalEnd": null,
