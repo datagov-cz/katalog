@@ -66,7 +66,7 @@ function asPositiveNumber(value, defaultValue) {
   if (isNaN(result)) {
     return defaultValue;
   } else {
-    return result;
+    return Math.max(1, result);
   }
 }
 
