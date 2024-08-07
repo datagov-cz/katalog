@@ -1,4 +1,4 @@
-import configuration from "../configuration.mjs";
+import configuration from "../configuration";
 
 export function registerFooter(templateService, language) {
   templateService.syncAddComponent("footer", "footer-" + language + ".html");

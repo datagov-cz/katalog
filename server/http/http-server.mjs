@@ -1,13 +1,13 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
-import logger from "../logger.mjs";
+import logger from "../logger";
 
 import { registerHttpRoutes } from "./route.mjs";
 
 export async function createHttpServer(configuration) {
   const application = Fastify({
     logger: logger,
-    trustProxy: configuration.trustProxy,
+    trustProxy: configuration.http.trustProxy,
   });
   await application.register(cors, {
     "origin": true,
@@ -16,7 +16,7 @@ export async function createHttpServer(configuration) {
 }
 
 export function registerRoutes(configuration, server, services) {
-  if (configuration.serverAssets) {
+  if (configuration.server.serverAssets) {
     registerAssetsRoutes(configuration, server);
   }
   registerHttpRoutes(server, services);
@@ -28,10 +28,10 @@ function registerAssetsRoutes(configuration, server) {
     prefix: "/assets/catalog/",
     decorateReply: false
   });
-  if (configuration.designSystemFolder) {
+  if (configuration.server.designSystemFolder) {
     logger.info("Serving design system assets from the given directory.")
     server.register(import("@fastify/static"), {
-      root: configuration.designSystemFolder,
+      root: configuration.server.designSystemFolder,
       prefix: "/assets/design-system/",
       decorateReply: false
     });
@@ -40,8 +40,8 @@ function registerAssetsRoutes(configuration, server) {
 
 export function startServer(server, configuration) {
   server.listen({
-    port: configuration.port,
-    host: configuration.host,
+    port: configuration.http.port,
+    host: configuration.http.host,
   }, function (error) {
     if (error) {
       server.log.error(error);

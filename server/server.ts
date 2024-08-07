@@ -1,5 +1,9 @@
-import configuration from "./configuration.mjs";
-import { createHttpServer, registerRoutes, startServer } from "./http/http-server.mjs";
+import configuration from "./configuration";
+import {
+  createHttpServer,
+  registerRoutes,
+  startServer,
+} from "./http/http-server.mjs";
 import { createHttpConnector } from "./connector/http.mjs";
 import { createServices } from "./service/service.mjs";
 

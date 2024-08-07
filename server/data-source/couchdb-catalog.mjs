@@ -1,7 +1,7 @@
 import { hasType, getResource, getString, getValue } from "./shared/jsonld.mjs";
 import { selectForLanguages } from "./shared/couchdb-response.mjs";
 import { DCTERMS, FOAF, NKOD, DCAT } from "./shared/vocabulary.mjs";
-import logger from "../logger.mjs";
+import logger from "../logger";
 
 export function createCouchDbCatalog(couchDbConnector) {
   return {

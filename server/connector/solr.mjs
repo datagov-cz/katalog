@@ -1,4 +1,4 @@
-import logger from "../logger.mjs";
+import logger from "../logger";
 
 import {ConnectorError} from "./connector-error.mjs";
 
