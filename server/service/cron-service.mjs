@@ -1,6 +1,6 @@
 import cron from "node-cron";
 
-import logger from "../logger.mjs";
+import logger from "../logger";
 
 export function createCronService(configuration, labelService) {
   return {
@@ -12,9 +12,9 @@ export function createCronService(configuration, labelService) {
 }
 
 function initialize(configuration, labelService) {
-  if (isNotEmpty(configuration.labelReloadCron)) {
+  if (isNotEmpty(configuration.server.labelReloadCron)) {
     logger.info("Cache reload registered.")
-    cron.schedule(configuration.labelReloadCron, () => {
+    cron.schedule(configuration.server.labelReloadCron, () => {
       labelService.reloadCache();
     });
   }

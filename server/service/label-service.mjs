@@ -1,4 +1,4 @@
-import logger from "../logger.mjs";
+import logger from "../logger";
 
 const DEFAULT_IRI = resource => resource["iri"];
 

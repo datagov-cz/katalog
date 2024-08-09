@@ -1,7 +1,7 @@
 import { performance } from "perf_hooks";
 import jsonld from "jsonld";
 
-import logger from "../logger.mjs";
+import logger from "../logger";
 
 export function createSparqlConnector(sparqlUrl, http) {
   return {

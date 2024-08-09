@@ -2,10 +2,10 @@ import fileSystem from "fs";
 
 import Handlebars from "handlebars";
 
-import configuration from "../configuration.mjs";
+import configuration from "../configuration";
 
 export function createTemplateService(basePath) {
-  if (configuration.reloadTemplates) {
+  if (configuration.server.reloadTemplates) {
     return new ReloadingTemplateService(basePath);
   }
   return new BoundTemplateService(basePath);

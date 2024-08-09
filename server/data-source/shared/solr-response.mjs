@@ -1,4 +1,4 @@
-import logger from "../../logger.mjs";
+import logger from "../../logger";
 
 export function selectLanguage(document, name_prefix, languages) {
   for (const language of languages) {

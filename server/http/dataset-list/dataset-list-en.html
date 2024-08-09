@@ -24,7 +24,7 @@
         <!-- Search. -->
         {{#with search}}
         <gov-form-search variant="primary" id="search" data-query="dotaz" data-base-url="{{base-url}}">
-          <gov-form-input slot="input"size="m" placeholder="What you're looking for" wcag-label="search" value="{{value}}"></gov-form-input>
+          <gov-form-input slot="input" size="m" placeholder="What you're looking for" wcag-label="search" value="{{query.searchQuery}}" data-type="query"></gov-form-input>
           <gov-button slot="button" variant="primary" size="s" wcag-label="hledat" data-type="submit">
             Search
           </gov-button>
