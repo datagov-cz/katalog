@@ -88,9 +88,9 @@ export default {
     "argument": {
     },
     "translation": {
-      "url-edit-dataset": "database-registration?dataset=",
-      "url-copy-dataset": "database-registration?copy-from-dataset=",
-      "url-delete-dataset": "database-withdrawn?dataset=",
+      "url-edit-dataset": "dataset-registration?dataset=",
+      "url-copy-dataset": "dataset-registration?copy-from-dataset=",
+      "url-delete-dataset": "dataset-withdrawn?dataset=",
       "url-delete-catalog": "local-catalog-withdrawn?catalog=",
       "year": [
         [1, "{} year"],
