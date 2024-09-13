@@ -20,8 +20,8 @@ export function prepareTemplateData(services, languages, query, data) {
   prepareDatasetsInPlace(services, data["datasets"]);
   const suggestion = prepareSuggestion(services.navigation, language, data);
   return {
-    "navigation": components.createNavigationData(
-      services.navigation, languages, query, true),
+    "head": components.createHeadData(services.configuration),
+    "navigation": components.createNavigationData(services.navigation, languages, query, true),
     "footer": components.createFooterData(),
     "suggestion": suggestion,
     "datasets": {

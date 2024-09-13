@@ -13,6 +13,7 @@ export function renderHtml(services, languages, query, data, reply) {
 export function prepareTemplateData(services, languages, query, data) {
   prepareCatalogsInPlace(services.configuration, services.link, services.translation, data["catalogs"])
   return {
+    "head": components.createHeadData(services.configuration),
     "navigation": components.createNavigationData(services.navigation, languages, query, { localCatalogsActive: true }),
     "footer": components.createFooterData(),
     "message": services.translation.translate("items-found", data["catalogs"].length),

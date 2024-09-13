@@ -17,7 +17,7 @@ const SORT_OPTIONS = [
 
 export function renderHtml(services, languages, query, data, reply) {
   const templateData = prepareTemplateData(
-    services.translation, services.navigation, languages, query, data);
+    services.configuration, services.translation, services.navigation, languages, query, data);
   const template = services.template.view(ROUTE.SUGGESTION_LIST);
   reply
     .code(200)
@@ -25,11 +25,12 @@ export function renderHtml(services, languages, query, data, reply) {
     .send(template(templateData));
 }
 
-export function prepareTemplateData(translation, navigation, languages, query, data) {
+export function prepareTemplateData(configuration, translation, navigation, languages, query, data) {
   const documents = data["documents"];
   prepareDocumentsInPlace(navigation, documents);
   const applicationCount = data["found"]["documents"];
   return {
+    "head": components.createHeadData(configuration),
     "navigation": components.createNavigationData(navigation, languages, query, { suggestionsActive: true }),
     "footer": components.createFooterData(),
     "search": {

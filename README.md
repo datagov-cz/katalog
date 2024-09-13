@@ -1,4 +1,4 @@
-# Komponenta národního katalogu otevřených dat pro registrované aplikace 
+# Komponenta národního katalogu otevřených dat pro registrované aplikace
 
 ## Konfigurace
 Konfiguraci je možné provést skrze proměnné prostředí, nebo soubor `.env` umístěný v `/opt/application-catalog/`;
@@ -33,7 +33,11 @@ HTTP_SERVE_STATIC = "1"
 CLIENT_APPLICATION_URL = ""
 # Reload every 15 minutes.
 LABEL_CACHE_RELOAD_CRON = "0/15 * * * *"
+# Optional Matomo configuration.
+CLIENT_MATOMO_URL = "http://matomo.localhost/"
+CLIENT_MATOMO_SITE_ID = "1"
 ```
+
 
 Pak je již možné provést samotné spuštění.
 ```bash

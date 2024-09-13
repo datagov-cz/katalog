@@ -20,8 +20,8 @@ export function prepareTemplateData(services, languages, query, data) {
   prepareDatasetsInPlace(services.navigation, data["datasets"]);
   const application = prepareApplication(services.navigation, language, data);
   return {
-    "navigation": components.createNavigationData(
-      services.navigation, languages, query),
+    "head": components.createHeadData(services.configuration),
+    "navigation": components.createNavigationData(services.navigation, languages, query),
     "footer": components.createFooterData(),
     "application": application,
     "datasets": {

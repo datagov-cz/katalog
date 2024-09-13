@@ -151,6 +151,7 @@ export function renderHtml(services, languages, query, data, reply) {
 
 export function prepareTemplateData(configuration, translation, navigation, languages, query, data) {
   return {
+    "head": components.createHeadData(configuration),
     "navigation": components.createNavigationData(navigation, languages, query),
     "footer": components.createFooterData(),
     "dataset": prepareDataset(configuration, translation, navigation, data),

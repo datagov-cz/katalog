@@ -28,7 +28,7 @@ const ConfigurationZod = z.object({
      */
     labelReloadCron: z.string(),
     /**
-     * Path to desing system directory.
+     * Path to design system directory.
      * Effective only with 'serverAssets' set to true.
      */
     designSystemFolder: z.string(),
@@ -63,10 +63,18 @@ const ConfigurationZod = z.object({
      * Replace {} with publisher URL.
      */
     sparqlClassAndPropertiesTemplate: z.string(),
+    /**
+     * URL of Matomo instance to report user interaction to.
+     */
+    matomoUrl: z.string().nullable(),
+    /**
+     * Value of siteId used for Matomo reporting.
+     */
+    matomoSiteId: z.string().nullable(),
   }),
 });
 
-type Configuration = z.infer<typeof ConfigurationZod>;
+export type Configuration = z.infer<typeof ConfigurationZod>;
 
 const createConfiguration = (): Configuration => {
   return ConfigurationZod.parse({
@@ -102,6 +110,8 @@ const createConfiguration = (): Configuration => {
       sparqlDefaultQuery: process.env.CLIENT_SPARQL_DEFAULT_QUERY ?? null,
       sparqlClassAndPropertiesTemplate:
         process.env.CLIENT_DATA_SERVICE_CLASS_AND_PROPERTIES_TEMPLATE ?? null,
+      matomoUrl: process.env.CLIENT_MATOMO_URL ?? null,
+      matomoSiteId: process.env.CLIENT_MATOMO_SITE_ID ?? null,
     },
   });
 };
