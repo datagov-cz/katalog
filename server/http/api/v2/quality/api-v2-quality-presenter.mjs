@@ -1,4 +1,4 @@
-import { createTranslationService } from "../../../../service/translation-service.mjs";
+import { createTranslationService } from "../../../../service/translation-service";
 import local from "./api-v2-quality-presenter-localization.mjs";
 
 export default function createHandler(services) {

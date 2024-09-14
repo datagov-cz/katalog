@@ -1,5 +1,5 @@
 import { ROUTE } from "../route-name.mjs";
-import { createTranslationService } from "../../service/translation-service.mjs";
+import { createTranslationService } from "../../service/translation-service";
 import { parseClientQuery, beforeLinkCallback } from "./dataset-detail-query.mjs";
 import { prepareData } from "./dataset-detail-model.mjs";
 import { renderHtml } from "./dataset-detail-view-html.mjs";

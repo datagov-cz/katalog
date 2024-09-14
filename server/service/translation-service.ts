@@ -1,0 +1,51 @@
+
+export type Translations = Record<string, string | Function>;
+
+export interface TranslationService {
+  translate: (serverMessage: string, args: any) => string;
+}
+
+/**
+ * Create translation service from pairs or server local strings.
+ */
+export function createTranslationService(serverToLocal: Translations) {
+  return new DefaultTranslationService(serverToLocal);
+}
+
+class DefaultTranslationService implements TranslationService {
+
+  readonly serverToLocal: Translations;
+
+  constructor(serverToLocal: Translations) {
+    this.serverToLocal = serverToLocal;
+  }
+
+  translate(serverMessage: string, args: any) {
+    let result;
+    const entry = this.serverToLocal[serverMessage];
+    // When given a function we do not care about anything else.
+    if (entry instanceof Function) {
+      return entry(args);
+    }
+    // We allow for simple "{}" substitution.
+    if (Array.isArray(entry)) {
+      // Initial value.
+      result = entry[0][1];
+      for (let [separator, localizedMessage] of entry) {
+        if (separator > args) {
+          break;
+        }
+        result = localizedMessage;
+      }
+    } else {
+      result = entry;
+      if (result === undefined) {
+        console.error("Missing localization entry.", { serverMessage });
+        result = "";
+      }
+    }
+    return result.replace("{}", args);
+  }
+
+}
+

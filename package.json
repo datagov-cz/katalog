@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "tsx ./server/server.ts",
-    "test": "tsc && node --test",
+    "test": "tsc && node --import tsx --test",
     "lint": "eslint . --fix"
   },
   "author": "Digitální a informační agentura",

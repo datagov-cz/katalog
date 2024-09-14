@@ -1,5 +1,5 @@
 import { ROUTE } from "../route-name.mjs";
-import { createTranslationService } from "../../service/translation-service.mjs";
+import { createTranslationService } from "../../service/translation-service";
 import { prepareData } from "./local-catalog-list-model.mjs";
 import { renderHtml } from "./local-catalog-list-view-html.mjs";
 import localization from "./local-catalog-list-localization.mjs";

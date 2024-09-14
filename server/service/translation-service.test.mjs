@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import { describe, it } from "node:test"
-import { createTranslationService } from "./translation-service.mjs";
+import { createTranslationService } from "./translation-service";
 
 describe("Translation service.", () => {
 
