@@ -1,5 +1,5 @@
-import { prepareFieldQuery, prepareTextQuery, prepareSort } from "./shared/solr-query.mjs";
-import { emptyAsNull, parseFacet, parseDate } from "./shared/solr-response.mjs";
+import { prepareFieldQuery, prepareTextQuery, prepareSort } from "./shared/solr-query.ts";
+import { emptyAsNull, parseFacet, parseDate } from "./shared/solr-response";
 
 const CORE = "suggestions";
 

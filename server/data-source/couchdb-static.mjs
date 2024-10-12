@@ -1,4 +1,4 @@
-import { FOAF } from "./shared/vocabulary.mjs";
+import { FOAF } from "./shared/vocabulary.ts";
 
 export function createCouchDbStatic(couchDbConnector) {
   return {

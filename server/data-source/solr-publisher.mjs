@@ -1,4 +1,4 @@
-import { parseFacet } from "./shared/solr-response.mjs";
+import { parseFacet } from "./shared/solr-response";
 
 const CORE = "dcat-ap-viewer";
 

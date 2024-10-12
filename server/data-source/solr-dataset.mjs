@@ -1,5 +1,5 @@
-import { prepareFieldQuery, prepareTextQuery, prepareSort } from "./shared/solr-query.mjs";
-import { selectLanguage, parseFacet } from "./shared/solr-response.mjs";
+import { prepareFieldQuery, prepareTextQuery, prepareSort } from "./shared/solr-query.ts";
+import { selectLanguage, parseFacet } from "./shared/solr-response";
 
 const CORE = "dcat-ap-viewer";
 

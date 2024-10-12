@@ -1,6 +1,6 @@
 import { getId, getTypes, getEntityByIri, getString, getStrings, getResource, getResources, getPlainStrings, getPlainString, getEntityByType, getValue } from "./shared/jsonld.mjs";
 import { selectForLanguages } from "./shared/couchdb-response.mjs";
-import { DCTERMS, DCAT, VCARD, SKOS, SGOV, EUA, ADMS, FOAF, OWL, NKOD, PU, SPDX , EUROPE} from "./shared/vocabulary.mjs";
+import { DCTERMS, DCAT, VCARD, SKOS, SGOV, EUA, ADMS, FOAF, OWL, NKOD, PU, SPDX , EUROPE} from "./shared/vocabulary.ts";
 
 export function createCouchDbDataset(couchDbConnector) {
   return {

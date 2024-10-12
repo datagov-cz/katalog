@@ -1,5 +1,5 @@
 import { parseLabelResponse } from "./shared/couchdb-response.mjs";
-import { SKOS, DCTERMS } from "./shared/vocabulary.mjs";
+import { SKOS, DCTERMS } from "./shared/vocabulary.ts";
 
 export function createCouchDbLabel(couchDbConnector) {
   return {

@@ -5,7 +5,7 @@ import { createSparqlConnector } from "../connector/sparql.mjs";
 import { createCouchDbDataset } from "../data-source/couchdb-dataset.mjs";
 import { createCouchDbLabel } from "../data-source/couchdb-label.mjs";
 import { createCouchDbSuggestions } from "../data-source/couchdb-suggestions.mjs";
-import { createSolrApplication } from "../data-source/solr-application.mjs";
+import { createSolrApplication } from "../data-source/solr-application.ts";
 import { createSolrSuggestion } from "../data-source/solr-suggestion.mjs";
 import { createCouchDbStatic } from "../data-source/couchdb-static.mjs";
 import { createSolrPublisher } from "../data-source/solr-publisher.mjs";

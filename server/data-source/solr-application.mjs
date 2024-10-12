@@ -1,7 +1,23 @@
-import { prepareFieldQuery, prepareTextQuery, prepareSort } from "./shared/solr-query.mjs";
-import { selectLanguage, emptyAsNull, parseFacet, parseDate } from "./shared/solr-response.mjs";
+import { prepareFieldQuery, prepareTextQuery, prepareSort } from "./shared/solr-query";
+import { selectLanguage, emptyAsNull, parseFacet, parseDate } from "./shared/solr-response";
+import { SolrApplicationResponse, SolrApplicationItemResponse } from "./solr-application-model";
 
 const CORE = "applications";
+
+export interface SolrApplicationSource {
+
+  /**
+   * @returns Number of applications.
+   */
+  fetchApplicationsCount(): Promise<number>;
+
+  fetchApplication(languages: string[], iri: string): Promise<SolrApplication>;
+
+  fetchApplications(languages: string[], iri: string): Promise<void>;
+
+  fetchApplicationsWithDatasets(languages: string[], datasets: string): Promise<void>;
+
+}
 
 export function createSolrApplication(solrConnector) {
   return {

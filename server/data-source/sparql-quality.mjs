@@ -1,6 +1,6 @@
 import { getId, getString, getResource, getEntitiesByType, getValue } from "./shared/jsonld.mjs";
 import { selectForLanguages } from "./shared/couchdb-response.mjs";
-import { SKOS, DQV, SDMX, SCHEMA } from "./shared/vocabulary.mjs";
+import { SKOS, DQV, SDMX, SCHEMA } from "./shared/vocabulary.ts";
 
 const QUALITY_PREFIX = "https://data.gov.cz/zdroj/datová-kvalita/metriky/";
 

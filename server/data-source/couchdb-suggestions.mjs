@@ -1,5 +1,5 @@
 import { parseLabelResponse } from "./shared/couchdb-response.mjs";
-import { FOAF } from "./shared/vocabulary.mjs";
+import { FOAF } from "./shared/vocabulary.ts";
 
 export function createCouchDbSuggestions(couchDbConnector) {
   return {

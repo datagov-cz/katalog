@@ -1,7 +1,6 @@
 import fileSystem from "fs";
 
-import Handlebars from "handlebars";
-
+import { createHandlebars } from "../handlebars/handlebars";
 import configuration from "../configuration";
 
 export function createTemplateService(basePath) {
@@ -15,9 +14,8 @@ class BoundTemplateService {
 
   constructor(basePath) {
     this.view_map = {};
-    this.handlebars = Handlebars.create();
+    this.handlebars = createHandlebars();
     this.basePath = basePath;
-    registerHelpers(this.handlebars);
   }
 
   view(name) {
@@ -44,20 +42,12 @@ class BoundTemplateService {
 
 }
 
-function registerHelpers(handlebars) {
-  handlebars.registerHelper("breaklines", (value) => {
-    const escapedText = Handlebars.Utils.escapeExpression(value);
-    const result = escapedText.replace(/(\r\n|\n|\r)/gm, "<br>");
-    return new Handlebars.SafeString(result);
-  });
-}
-
 /**
  * Reload content with every request.
  */
 class ReloadingTemplateService extends BoundTemplateService {
 
-  constructor(basePath)  {
+  constructor(basePath) {
     super(basePath);
     this.partials = {};
   }
