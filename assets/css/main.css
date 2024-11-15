@@ -47,7 +47,11 @@ a {
   gap: 0.5rem;
 }
 
-/* General layout styles. */
+/* General styles. */
+
+.italic {
+  font-style: italic;
+}
 
 .break-word-wrap {
   word-wrap: break-word;
