@@ -106,8 +106,3 @@ function setIfNotEmpty(query, key, value) {
   query[key] = value;
 }
 
-function setIfTrue(query, key, value) {
-  if (value === true) {
-    query[key] = value;
-  }
-}
