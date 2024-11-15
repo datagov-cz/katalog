@@ -1,8 +1,11 @@
 /**
  * Given field and values produce array of pairs {field}:"{value}".
  */
-export function prepareFieldQuery(fieldName: string, values: undefined | null | string[]): string[] {
-  return (values ?? []).map(value => `${fieldName}:"${value}"`);
+export function prepareFieldQuery(
+  fieldName: string,
+  values: undefined | null | string[],
+): string[] {
+  return (values ?? []).map((value) => `${fieldName}:"${value}"`);
 }
 
 /**
@@ -20,10 +23,16 @@ export function prepareTextQuery(language: string, text: string): string {
   }
   // We ask for title first to prioritize it before _text_.
   // As a result items with value in title are returned first.
-  return "" +
-    "( " + createFieldQuery("title_" + language + "_query", tokens) + " )" +
+  return (
+    "" +
+    "( " +
+    createFieldQuery("title_" + language + "_query", tokens) +
+    " )" +
     " OR " +
-    "( " + createFieldQuery("_text_", tokens) + " )";
+    "( " +
+    createFieldQuery("_text_", tokens) +
+    " )"
+  );
 }
 
 const SOLR_TEXT_TO_ESCAPE = /([!*+=<>&|{}^~?[\]:"])/g;
@@ -42,8 +51,10 @@ function escapeSolrTextQuery(query: string): string {
 }
 
 function splitStringByWhitespace(text: string): string[] {
-  return text.trim().split(" ")
-    .filter(item => item !== "")
+  return text
+    .trim()
+    .split(" ")
+    .filter((item) => item !== "")
     .filter(isSpecialCharacter);
 }
 
@@ -65,7 +76,11 @@ function createFieldQuery(fieldName: string, tokens: string[]): string {
   return result;
 }
 
-export function prepareSort(language: string, sort: string | undefined | null, sortDirection: string): string {
+export function prepareSort(
+  language: string,
+  sort: string | undefined | null,
+  sortDirection: string,
+): string {
   if (sort === null || sort === undefined) {
     return "";
   }

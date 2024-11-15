@@ -1,17 +1,18 @@
 import logger from "../logger";
 import { hasRequestFailed, HttpConnector, HttpFailed } from "./http-connector";
-import { SuccessSolrResponse, isErrorSolrResponse, isSuccessSolrResponse } from "./solr-connector-model";
+import {
+  SuccessSolrResponse,
+  isErrorSolrResponse,
+  isSuccessSolrResponse,
+} from "./solr-connector-model";
 
 export type SolrQuery = Record<string, string | string[] | number | boolean>;
 
 export interface SolrConnector {
-
   query<T>(core: string, query: SolrQuery): Promise<SuccessSolrResponse<T>>;
-
 }
 
 class DefaultSolrConnector implements SolrConnector {
-
   private http: HttpConnector;
 
   private solrUrl: string;
@@ -21,8 +22,12 @@ class DefaultSolrConnector implements SolrConnector {
     this.solrUrl = solrUrl;
   }
 
-  async query<T>(core: string, query: SolrQuery): Promise<SuccessSolrResponse<T>> {
-    const url = this.solrUrl + "/" + core + "/query?" + solrQueryToUrlQuery(query);
+  async query<T>(
+    core: string,
+    query: SolrQuery,
+  ): Promise<SuccessSolrResponse<T>> {
+    const url =
+      this.solrUrl + "/" + core + "/query?" + solrQueryToUrlQuery(query);
     const response = await this.http.fetch(url);
     if (hasRequestFailed(response)) {
       throw new HttpFailed(response, "Failed to fetch data from Solr.");
@@ -38,19 +43,25 @@ class DefaultSolrConnector implements SolrConnector {
       throw new Error("Solr request failed.");
     }
   }
-
 }
 
 function solrQueryToUrlQuery(query: SolrQuery): string {
-  return Object.entries(query).map(([key, value]) => {
-    if (Array.isArray(value)) {
-      return value.map(item => key + "=" + encodeURIComponent(item)).join("&");
-    } else {
-      return key + "=" + encodeURIComponent(value);
-    }
-  }).join("&");
+  return Object.entries(query)
+    .map(([key, value]) => {
+      if (Array.isArray(value)) {
+        return value
+          .map((item) => key + "=" + encodeURIComponent(item))
+          .join("&");
+      } else {
+        return key + "=" + encodeURIComponent(value);
+      }
+    })
+    .join("&");
 }
 
-export function createDefaultSolrConnector(http: HttpConnector, solrUrl: string) {
+export function createDefaultSolrConnector(
+  http: HttpConnector,
+  solrUrl: string,
+) {
   return new DefaultSolrConnector(http, solrUrl);
 }

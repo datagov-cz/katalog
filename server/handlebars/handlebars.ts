@@ -8,8 +8,7 @@ export function createHandlebars() {
   return handlebars;
 }
 
-function registerHelpers(handlebars: HandlebarsType) : void {
-
+function registerHelpers(handlebars: HandlebarsType): void {
   // {{#if (notEmpty cards)}} ... {{/if}}
   handlebars.registerHelper("notEmpty", function (value) {
     return value !== undefined && value.length > 0;
@@ -21,5 +20,4 @@ function registerHelpers(handlebars: HandlebarsType) : void {
     const result = escapedText.replace(/(\r\n|\n|\r)/gm, "<br>");
     return new Handlebars.SafeString(result);
   });
-
 }

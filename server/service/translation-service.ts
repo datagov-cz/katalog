@@ -1,4 +1,3 @@
-
 export type Translations = Record<string, string | Function>;
 
 export interface TranslationService {
@@ -13,7 +12,6 @@ export function createTranslationService(serverToLocal: Translations) {
 }
 
 class DefaultTranslationService implements TranslationService {
-
   readonly serverToLocal: Translations;
 
   constructor(serverToLocal: Translations) {
@@ -31,7 +29,7 @@ class DefaultTranslationService implements TranslationService {
     if (Array.isArray(entry)) {
       // Initial value.
       result = entry[0][1];
-      for (let [separator, localizedMessage] of entry) {
+      for (const [separator, localizedMessage] of entry) {
         if (separator > args) {
           break;
         }
@@ -46,6 +44,4 @@ class DefaultTranslationService implements TranslationService {
     }
     return result.replace("{}", args);
   }
-
 }
-

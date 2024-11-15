@@ -2,8 +2,12 @@ window.addEventListener("load", () => {
   const localization = window.search.localization;
   const searchElement = document.querySelector("#search");
   const extendedSearchElement = document.querySelector(".extended-search");
-  const temporalFromElement = extendedSearchElement.querySelector("gov-form-input[data-type=time-from]");
-  const temporalToElement = extendedSearchElement.querySelector("gov-form-input[data-type=time-to]");
+  const temporalFromElement = extendedSearchElement.querySelector(
+    "gov-form-input[data-type=time-from]",
+  );
+  const temporalToElement = extendedSearchElement.querySelector(
+    "gov-form-input[data-type=time-to]",
+  );
 
   const query = { ...window.search.query };
   const initialQuery = { ...window.search.query };
@@ -47,19 +51,28 @@ window.addEventListener("load", () => {
 
     const urlQuery = [];
     addToUrlQueryWhenNotEmpty(
-      urlQuery, localization.searchQuery, query.searchQuery);
+      urlQuery,
+      localization.searchQuery,
+      query.searchQuery,
+    );
     addToUrlQueryWhenNotEmpty(
-      urlQuery, localization.temporalFrom, query.temporalFrom);
+      urlQuery,
+      localization.temporalFrom,
+      query.temporalFrom,
+    );
     addToUrlQueryWhenNotEmpty(
-      urlQuery, localization.temporalTo, query.temporalTo);
+      urlQuery,
+      localization.temporalTo,
+      query.temporalTo,
+    );
+    addToUrlQueryWhenTrue(urlQuery, localization.publicData, query.publicData);
+    addToUrlQueryWhenTrue(urlQuery, localization.codelist, query.codelist);
+    addToUrlQueryWhenTrue(urlQuery, localization.hvdDataset, query.hvdDataset);
     addToUrlQueryWhenTrue(
-      urlQuery, localization.publicData, query.publicData);
-    addToUrlQueryWhenTrue(
-      urlQuery, localization.codelist, query.codelist);
-    addToUrlQueryWhenTrue(
-      urlQuery, localization.hvdDataset, query.hvdDataset);
-    addToUrlQueryWhenTrue(
-      urlQuery, localization.dynamicData, query.dynamicData);
+      urlQuery,
+      localization.dynamicData,
+      query.dynamicData,
+    );
 
     let url = searchElement.dataset.baseUrl;
     // Prepare URL for adding query.
@@ -134,17 +147,16 @@ window.addEventListener("load", () => {
   }
 
   const getThisYear = () => {
-    const year = (new Date()).getFullYear();
+    const year = new Date().getFullYear();
     return [year + "-01-01", year + "-12-31"];
   };
 
   const getLastYear = () => {
-    const year = (new Date()).getFullYear() - 1;
+    const year = new Date().getFullYear() - 1;
     return [year + "-01-01", year + "-12-31"];
   };
 
   registerPageSizeHandler();
-
 });
 
 function registerPageSizeHandler() {

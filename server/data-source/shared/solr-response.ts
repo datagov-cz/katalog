@@ -3,7 +3,11 @@ import logger from "../../logger";
 /**
  * Combine name_prefix with languages returning the first non-empty value found.
  */
-export function selectLanguage(document: Record<string, any>, name_prefix: string, languages: string[]): string | null {
+export function selectLanguage(
+  document: Record<string, any>,
+  name_prefix: string,
+  languages: string[],
+): string | null {
   for (const language of languages) {
     const key = name_prefix + language;
     const value = document[key];
@@ -42,8 +46,8 @@ export function parseFacet(payload: undefined | string[]): FacetItem[] {
   const result: FacetItem[] = [];
   for (let index = 0; index < payload.length; index += 2) {
     result.push({
-      "iri": payload[index],
-      "count": Number(payload[index + 1]),
+      iri: payload[index],
+      count: Number(payload[index + 1]),
     });
   }
   result.sort((left, right) => right.count - left.count);

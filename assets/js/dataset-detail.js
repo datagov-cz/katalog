@@ -10,7 +10,9 @@ function initializeApplicableLegislation() {
   const showModal = (event) => {
     if (originalParent !== null) {
       // We need to move current content back.
-      originalParent.appendChild(modalElement.querySelector(".gov-modal__content ul"));
+      originalParent.appendChild(
+        modalElement.querySelector(".gov-modal__content ul"),
+      );
     }
     // Move selected content into the dialog.
     const content = event.target.querySelector("ul");
@@ -18,17 +20,26 @@ function initializeApplicableLegislation() {
     modalElement.querySelector(".gov-modal__content").replaceChildren(content);
     modalElement.setAttribute("open", "true");
   };
-  document.querySelectorAll(".applicable-legislation .legislation-list")
-    .forEach(element => element.addEventListener("gov-click", showModal));
+  document
+    .querySelectorAll(".applicable-legislation .legislation-list")
+    .forEach((element) => element.addEventListener("gov-click", showModal));
 }
 
 function initializeQuality() {
   const language = document.documentElement.lang;
   const datasetElement = document.querySelector(".dataset-container[data-iri]");
-  fetchAndRenderDatasetQuality(language, datasetElement, datasetElement.dataset.iri);
+  fetchAndRenderDatasetQuality(
+    language,
+    datasetElement,
+    datasetElement.dataset.iri,
+  );
 
-  const distributionElements = document.querySelectorAll(".distribution-item-wrap[data-iri]");
-  distributionElements.forEach(element => fetchAndRenderDistributionQuality(language, element, element.dataset.iri));
+  const distributionElements = document.querySelectorAll(
+    ".distribution-item-wrap[data-iri]",
+  );
+  distributionElements.forEach((element) =>
+    fetchAndRenderDistributionQuality(language, element, element.dataset.iri),
+  );
 }
 
 async function fetchAndRenderDatasetQuality(language, element, iri) {
@@ -36,24 +47,43 @@ async function fetchAndRenderDatasetQuality(language, element, iri) {
 
   const documentationElement = element.querySelector(".documentation .quality");
   const documentation = response.documentation;
-  renderQualityMeasure(documentationElement, documentation, "link", "link-45deg");
+  renderQualityMeasure(
+    documentationElement,
+    documentation,
+    "link",
+    "link-45deg",
+  );
 
   const specificationElement = element.querySelector(".specification .quality");
   const specification = response.specification;
-  renderQualityMeasure(specificationElement, specification, "link", "link-45deg");
+  renderQualityMeasure(
+    specificationElement,
+    specification,
+    "link",
+    "link-45deg",
+  );
 }
 
 function fetchQuality(language, iri) {
-  const url = "/api/v2/quality?iri=" + encodeURIComponent(iri) + "&language=" + encodeURIComponent(language);
+  const url =
+    "/api/v2/quality?iri=" +
+    encodeURIComponent(iri) +
+    "&language=" +
+    encodeURIComponent(language);
   return fetch(url)
-    .then(response => response.json())
-    .then(content => {
+    .then((response) => response.json())
+    .then((content) => {
       console.log({ iri, content });
       return content;
-    })
+    });
 }
 
-function renderQualityMeasure(element, measure, successIconName, failedIconName) {
+function renderQualityMeasure(
+  element,
+  measure,
+  successIconName,
+  failedIconName,
+) {
   if (element === null || measure === undefined || measure === null) {
     return;
   }
@@ -98,18 +128,31 @@ async function fetchAndRenderDistributionQuality(language, element, iri) {
 }
 
 function renderLegalQuality(element, response) {
-
   const authorshipElement = element.querySelector(".authorship .quality");
   const authorship = response.authorship;
   renderQualityMeasure(authorshipElement, authorship, "award", "bug");
 
-  const databaseAuthorshipElement = element.querySelector(".databaseAuthorship .quality");
+  const databaseAuthorshipElement = element.querySelector(
+    ".databaseAuthorship .quality",
+  );
   const databaseAuthorship = response.databaseAuthorship;
-  renderQualityMeasure(databaseAuthorshipElement, databaseAuthorship, "award", "bug");
+  renderQualityMeasure(
+    databaseAuthorshipElement,
+    databaseAuthorship,
+    "award",
+    "bug",
+  );
 
-  const specialDatabaseElement = element.querySelector(".protectedDatabaseAuthorship .quality");
+  const specialDatabaseElement = element.querySelector(
+    ".protectedDatabaseAuthorship .quality",
+  );
   const specialDatabaseAuthorship = response.specialDatabaseAuthorship;
-  renderQualityMeasure(specialDatabaseElement, specialDatabaseAuthorship, "award", "bug");
+  renderQualityMeasure(
+    specialDatabaseElement,
+    specialDatabaseAuthorship,
+    "award",
+    "bug",
+  );
 }
 
 function renderShared(element, response) {
@@ -133,11 +176,23 @@ function renderDistributionQuality(element, response) {
 }
 
 function renderDataServiceQuality(element, response) {
-  const endpointDescriptionElement = element.querySelector(".endpointDescription .quality");
+  const endpointDescriptionElement = element.querySelector(
+    ".endpointDescription .quality",
+  );
   const endpointDescription = response.endpointDescription;
   const endpointDescriptionCors = response.endpointDescriptionCors;
-  renderQualityMeasure(endpointDescriptionElement, endpointDescription, "award", "bug");
-  renderQualityMeasure(endpointDescriptionElement, endpointDescriptionCors, "globe2", "globe2");
+  renderQualityMeasure(
+    endpointDescriptionElement,
+    endpointDescription,
+    "award",
+    "bug",
+  );
+  renderQualityMeasure(
+    endpointDescriptionElement,
+    endpointDescriptionCors,
+    "globe2",
+    "globe2",
+  );
 
   const endpointUrlElement = element.querySelector(".endpointUrl .quality");
   const endpointUrl = response.endpointUrl;
