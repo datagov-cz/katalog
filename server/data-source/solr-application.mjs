@@ -1,23 +1,7 @@
 import { prepareFieldQuery, prepareTextQuery, prepareSort } from "./shared/solr-query";
 import { selectLanguage, emptyAsNull, parseFacet, parseDate } from "./shared/solr-response";
-import { SolrApplicationResponse, SolrApplicationItemResponse } from "./solr-application-model";
 
 const CORE = "applications";
-
-export interface SolrApplicationSource {
-
-  /**
-   * @returns Number of applications.
-   */
-  fetchApplicationsCount(): Promise<number>;
-
-  fetchApplication(languages: string[], iri: string): Promise<SolrApplication>;
-
-  fetchApplications(languages: string[], iri: string): Promise<void>;
-
-  fetchApplicationsWithDatasets(languages: string[], datasets: string): Promise<void>;
-
-}
 
 export function createSolrApplication(solrConnector) {
   return {
@@ -38,13 +22,13 @@ async function fetchApplicationsCount(solrConnector) {
     "rows": 0,
     "q": "*:*",
   };
-  const response = await solrConnector.fetch(CORE, solrQuery);
+  const response = await solrConnector.query(CORE, solrQuery);
   return response["response"]["numFound"];
 }
 
 async function fetchApplication(solrConnector, languages, iri) {
   const solrQuery = buildApplicationQuery(iri);
-  const response = await solrConnector.fetch(CORE, solrQuery);
+  const response = await solrConnector.query(CORE, solrQuery);
   return parseApplicationResponse(languages, response);
 }
 
@@ -103,7 +87,7 @@ function parseApplicationResponse(languages, response) {
 async function fetchApplications(solrConnector, languages, query) {
   const primaryLanguage = languages[0];
   const solrQuery = buildApplicationsQuery(primaryLanguage, query);
-  const response = await solrConnector.fetch(CORE, solrQuery);
+  const response = await solrConnector.query(CORE, solrQuery);
   return parseApplicationsResponse(languages, response);
 }
 
@@ -175,7 +159,7 @@ function parseApplicationsResponse(languages, response) {
 
 async function fetchApplicationsWithDatasets(solrConnector, languages, datasets) {
   const solrQuery = buildApplicationsWithDatasetsQuery(datasets);
-  const response = await solrConnector.fetch(CORE, solrQuery);
+  const response = await solrConnector.query(CORE, solrQuery);
   return parseApplicationsWithDatasetsResponse(languages, response);
 }
 

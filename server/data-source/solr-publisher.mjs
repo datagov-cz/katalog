@@ -11,7 +11,7 @@ export function createSolrPublisher(solrConnector) {
 
 async function fetchPublishers(solrConnector) {
   const solrQuery = buildPublishersQuery();
-  const response = await solrConnector.fetch(CORE, solrQuery);
+  const response = await solrConnector.query(CORE, solrQuery);
   return parsePublishersResponse(response);
 }
 

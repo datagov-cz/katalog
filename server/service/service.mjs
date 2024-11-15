@@ -1,11 +1,11 @@
-import { createSolrConnector } from "../connector/solr.mjs";
+import { createDefaultSolrConnector } from "../connector/solr-connector";
 import { createCouchDbConnector } from "../connector/couchdb.mjs";
 import { createSparqlConnector } from "../connector/sparql.mjs";
 
 import { createCouchDbDataset } from "../data-source/couchdb-dataset.mjs";
 import { createCouchDbLabel } from "../data-source/couchdb-label.mjs";
 import { createCouchDbSuggestions } from "../data-source/couchdb-suggestions.mjs";
-import { createSolrApplication } from "../data-source/solr-application.ts";
+import { createSolrApplication } from "../data-source/solr-application.mjs";
 import { createSolrSuggestion } from "../data-source/solr-suggestion.mjs";
 import { createCouchDbStatic } from "../data-source/couchdb-static.mjs";
 import { createSolrPublisher } from "../data-source/solr-publisher.mjs";
@@ -22,7 +22,7 @@ import { createCronService } from "./cron-service.mjs";
 import { createLinkService } from "./link-service.mjs";
 
 export async function createServices(configuration, http) {
-  const solr = createSolrConnector(configuration.services.solrUrl, http);
+  const solr = createDefaultSolrConnector(http, configuration.services.solrUrl);
   const couchdb = createCouchDbConnector(configuration.services.couchDbUrl, http);
 
   const couchDbDataset = createCouchDbDataset(couchdb);
