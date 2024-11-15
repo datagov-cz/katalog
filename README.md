@@ -36,8 +36,8 @@ LABEL_CACHE_RELOAD_CRON = "0/15 * * * *"
 # Optional Matomo configuration.
 CLIENT_MATOMO_URL = "http://matomo.localhost/"
 CLIENT_MATOMO_SITE_ID = "1"
+CLIENT_CATALOG_VALIDATOR = "https://datagov-cz.github.io/lkod-validator?catalog={}"
 ```
-
 
 Pak je již možné provést samotné spuštění.
 ```bash
