@@ -71,6 +71,10 @@ const ConfigurationZod = z.object({
      * Value of siteId used for Matomo reporting.
      */
     matomoSiteId: z.string().nullable(),
+    /**
+     * Replace {} with catalog endpoint.
+     */
+    catalogValidatorTemplate: z.string(),
   }),
 });
 
@@ -112,6 +116,7 @@ const createConfiguration = (): Configuration => {
         process.env.CLIENT_DATA_SERVICE_CLASS_AND_PROPERTIES_TEMPLATE ?? null,
       matomoUrl: process.env.CLIENT_MATOMO_URL ?? null,
       matomoSiteId: process.env.CLIENT_MATOMO_SITE_ID ?? null,
+      catalogValidatorTemplate : process.env.CLIENT_CATALOG_VALIDATOR ?? null,
     },
   });
 };

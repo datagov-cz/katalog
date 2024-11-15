@@ -25,8 +25,17 @@ function prepareCatalogsInPlace(configuration, link, translation, catalogs) {
   for (const catalog of catalogs) {
     catalog.url = link.wrapLink(catalog.iri);
     catalog.publisher.iri = link.wrapLink(catalog.publisher.iri);
+    catalog.homepageUrl = catalog.homepage;
+    catalog.endpointUrl = catalog.endpointURL;
     catalog.deleteUrl = configuration.client.catalogFormUrl
       + translation.translate("url-remove-link")
       + encodeURIComponent(catalog.iri);
+    console.log(">", configuration.client);
+    catalog.validateUrl = substituteToTemplate(
+      configuration.client.catalogValidatorTemplate, catalog.endpointURL);
   }
+}
+
+function substituteToTemplate(template, url) {
+  return template.replace("{}", encodeURIComponent(url));
 }

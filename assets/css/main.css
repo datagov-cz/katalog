@@ -53,6 +53,10 @@ a {
   word-wrap: break-word;
 }
 
+.grow {
+  flex-grow: 1;
+}
+
 .flex-row {
   display: flex;
   flex-direction: row;
@@ -127,4 +131,8 @@ a {
 
 .p-2 {
   padding: .5rem;
+}
+
+.h-full {
+  height: 100%;
 }
