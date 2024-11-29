@@ -72,6 +72,10 @@ const ConfigurationZod = z.object({
      */
     matomoSiteId: z.string().nullable(),
     /**
+     * Link to local catalog validator landing page.
+     */
+    catalogValidator: z.string(),
+    /**
      * Replace {} with catalog endpoint.
      */
     catalogValidatorTemplate: z.string(),
@@ -116,7 +120,8 @@ const createConfiguration = (): Configuration => {
         process.env.CLIENT_DATA_SERVICE_CLASS_AND_PROPERTIES_TEMPLATE ?? null,
       matomoUrl: process.env.CLIENT_MATOMO_URL ?? null,
       matomoSiteId: process.env.CLIENT_MATOMO_SITE_ID ?? null,
-      catalogValidatorTemplate : process.env.CLIENT_CATALOG_VALIDATOR ?? null,
+      catalogValidator: process.env.CLIENT_CATALOG_VALIDATOR_LANDING_PAGE ?? null,
+      catalogValidatorTemplate : process.env.CLIENT_CATALOG_VALIDATOR_RUN_VALIDATION ?? null,
     },
   });
 };

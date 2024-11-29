@@ -8,5 +8,6 @@ export function createFooterData() {
   return {
     "applicationRegistrationFormUrl": configuration.client.applicationFormUrl,
     "suggestionRegistrationFormUrl": configuration.client.suggestionFormUrl,
+    "catalogValidator": configuration.client.catalogValidator,
   };
 }
