@@ -2,12 +2,21 @@
  * We use custom response class to allow for easy testing.
  */
 export interface HttpResponse {
+
+  /**
+   * HTTP status code.
+   */
   status: number;
 
   json: () => Promise<any>;
 }
 
 export interface HttpConnector {
+
+  /**
+   * Fetch and return content from given URL.
+   * @param url
+   */
   fetch(url: string): Promise<HttpResponse>;
 }
 
