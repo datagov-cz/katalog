@@ -86,6 +86,12 @@ const PROTECTED_DATABASE_AUTHORSHIP_MAP = {
     "iconStyle": "alright",
     "iconTitle": "cc0-protected-database-authorship-comment",
   }),
+  "https://creativecommons.org/licenses/by/4.0/": () => ({
+    "label": "ccby-database-authorship",
+    "icon": "bookmark-fill",
+    "iconStyle": "warning",
+    "iconTitle": "ccby-database-authorship-comment",
+  }),
   [null]: () => ({
     "label": "missing-protected-database-authorship",
     "icon": "exclamation-circle",
