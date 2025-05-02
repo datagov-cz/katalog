@@ -14,6 +14,7 @@ K dispozici jsou následující proměnné:
 - `CLIENT_APPLICATION_FORM_URL` - URL pro registrační formulář aplikací.
 - `CLIENT_SUGGESTION_FORM_URL` - URL pro registrační formulář návrhů ke zveřejnění dat.
 - `LABEL_CACHE_RELOAD_CRON` - Volitelné, pokud je uvedeno tak v [Cron formátu](https://crontab.guru/) popisuje jak často se má re-inicializovat interní cache pro labely.
+- `CLIENT_DEREFERENCE` - Volitelná šablona pro externí IRI, datasety, katalogy. Příklad `http://all-knowing.example.com/describe/?uri={}`
 
 ## Sestavení a spuštění
 Po naklonování repozitáře je nejprve zapotřebí nainstalovat knihovny pomocí následujícího příkazu.

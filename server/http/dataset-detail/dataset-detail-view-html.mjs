@@ -147,6 +147,7 @@ export function renderHtml(services, languages, query, data, reply) {
   }
   const templateData = prepareTemplateData(
     services.configuration, services.translation, services.navigation,
+    services.link,
     languages, query, data);
   const template = services.template.view(ROUTE.DATASET_DETAIL);
   reply
@@ -155,12 +156,12 @@ export function renderHtml(services, languages, query, data, reply) {
     .send(template(templateData));
 }
 
-export function prepareTemplateData(configuration, translation, navigation, languages, query, data) {
+export function prepareTemplateData(configuration, translation, navigation, link, languages, query, data) {
   return {
     "head": components.createHeadData(configuration),
     "navigation": components.createNavigationData(navigation, languages, query),
     "footer": components.createFooterData(),
-    "dataset": prepareDataset(configuration, translation, navigation, data),
+    "dataset": prepareDataset(configuration, translation, navigation, link, data),
     "distributions": prepareDistributions(configuration, translation, navigation, query, data),
     "applications": prepareApplications(navigation, data),
     "datasetSeries": prepareDatasetSeries(navigation, data),
@@ -168,14 +169,13 @@ export function prepareTemplateData(configuration, translation, navigation, lang
   };
 }
 
-function prepareDataset(configuration, translation, navigation, { dataset }) {
+function prepareDataset(configuration, translation, navigation, link, { dataset }) {
   const datasetDetailNavigation = navigation.changeView(ROUTE.DATASET_DETAIL);
   const datasetListNavigation = navigation.changeView(ROUTE.DATASET_LIST);
   // heading section
   const heading = {
     "title": dataset.title,
-    "openUrl": configuration.client.dereferenceTemplate
-      .replace("{}", encodeURIComponent(dataset.iri)),
+    "openUrl": link.wrapLink(dataset.iri),
     "copyUrl": configuration.client.catalogFormUrl
       + translation.translate("url-copy-dataset")
       + encodeURIComponent(dataset.iri),
