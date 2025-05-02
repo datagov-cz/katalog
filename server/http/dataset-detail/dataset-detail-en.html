@@ -399,14 +399,14 @@
                   <span class="quality"></span>
                 </li>
                 <li class="endpointUrl">
-                  <a href="{{endpointUrl}}">Endpoint</a>
-                  <span class="quality"></span>
+                  <div>
+                    <a href="{{endpointUrl}}">Endpoint</a>
+                    <span class="quality"></span>
+                  </div>
                   {{#if sparqlEditor}}
-                  <br/>
                   <a href="{{sparqlEditor}}">SPARQL query</a>
                   {{/if}}
                   {{#if classesAndProperties}}
-                  <br/>
                   <a href="{{classesAndProperties}}">Classes and properties</a>
                   {{/if}}
                 </li>
