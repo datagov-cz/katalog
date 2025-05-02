@@ -70,12 +70,7 @@ function fetchQuality(language, iri) {
     encodeURIComponent(iri) +
     "&language=" +
     encodeURIComponent(language);
-  return fetch(url)
-    .then((response) => response.json())
-    .then((content) => {
-      console.log({ iri, content });
-      return content;
-    });
+  return fetch(url).then((response) => response.json());
 }
 
 function renderQualityMeasure(
@@ -124,7 +119,14 @@ async function fetchAndRenderDistributionQuality(language, element, iri) {
   renderLegalQuality(element, response);
   renderShared(element, response);
   renderDistributionQuality(element, response);
-  renderDataServiceQuality(element, response);
+
+  // Data service has custom quality measure entity.
+  const dataServiceElement = element.querySelector(".data-service[data-iri]");
+  if (dataServiceElement !== null) {
+    const dataServiceIri = dataServiceElement.dataset.iri;
+    const dataServiceResponse = await fetchQuality(language, dataServiceIri);
+    renderDataServiceQuality(dataServiceElement, dataServiceResponse);
+  }
 }
 
 function renderLegalQuality(element, response) {

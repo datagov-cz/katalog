@@ -11,13 +11,17 @@
   color: var(--color-danger, #dc3545);
 }
 
-.quality {
-  font-size: larger;
-  float: right;
+:has(>.quality) {
+  display: flex;
+  justify-content: space-between;
 }
 
-.quality>*{
-  margin-left: .5rem;
+.quality {
+  font-size: larger;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: 0.25rem;
 }
 
 .dataset-container .quality {

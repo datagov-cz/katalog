@@ -570,6 +570,7 @@ function prepareDataService(configuration, distribution, dataService) {
   const showSparqlEditor = sparqlCompliant && dataService.endpointURL && client.sparqlEditorUrl;
   return {
     "dataService": {
+      "iri": dataService.iri,
       "endpointDescription": dataService.endpointDescription,
       "endpointUrl": dataService.endpointURL,
       "sparqlEditor": showSparqlEditor
