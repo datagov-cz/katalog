@@ -1,5 +1,5 @@
 export function parseClientQuery(navigation, query) {
   return {
-    "iri": navigation.queryArgumentFromClient(query, "iri"),
+    iri: navigation.queryArgumentFromClient(query, "iri"),
   };
 }

@@ -1,4 +1,3 @@
-
 /**
  * Objective of link service is to update links to external resources.
  * Those may include links to publishers, catalogs, and datasets.
@@ -18,7 +17,7 @@ export function createLinkService(configuration) {
      * @param {string} url
      * @returns {string}
      */
-    "wrapLink": wrapLink,
+    wrapLink: wrapLink,
   };
 }
 

@@ -11,7 +11,6 @@ export function createNavigationService() {
 }
 
 class NavigationService {
-
   constructor() {
     this.beforeLinks = {};
     this.data = {};
@@ -27,19 +26,17 @@ class NavigationService {
     const key = language + ":" + viewName;
     if (this.data[key] === undefined) {
       this.data[key] = {
-        "path": "",
-        "query": {},
-        "argument": {},
-        "beforeLink": NOOP,
+        path: "",
+        query: {},
+        argument: {},
+        beforeLink: NOOP,
       };
     }
     return new ViewBoundNavigation(this, language, viewName, this.data[key]);
   }
-
 }
 
 class ViewBoundNavigation {
-
   constructor(parent, language, viewName, data) {
     this.parent = parent;
     this.language = language;
@@ -118,7 +115,7 @@ class ViewBoundNavigation {
    * Return relative link to this view with given query.
    */
   linkFromServer(query) {
-    const effectiveQuery =  this.data.beforeLink(this, query);
+    const effectiveQuery = this.data.beforeLink(this, query);
     const queryString = this.queryFromServer(effectiveQuery);
     const clientPath = this.data.path;
     if (queryString === "") {
@@ -148,7 +145,6 @@ class ViewBoundNavigation {
     }
     return querystring.stringify(localized);
   }
-
 }
 
 function asArray(value) {

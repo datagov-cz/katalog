@@ -1,4 +1,3 @@
-
 export function createFacetService(labelService) {
   return {
     /**
@@ -10,13 +9,31 @@ export function createFacetService(labelService) {
      * @param {} labelCallback
      * @returns {}
      */
-    "updateFacetInPlace": (languages, items, active, limit, labelCallback = null) =>
-      updateFacetInPlace(labelService, languages, items, active, limit, labelCallback),
-  }
+    updateFacetInPlace: (
+      languages,
+      items,
+      active,
+      limit,
+      labelCallback = null,
+    ) =>
+      updateFacetInPlace(
+        labelService,
+        languages,
+        items,
+        active,
+        limit,
+        labelCallback,
+      ),
+  };
 }
 
 async function updateFacetInPlace(
-  labelService, languages, items, active, limit, labelCallback
+  labelService,
+  languages,
+  items,
+  active,
+  limit,
+  labelCallback,
 ) {
   addActivityAndActive(items, active);
   // We should not load labels for all facets as that can be a lot of requests.
@@ -45,10 +62,10 @@ function addActivityAndActive(items, active) {
   }
   for (const iri of missingActive) {
     items.push({
-      "iri": iri,
-      "count": 0,
-      "active": true,
-    })
+      iri: iri,
+      count: 0,
+      active: true,
+    });
   }
 }
 
@@ -64,7 +81,7 @@ function partialSortByActivityAndCount(items) {
   });
 }
 
-function softSizeLengthByCount(items, softLimit)  {
+function softSizeLengthByCount(items, softLimit) {
   if (softLimit === -1 || softLimit >= items.length) {
     return;
   }

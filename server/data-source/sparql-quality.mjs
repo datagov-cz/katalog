@@ -1,73 +1,67 @@
-import { getId, getString, getResource, getEntitiesByType, getValue } from "./shared/jsonld.mjs";
+import {
+  getId,
+  getString,
+  getResource,
+  getEntitiesByType,
+  getValue,
+} from "./shared/jsonld.mjs";
 import { selectForLanguages } from "./shared/couchdb-response.mjs";
 import { SKOS, DQV, SDMX, SCHEMA } from "./shared/vocabulary.ts";
 
 const QUALITY_PREFIX = "https://data.gov.cz/zdroj/datová-kvalita/metriky/";
 
 const QUALITY_DATASET = {
-  "documentation":
-    QUALITY_PREFIX + "metrikaDostupnostiDokumentace",
-  "specification":
-    QUALITY_PREFIX + "metrikaDostupnostiSpecifikace",
+  documentation: QUALITY_PREFIX + "metrikaDostupnostiDokumentace",
+  specification: QUALITY_PREFIX + "metrikaDostupnostiSpecifikace",
 };
 
 const LEGAL_QUALITY = {
-  "authorship":
-    QUALITY_PREFIX + "metrikaDostupnostiPodmínekUžitíAutorskéDílo",
-  "authorshipCors":
+  authorship: QUALITY_PREFIX + "metrikaDostupnostiPodmínekUžitíAutorskéDílo",
+  authorshipCors:
     QUALITY_PREFIX + "metrikaDostupnostiCORSPodmínekUžitíAutorskéDílo",
-  "databaseAuthorship":
+  databaseAuthorship:
     QUALITY_PREFIX + "metrikaDostupnostiPodmínekUžitíAutorskáDatabáze",
-  "databaseAuthorshipCors":
+  databaseAuthorshipCors:
     QUALITY_PREFIX + "metrikaDostupnostiCORSPodmínekUžitíAutorskáDatabáze",
-  "specialDatabaseAuthorship":
-    QUALITY_PREFIX + "metrikaDostupnostiPodmínekUžití"
-    + "ZvláštníPrávoPořizovateleDatabáze",
-  "specialDatabaseAuthorshipCors":
-    QUALITY_PREFIX + "metrikaDostupnostiCORSPodmínekUžití"
-    + "ZvláštníPrávoPořizovateleDatabáze",
+  specialDatabaseAuthorship:
+    QUALITY_PREFIX +
+    "metrikaDostupnostiPodmínekUžití" +
+    "ZvláštníPrávoPořizovateleDatabáze",
+  specialDatabaseAuthorshipCors:
+    QUALITY_PREFIX +
+    "metrikaDostupnostiCORSPodmínekUžití" +
+    "ZvláštníPrávoPořizovateleDatabáze",
 };
 
 const QUALITY_DISTRIBUTION = {
-  "download":
-    QUALITY_PREFIX + "metrikaDostupnostiDownloadURL",
-  "downloadCors":
-    QUALITY_PREFIX + "metrikaDostupnostiCORSDownloadURL",
-  "schema":
-    QUALITY_PREFIX + "metrikaDostupnostiSchématu",
-  "schemaCors":
-    QUALITY_PREFIX + "metrikaDostupnostiCORSSchématu",
-  "mediaType":
-    QUALITY_PREFIX + "metrikaSprávnostiMediaTypu",
+  download: QUALITY_PREFIX + "metrikaDostupnostiDownloadURL",
+  downloadCors: QUALITY_PREFIX + "metrikaDostupnostiCORSDownloadURL",
+  schema: QUALITY_PREFIX + "metrikaDostupnostiSchématu",
+  schemaCors: QUALITY_PREFIX + "metrikaDostupnostiCORSSchématu",
+  mediaType: QUALITY_PREFIX + "metrikaSprávnostiMediaTypu",
 };
 
 const QUALITY_DATA_SERVICE = {
-  "endpointDescription":
-    QUALITY_PREFIX + "metrikaDostupnostiEndpointDescription",
-  "endpointDescriptionCors":
+  endpointDescription: QUALITY_PREFIX + "metrikaDostupnostiEndpointDescription",
+  endpointDescriptionCors:
     QUALITY_PREFIX + "metrikaDostupnostiCORSEndpointDescription",
-  "endpointUrl":
-    QUALITY_PREFIX + "metrikaDostupnostiEndpointURL",
-  "endpointUrlCors":
-    QUALITY_PREFIX + "metrikaDostupnostiCORSEndpointURL",
-  "conformsTo":
-    QUALITY_PREFIX + "metrikaDostupnostiServiceConformsTo",
-  "conformsToCors":
-    QUALITY_PREFIX + "metrikaDostupnostiCORSServiceConformsTo",
-  "mediaType":
-    QUALITY_PREFIX + "metrikaSprávnostiMediaTypu",
-}
+  endpointUrl: QUALITY_PREFIX + "metrikaDostupnostiEndpointURL",
+  endpointUrlCors: QUALITY_PREFIX + "metrikaDostupnostiCORSEndpointURL",
+  conformsTo: QUALITY_PREFIX + "metrikaDostupnostiServiceConformsTo",
+  conformsToCors: QUALITY_PREFIX + "metrikaDostupnostiCORSServiceConformsTo",
+  mediaType: QUALITY_PREFIX + "metrikaSprávnostiMediaTypu",
+};
 
 const QUALITY = {
   ...QUALITY_DATASET,
   ...LEGAL_QUALITY,
   ...QUALITY_DISTRIBUTION,
-  ...QUALITY_DATA_SERVICE
+  ...QUALITY_DATA_SERVICE,
 };
 
 export function createSparqlQuality(sparqlConnector) {
   return {
-    "fetchQuality": (languages, iri) =>
+    fetchQuality: (languages, iri) =>
       fetchQuality(sparqlConnector, languages, iri),
   };
 }
@@ -88,25 +82,25 @@ async function fetchQuality(sparqlConnector, languages, iri) {
     measures.push({
       // @lc-property
       // @lc-name iri
-      "iri": getId(entity),
+      iri: getId(entity),
       // @lc-property
       // @lc-name value
-      "value": getValue(entity, DQV.value),
+      value: getValue(entity, DQV.value),
       // @lc-property
       // @lc-name lastCheck
-      "lastCheck": sdmxRefToDate(getResource(entity, SDMX.refPeriod)),
+      lastCheck: sdmxRefToDate(getResource(entity, SDMX.refPeriod)),
       // @lc-property
       // @lc-name computedOn
-      "computedOn": getResource(entity, DQV.computedOn),
+      computedOn: getResource(entity, DQV.computedOn),
       // @lc-property
       // @lc-name measureOf
-      "measureOf": getResource(entity, DQV.isMeasurementOf),
+      measureOf: getResource(entity, DQV.isMeasurementOf),
       // @lc-property
       // @lc-name note
-      "note": selectForLanguages(languages, getString(entity, SKOS.note)),
+      note: selectForLanguages(languages, getString(entity, SKOS.note)),
       // @lc-property
       // @lc-name object
-      "object": getResource(entity, SCHEMA.object),
+      object: getResource(entity, SCHEMA.object),
     });
   }
   return convertMeasuresToObject(measures);
@@ -159,9 +153,9 @@ function convertMeasuresToObject(measures) {
       continue;
     }
     result[key] = {
-      "value": measure["value"],
-      "lastCheck": measure["lastCheck"],
-      "note": measure["note"],
+      value: measure["value"],
+      lastCheck: measure["lastCheck"],
+      note: measure["note"],
     };
   }
   return result;

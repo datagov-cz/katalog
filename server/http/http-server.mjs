@@ -6,11 +6,11 @@ import { registerHttpRoutes } from "./route.mjs";
 
 export async function createHttpServer(configuration) {
   const application = Fastify({
-    logger: logger,
+    loggerInstance: logger,
     trustProxy: configuration.http.trustProxy,
   });
   await application.register(cors, {
-    "origin": true,
+    origin: true,
   });
   return application;
 }
@@ -26,26 +26,29 @@ function registerAssetsRoutes(configuration, server) {
   server.register(import("@fastify/static"), {
     root: new URL("../../assets", import.meta.url),
     prefix: "/assets/catalog/",
-    decorateReply: false
+    decorateReply: false,
   });
   if (configuration.server.designSystemFolder) {
-    logger.info("Serving design system assets from the given directory.")
+    logger.info("Serving design system assets from the given directory.");
     server.register(import("@fastify/static"), {
       root: configuration.server.designSystemFolder,
       prefix: "/assets/design-system/",
-      decorateReply: false
+      decorateReply: false,
     });
   }
 }
 
 export function startServer(server, configuration) {
-  server.listen({
-    port: configuration.http.port,
-    host: configuration.http.host,
-  }, function (error) {
-    if (error) {
-      server.log.error(error);
-      process.exit(1);
-    }
-  });
+  server.listen(
+    {
+      port: configuration.http.port,
+      host: configuration.http.host,
+    },
+    function (error) {
+      if (error) {
+        server.log.error(error);
+        process.exit(1);
+      }
+    },
+  );
 }

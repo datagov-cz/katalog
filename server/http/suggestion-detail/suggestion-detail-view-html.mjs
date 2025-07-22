@@ -20,13 +20,18 @@ export function prepareTemplateData(services, languages, query, data) {
   prepareDatasetsInPlace(services, data["datasets"]);
   const suggestion = prepareSuggestion(services.navigation, language, data);
   return {
-    "head": components.createHeadData(services.configuration),
-    "navigation": components.createNavigationData(services.navigation, languages, query, true),
-    "footer": components.createFooterData(),
-    "suggestion": suggestion,
-    "datasets": {
-      "visible": datasets.length > 0,
-      "items": datasets,
+    head: components.createHeadData(services.configuration),
+    navigation: components.createNavigationData(
+      services.navigation,
+      languages,
+      query,
+      true,
+    ),
+    footer: components.createFooterData(),
+    suggestion: suggestion,
+    datasets: {
+      visible: datasets.length > 0,
+      items: datasets,
     },
   };
 }
@@ -34,29 +39,29 @@ export function prepareTemplateData(services, languages, query, data) {
 function prepareDatasetsInPlace(services, datasets) {
   const listNavigation = services.navigation.changeView(ROUTE.DATASET_DETAIL);
   for (const dataset of datasets) {
-    dataset["href"] = listNavigation.linkFromServer({ "iri": dataset["iri"] });
+    dataset["href"] = listNavigation.linkFromServer({ iri: dataset["iri"] });
   }
 }
 
 function prepareSuggestion(navigation, language, suggestion) {
   updateCodelistInPlace(navigation, suggestion["themes"], "theme");
   return {
-    "iri": suggestion["iri"],
-    "title": suggestion["title"],
-    "description": suggestion["description"],
-    "themes": suggestion["themes"],
-    "state": suggestion["state"],
-    "created": formatDate(language, suggestion["created"]),
-    "mandatory_106": suggestion["mandatory_106"],
-    "obstacle_special_regulation": suggestion["obstacle_special_regulation"],
-    "obstacle_106": suggestion["obstacle_106"],
-    "publisher": {
-      "iri": suggestion["publisher"]["iri"],
-      "title": suggestion["publisher"]["title"],
+    iri: suggestion["iri"],
+    title: suggestion["title"],
+    description: suggestion["description"],
+    themes: suggestion["themes"],
+    state: suggestion["state"],
+    created: formatDate(language, suggestion["created"]),
+    mandatory_106: suggestion["mandatory_106"],
+    obstacle_special_regulation: suggestion["obstacle_special_regulation"],
+    obstacle_106: suggestion["obstacle_106"],
+    publisher: {
+      iri: suggestion["publisher"]["iri"],
+      title: suggestion["publisher"]["title"],
     },
-    "publication_plan": suggestion["publication_plan"],
-    "publication_plan_visible": isNotEmpty(suggestion["publication_plan"]),
-  }
+    publication_plan: suggestion["publication_plan"],
+    publication_plan_visible: isNotEmpty(suggestion["publication_plan"]),
+  };
 }
 
 function formatDate(language, value) {

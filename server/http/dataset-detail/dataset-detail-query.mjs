@@ -1,15 +1,17 @@
-
 const DEFAULT_PAGE = 1;
 
 const DEFAULT_DISTRIBUTION_PAGE_SIZE = 25;
 
 export function parseClientQuery(navigation, query) {
-  const distributionPage = navigation.queryArgumentFromClient(query, "distribution-page");
+  const distributionPage = navigation.queryArgumentFromClient(
+    query,
+    "distribution-page",
+  );
 
   return {
-    "iri": navigation.queryArgumentFromClient(query, "iri"),
-    "distributionPage": asPositiveNumber(distributionPage, DEFAULT_PAGE) - 1,
-    "distributionPageSize": DEFAULT_DISTRIBUTION_PAGE_SIZE,
+    iri: navigation.queryArgumentFromClient(query, "iri"),
+    distributionPage: asPositiveNumber(distributionPage, DEFAULT_PAGE) - 1,
+    distributionPageSize: DEFAULT_DISTRIBUTION_PAGE_SIZE,
   };
 }
 
@@ -27,12 +29,12 @@ function asPositiveNumber(value, defaultValue) {
 
 export function beforeLinkCallback(navigation, serverQuery) {
   const result = {
-    "iri": serverQuery.iri,
+    iri: serverQuery.iri,
   };
 
   if (serverQuery.distributionPage ?? DEFAULT_PAGE !== DEFAULT_PAGE) {
     // We use the input as we need get value in to the template.
-    result["distribution-page"] =  serverQuery.distributionPage;
+    result["distribution-page"] = serverQuery.distributionPage;
   }
 
   return result;

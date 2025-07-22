@@ -1,11 +1,9 @@
 export default {
-  "cs": {
-    "path": "poskytovatelé",
-    "query": {
-    },
-    "argument": {
-    },
-    "translation": {
+  cs: {
+    path: "poskytovatelé",
+    query: {},
+    argument: {},
+    translation: {
       "items-found": [
         [0, "Nebyla nalezen žádný poskytovatel."],
         [1, "Nalezen jeden poskytovatel."],
@@ -20,13 +18,11 @@ export default {
       ],
     },
   },
-  "en": {
-    "path": "publishers",
-    "query": {
-    },
-    "argument": {
-    },
-    "translation": {
+  en: {
+    path: "publishers",
+    query: {},
+    argument: {},
+    translation: {
       "items-found": [
         [0, "No publisher found."],
         [1, "One publisher found."],

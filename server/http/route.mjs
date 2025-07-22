@@ -21,92 +21,124 @@ export function registerHttpRoutes(server, services) {
   const httpStatusHandlers = createStatusHandlers([templateCs, templateEn]);
   const webServices = {
     ...services,
-    "http": httpStatusHandlers,
+    http: httpStatusHandlers,
   };
 
   // API version 2.
 
   registerHandler(server, createV2Quality(services));
-  registerHandler(server, createV2Statistics(services))
+  registerHandler(server, createV2Statistics(services));
 
   // Application list.
 
-  const applicationListCs = createApplicationList(
-    webServices, templateCs, ["cs", "en"]);
+  const applicationListCs = createApplicationList(webServices, templateCs, [
+    "cs",
+    "en",
+  ]);
   registerHandler(server, applicationListCs);
 
-  const applicationListEn = createApplicationList(
-    webServices, templateEn, ["en", "cs"]);
+  const applicationListEn = createApplicationList(webServices, templateEn, [
+    "en",
+    "cs",
+  ]);
   registerHandler(server, applicationListEn);
 
   // Application detail.
 
-  const applicationDetailCs = createApplicationDetail(
-    webServices, templateCs, ["cs", "en"]);
+  const applicationDetailCs = createApplicationDetail(webServices, templateCs, [
+    "cs",
+    "en",
+  ]);
   registerHandler(server, applicationDetailCs);
 
-  const applicationDetailEn = createApplicationDetail(
-    webServices, templateEn, ["en", "cs"]);
+  const applicationDetailEn = createApplicationDetail(webServices, templateEn, [
+    "en",
+    "cs",
+  ]);
   registerHandler(server, applicationDetailEn);
 
   // Suggestion list.
 
-  const suggestionListCs = createSuggestionList(
-    webServices, templateCs, ["cs", "en"]);
+  const suggestionListCs = createSuggestionList(webServices, templateCs, [
+    "cs",
+    "en",
+  ]);
   registerHandler(server, suggestionListCs);
 
-  const suggestionListEn = createSuggestionList(
-    webServices, templateEn, ["en", "cs"]);
+  const suggestionListEn = createSuggestionList(webServices, templateEn, [
+    "en",
+    "cs",
+  ]);
   registerHandler(server, suggestionListEn);
 
   // Suggestion detail.
 
-  const suggestionDetailCs = createSuggestionDetail(
-    webServices, templateCs, ["cs", "en"]);
+  const suggestionDetailCs = createSuggestionDetail(webServices, templateCs, [
+    "cs",
+    "en",
+  ]);
   registerHandler(server, suggestionDetailCs);
 
-  const suggestionDetailEn = createSuggestionDetail(
-    webServices, templateEn, ["en", "cs"]);
+  const suggestionDetailEn = createSuggestionDetail(webServices, templateEn, [
+    "en",
+    "cs",
+  ]);
   registerHandler(server, suggestionDetailEn);
 
   // Publisher list.
 
-  const publisherListCs = createPublisherList(
-    webServices, templateCs, ["cs", "en"]);
+  const publisherListCs = createPublisherList(webServices, templateCs, [
+    "cs",
+    "en",
+  ]);
   registerHandler(server, publisherListCs);
 
-  const publisherListEn = createPublisherList(
-    webServices, templateEn, ["en", "cs"]);
+  const publisherListEn = createPublisherList(webServices, templateEn, [
+    "en",
+    "cs",
+  ]);
   registerHandler(server, publisherListEn);
 
   // Local catalog list.
 
-  const localCatalogListCs = createLocalCatalogList(
-    webServices, templateCs, ["cs", "en"]);
+  const localCatalogListCs = createLocalCatalogList(webServices, templateCs, [
+    "cs",
+    "en",
+  ]);
   registerHandler(server, localCatalogListCs);
 
-  const localCatalogListEn = createLocalCatalogList(
-    webServices, templateEn, ["en", "cs"]);
+  const localCatalogListEn = createLocalCatalogList(webServices, templateEn, [
+    "en",
+    "cs",
+  ]);
   registerHandler(server, localCatalogListEn);
 
   // Dataset list.
 
-  const datasetListCs = createDatasetList(
-    webServices, templateCs, ["cs", "en"]);
+  const datasetListCs = createDatasetList(webServices, templateCs, [
+    "cs",
+    "en",
+  ]);
   registerHandler(server, datasetListCs);
 
-  const datasetListEn = createDatasetList(
-    webServices, templateEn, ["en", "cs"]);
+  const datasetListEn = createDatasetList(webServices, templateEn, [
+    "en",
+    "cs",
+  ]);
   registerHandler(server, datasetListEn);
 
   // Dataset detail.
 
-  const datasetDetailCs = createDatasetDetail(
-    webServices, templateCs, ["cs", "en"]);
+  const datasetDetailCs = createDatasetDetail(webServices, templateCs, [
+    "cs",
+    "en",
+  ]);
   registerHandler(server, datasetDetailCs);
 
-  const datasetDetailEn = createDatasetDetail(
-    webServices, templateEn, ["en", "cs"]);
+  const datasetDetailEn = createDatasetDetail(webServices, templateEn, [
+    "en",
+    "cs",
+  ]);
   registerHandler(server, datasetDetailEn);
 
   //
@@ -119,7 +151,6 @@ export function registerHttpRoutes(server, services) {
   server.setNotFoundHandler(function (request, reply) {
     httpStatusHandlers.handlePathNotFound(reply);
   });
-
 }
 
 function registerHandler(server, handler) {

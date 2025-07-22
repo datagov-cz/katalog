@@ -6,8 +6,8 @@ export function registerFooter(templateService, language) {
 
 export function createFooterData() {
   return {
-    "applicationRegistrationFormUrl": configuration.client.applicationFormUrl,
-    "suggestionRegistrationFormUrl": configuration.client.suggestionFormUrl,
-    "catalogValidator": configuration.client.catalogValidator,
+    applicationRegistrationFormUrl: configuration.client.applicationFormUrl,
+    suggestionRegistrationFormUrl: configuration.client.suggestionFormUrl,
+    catalogValidator: configuration.client.catalogValidator,
   };
 }

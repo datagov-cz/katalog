@@ -3,8 +3,7 @@
  */
 export function createSparqlVdf(sparqlConnector) {
   return {
-    "fetchDatasetVdf": (iri) =>
-      fetchDatasetVdf(sparqlConnector, iri),
+    fetchDatasetVdf: (iri) => fetchDatasetVdf(sparqlConnector, iri),
   };
 }
 
@@ -15,15 +14,17 @@ export function createSparqlVdf(sparqlConnector) {
  */
 async function fetchDatasetVdf(sparqlConnector, iri) {
   const usedBy = await sparqlConnector.executeSparqlSelect(
-    createUsingDatasetAsCodelistSparql(dataset));
+    createUsingDatasetAsCodelistSparql(iri),
+  );
 
   const usingCodelists = await sparqlConnector.executeSparqlSelect(
-    createCodelistsUsedByDatasetSparql(dataset));
+    createCodelistsUsedByDatasetSparql(iri),
+  );
 
   return {
-    "usedAsCodelistBy": usedBy.map((entry) => (entry["iri"]["value"])),
-    "usingCodelists": usingCodelists.map((entry) => (entry["iri"]["value"])),
-  }
+    usedAsCodelistBy: usedBy.map((entry) => entry["iri"]["value"]),
+    usingCodelists: usingCodelists.map((entry) => entry["iri"]["value"]),
+  };
 }
 
 function createUsingDatasetAsCodelistSparql(iri) {

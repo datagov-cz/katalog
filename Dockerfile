@@ -1,6 +1,6 @@
 FROM node:21.1.0-bullseye
 
-WORKDIR /opt/application-catalog/
+WORKDIR /opt/catalog/
 COPY ./package*.json ./
 RUN npm ci
 

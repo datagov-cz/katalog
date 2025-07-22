@@ -1,23 +1,33 @@
-import {DEFAULT_FACET_SIZE} from "../constants.mjs";
+import { DEFAULT_FACET_SIZE } from "../constants.mjs";
 
 export function registerFacet(templateService, language) {
   templateService.syncAddComponent("facet", "facet-" + language + ".html");
 }
 
-export function createFacetData(navigationService, query, facetData, facetName, facetLabel, tooltipMessage, count) {
-  facetData.forEach(item => prepareFacetItemInPlace(navigationService, facetName, query, item))
+export function createFacetData(
+  navigationService,
+  query,
+  facetData,
+  facetName,
+  facetLabel,
+  tooltipMessage,
+  count,
+) {
+  facetData.forEach((item) =>
+    prepareFacetItemInPlace(navigationService, facetName, query, item),
+  );
   const result = {
-    "label": facetLabel,
-    "count": count,
-    "items": facetData,
-    "tooltipMessage": tooltipMessage,
+    label: facetLabel,
+    count: count,
+    items: facetData,
+    tooltipMessage: tooltipMessage,
   };
   if (count > facetData.length) {
     result["showMoreHref"] = navigationService.linkFromServer({
       ...query,
       [facetName + "Limit"]: query[facetName + "Limit"] + DEFAULT_FACET_SIZE,
     });
-    console.log(result["showMoreHref"], {facetName});
+    console.log(result["showMoreHref"], { facetName });
   }
   if (DEFAULT_FACET_SIZE < facetData.length) {
     result["showInitialHref"] = navigationService.linkFromServer({
@@ -30,12 +40,12 @@ export function createFacetData(navigationService, query, facetData, facetName, 
 
 function prepareFacetItemInPlace(navigationService, facetName, query, item) {
   const facetHref = [...query[facetName]];
-  toggleItemInArray(facetHref, item["iri"])
+  toggleItemInArray(facetHref, item["iri"]);
   const nextQuery = {
     ...query,
-    "page": 0,
+    page: 0,
     [facetName]: facetHref,
-  }
+  };
   item["href"] = navigationService.linkFromServer(nextQuery);
 }
 

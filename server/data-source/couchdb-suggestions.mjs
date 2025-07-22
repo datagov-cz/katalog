@@ -6,9 +6,9 @@ export function createCouchDbSuggestions(couchDbConnector) {
     /**
      * Returns tuple [language, value].
      */
-    "fetchLabel": (languages, iri) =>
+    fetchLabel: (languages, iri) =>
       fetchLabel(couchDbConnector, languages, iri),
-    "fetchInitialCache": (languages) =>
+    fetchInitialCache: (languages) =>
       fetchInitialCache(couchDbConnector, languages),
   };
 }
@@ -19,7 +19,10 @@ async function fetchLabel(couchDbConnector, languages, iri) {
 }
 
 async function fetchInitialCache(couchDbConnector, languages) {
-  const response = await couchDbConnector.fetch("suggestions", "initial_data_cache");
+  const response = await couchDbConnector.fetch(
+    "suggestions",
+    "initial_data_cache",
+  );
   return parseInitialDataCacheResponse(response, languages);
 }
 
@@ -31,14 +34,14 @@ function parseInitialDataCacheResponse(response, languages) {
       continue;
     }
     const labels = (item[FOAF.name] ?? [])
-      .map(item => ({
-        "value": item["@value"],
-        "language": item["@language"],
+      .map((item) => ({
+        value: item["@value"],
+        language: item["@language"],
       }))
-      .filter(item => languages.includes(item.language));
+      .filter((item) => languages.includes(item.language));
     result.push({
-      "iri": iri,
-      "labels": labels,
+      iri: iri,
+      labels: labels,
     });
   }
   return result;

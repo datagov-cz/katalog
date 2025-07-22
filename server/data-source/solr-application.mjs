@@ -1,26 +1,34 @@
-import { prepareFieldQuery, prepareTextQuery, prepareSort } from "./shared/solr-query";
-import { selectLanguage, emptyAsNull, parseFacet, parseDate } from "./shared/solr-response";
+import {
+  prepareFieldQuery,
+  prepareTextQuery,
+  prepareSort,
+} from "./shared/solr-query";
+import {
+  selectLanguage,
+  emptyAsNull,
+  parseFacet,
+  parseDate,
+} from "./shared/solr-response";
 
 const CORE = "applications";
 
 export function createSolrApplication(solrConnector) {
   return {
-    "fetchApplicationsCount": () =>
-      fetchApplicationsCount(solrConnector),
-    "fetchApplication": (languages, iri) =>
+    fetchApplicationsCount: () => fetchApplicationsCount(solrConnector),
+    fetchApplication: (languages, iri) =>
       fetchApplication(solrConnector, languages, iri),
-    "fetchApplications": (languages, query) =>
+    fetchApplications: (languages, query) =>
       fetchApplications(solrConnector, languages, query),
-    "fetchApplicationsWithDatasets": (languages, datasets) =>
+    fetchApplicationsWithDatasets: (languages, datasets) =>
       fetchApplicationsWithDatasets(solrConnector, languages, datasets),
   };
 }
 
 async function fetchApplicationsCount(solrConnector) {
   const solrQuery = {
-    "start": 0,
-    "rows": 0,
-    "q": "*:*",
+    start: 0,
+    rows: 0,
+    q: "*:*",
   };
   const response = await solrConnector.query(CORE, solrQuery);
   return response["response"]["numFound"];
@@ -34,7 +42,7 @@ async function fetchApplication(solrConnector, languages, iri) {
 
 function buildApplicationQuery(iri) {
   return {
-    "fl": [
+    fl: [
       "iri",
       "title_cs",
       "title_en",
@@ -52,10 +60,8 @@ function buildApplicationQuery(iri) {
       "modified",
       "published",
     ],
-    "fq": [
-      ...prepareFieldQuery("iri", [iri]),
-    ],
-    "q": "*:*",
+    fq: [...prepareFieldQuery("iri", [iri])],
+    q: "*:*",
   };
 }
 
@@ -66,21 +72,21 @@ function parseApplicationResponse(languages, response) {
   }
   const document = response["response"]["docs"][0];
   return {
-    "iri": document["iri"],
-    "title": selectLanguage(document, "title_", languages),
-    "description": selectLanguage(document, "description_", languages),
-    "states": document["state"] ?? [],
-    "platforms": document["platform"] ?? [],
-    "themes": document["theme"] ?? [],
-    "types": [document["type"]], // This is stored as single value in Solr.
-    "author": {
-      "iri": emptyAsNull(document["author"]),
-      "title": emptyAsNull(selectLanguage(document, "author_", languages)),
+    iri: document["iri"],
+    title: selectLanguage(document, "title_", languages),
+    description: selectLanguage(document, "description_", languages),
+    states: document["state"] ?? [],
+    platforms: document["platform"] ?? [],
+    themes: document["theme"] ?? [],
+    types: [document["type"]], // This is stored as single value in Solr.
+    author: {
+      iri: emptyAsNull(document["author"]),
+      title: emptyAsNull(selectLanguage(document, "author_", languages)),
     },
-    "link": document["link"],
-    "datasets": document["dataset"] ?? [],
-    "modified": parseDate(document["modified"]),
-    "published": parseDate(document["published"]),
+    link: document["link"],
+    datasets: document["dataset"] ?? [],
+    modified: parseDate(document["modified"]),
+    published: parseDate(document["published"]),
   };
 }
 
@@ -101,16 +107,11 @@ function buildApplicationsQuery(language, query) {
     sort,
     sortDirection,
     offset,
-    limit
+    limit,
   } = query;
   return {
-    "facet.field": [
-      "state",
-      "platform",
-      "theme",
-      "type",
-    ],
-    "fl": [
+    "facet.field": ["state", "platform", "theme", "type"],
+    fl: [
       "iri",
       "title_cs",
       "title_en",
@@ -118,46 +119,50 @@ function buildApplicationsQuery(language, query) {
       "description_en",
       "theme",
     ],
-    "fq": [
+    fq: [
       ...prepareFieldQuery("state", state),
       ...prepareFieldQuery("platform", platform),
       ...prepareFieldQuery("theme", theme),
       ...prepareFieldQuery("type", type),
     ],
-    "sort": prepareSort(language, sort, sortDirection),
-    "facet": true,
+    sort: prepareSort(language, sort, sortDirection),
+    facet: true,
     "facet.limit": -1,
     "facet.mincount": 1,
-    "start": offset,
-    "rows": limit,
-    "q": prepareTextQuery(language, searchQuery),
+    start: offset,
+    rows: limit,
+    q: prepareTextQuery(language, searchQuery),
   };
 }
 
 function parseApplicationsResponse(languages, response) {
-  const documents = response["response"]["docs"].map(document => ({
-    "iri": document["iri"],
-    "title": selectLanguage(document, "title_", languages),
-    "description": selectLanguage(document, "description_", languages),
-    "themes": document["theme"] ?? [],
+  const documents = response["response"]["docs"].map((document) => ({
+    iri: document["iri"],
+    title: selectLanguage(document, "title_", languages),
+    description: selectLanguage(document, "description_", languages),
+    themes: document["theme"] ?? [],
   }));
 
   const facet_fields = response["facet_counts"]["facet_fields"];
   const facets = {
-    "state": parseFacet(facet_fields["state"]),
-    "platform": parseFacet(facet_fields["platform"]),
-    "theme": parseFacet(facet_fields["theme"]),
-    "type": parseFacet(facet_fields["type"]),
+    state: parseFacet(facet_fields["state"]),
+    platform: parseFacet(facet_fields["platform"]),
+    theme: parseFacet(facet_fields["theme"]),
+    type: parseFacet(facet_fields["type"]),
   };
 
   return {
-    "found": response["response"]["numFound"],
-    "documents": documents,
-    "facets": facets,
+    found: response["response"]["numFound"],
+    documents: documents,
+    facets: facets,
   };
 }
 
-async function fetchApplicationsWithDatasets(solrConnector, languages, datasets) {
+async function fetchApplicationsWithDatasets(
+  solrConnector,
+  languages,
+  datasets,
+) {
   const solrQuery = buildApplicationsWithDatasetsQuery(datasets);
   const response = await solrConnector.query(CORE, solrQuery);
   return parseApplicationsWithDatasetsResponse(languages, response);
@@ -165,25 +170,17 @@ async function fetchApplicationsWithDatasets(solrConnector, languages, datasets)
 
 function buildApplicationsWithDatasetsQuery(datasets) {
   return {
-    "fl": [
-      "iri",
-      "title_cs",
-      "title_en",
-      "description_cs",
-      "description_en",
-    ],
-    "fq": [
-      prepareFieldQuery("dataset", datasets).join(" OR "),
-    ],
-    "q": "*:*",
+    fl: ["iri", "title_cs", "title_en", "description_cs", "description_en"],
+    fq: [prepareFieldQuery("dataset", datasets).join(" OR ")],
+    q: "*:*",
   };
 }
 
 function parseApplicationsWithDatasetsResponse(languages, response) {
   const documents = response["response"]["docs"];
-  return documents.map(document => ({
-    "iri": document["iri"],
-    "title": selectLanguage(document, "title_", languages),
-    "description": selectLanguage(document, "description_", languages),
+  return documents.map((document) => ({
+    iri: document["iri"],
+    title: selectLanguage(document, "title_", languages),
+    description: selectLanguage(document, "description_", languages),
   }));
 }

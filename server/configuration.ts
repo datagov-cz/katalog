@@ -6,7 +6,7 @@ const ConfigurationZod = z.object({
   development: z.boolean(),
   http: z.object({
     port: z.number().positive(),
-    host: z.string().ip(),
+    host: z.string(),
     /*
      * https://fastify.dev/docs/latest/Reference/Server/#trustproxy
      */
@@ -120,8 +120,10 @@ const createConfiguration = (): Configuration => {
         process.env.CLIENT_DATA_SERVICE_CLASS_AND_PROPERTIES_TEMPLATE ?? null,
       matomoUrl: process.env.CLIENT_MATOMO_URL ?? null,
       matomoSiteId: process.env.CLIENT_MATOMO_SITE_ID ?? null,
-      catalogValidator: process.env.CLIENT_CATALOG_VALIDATOR_LANDING_PAGE ?? null,
-      catalogValidatorTemplate : process.env.CLIENT_CATALOG_VALIDATOR_RUN_VALIDATION ?? null,
+      catalogValidator:
+        process.env.CLIENT_CATALOG_VALIDATOR_LANDING_PAGE ?? null,
+      catalogValidatorTemplate:
+        process.env.CLIENT_CATALOG_VALIDATOR_RUN_VALIDATION ?? null,
     },
   });
 };
@@ -131,5 +133,4 @@ function stripTrailingSlash(value: string | undefined) {
 }
 
 const configuration = createConfiguration();
-console.log('{"configuration": ' + JSON.stringify(configuration) + "}");
 export default configuration;

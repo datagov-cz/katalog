@@ -7,138 +7,140 @@ const PU_PREFIX = "https://data.gov.cz/podmínky-užití/";
 
 const AUTHORSHIP_MAP = {
   [PU_PREFIX + "neobsahuje-autorská-díla/"]: () => ({
-    "label": "without-authorship",
-    "icon": "check-lg",
-    "iconStyle": "alright",
-    "iconTitle": "without-authorship-comment",
+    label: "without-authorship",
+    icon: "check-lg",
+    iconStyle: "alright",
+    iconTitle: "without-authorship-comment",
   }),
   [PU_PREFIX + "obsahuje-více-autorských-děl/"]: () => ({
-    "label": "with-multiple-authorship",
-    "icon": "list",
-    "iconStyle": "warning",
-    "iconTitle": "with-authorship-comment",
+    label: "with-multiple-authorship",
+    icon: "list",
+    iconStyle: "warning",
+    iconTitle: "with-authorship-comment",
   }),
   "https://creativecommons.org/licenses/by/4.0/": (author) => ({
-    "label": "ccby-authorship",
-    "icon": "bookmark-fill",
-    "iconStyle": "warning",
-    "iconTitle": "ccby-authorship-comment",
-    "author": author,
+    label: "ccby-authorship",
+    icon: "bookmark-fill",
+    iconStyle: "warning",
+    iconTitle: "ccby-authorship-comment",
+    author: author,
   }),
   [null]: () => ({
-    "label": "missing-authorship",
-    "icon": "exclamation-circle",
-    "iconStyle": "danger",
-    "iconTitle": "missing-authorship-comment",
+    label: "missing-authorship",
+    icon: "exclamation-circle",
+    iconStyle: "danger",
+    iconTitle: "missing-authorship-comment",
   }),
-}
+};
 
 const AUTHORSHIP_CUSTOM = (authorship) => ({
-  "label": "custom-authorship",
-  "icon": "question-circle",
-  "iconStyle": "warning",
-  "iconTitle": "custom-authorship-comment",
-  "href": authorship,
-  "showQuality": true,
+  label: "custom-authorship",
+  icon: "question-circle",
+  iconStyle: "warning",
+  iconTitle: "custom-authorship-comment",
+  href: authorship,
+  showQuality: true,
 });
 
 const DATABASE_AUTHORSHIP_MAP = {
   [PU_PREFIX + "není-autorskoprávně-chráněnou-databází/"]: () => ({
-    "label": "without-database-authorship",
-    "icon": "check-lg",
-    "iconStyle": "alright",
-    "iconTitle": "without-database-authorship-comment",
+    label: "without-database-authorship",
+    icon: "check-lg",
+    iconStyle: "alright",
+    iconTitle: "without-database-authorship-comment",
   }),
   "https://creativecommons.org/licenses/by/4.0/": (author) => ({
-    "label": "ccby-database-authorship",
-    "icon": "bookmark-fill",
-    "iconStyle": "warning",
-    "iconTitle": "ccby-database-authorship-comment",
-    "author": author
+    label: "ccby-database-authorship",
+    icon: "bookmark-fill",
+    iconStyle: "warning",
+    iconTitle: "ccby-database-authorship-comment",
+    author: author,
   }),
   [null]: () => ({
-    "label": "missing-database-authorship",
-    "icon": "exclamation-circle",
-    "iconStyle": "danger",
-    "iconTitle": "missing-database-authorship-comment",
+    label: "missing-database-authorship",
+    icon: "exclamation-circle",
+    iconStyle: "danger",
+    iconTitle: "missing-database-authorship-comment",
   }),
-}
+};
 
 const DATABASE_AUTHORSHIP_CUSTOM = (authorship) => ({
-  "label": "custom-database-authorship",
-  "icon": "question-circle",
-  "iconStyle": "warning",
-  "iconTitle": "custom-database-authorship-comment",
-  "href": authorship,
-  "showQuality": true,
+  label: "custom-database-authorship",
+  icon: "question-circle",
+  iconStyle: "warning",
+  iconTitle: "custom-database-authorship-comment",
+  href: authorship,
+  showQuality: true,
 });
 
 const PROTECTED_DATABASE_AUTHORSHIP_MAP = {
-  [PU_PREFIX + "není-chráněna-zvláštním-právem-pořizovatele-databáze/"]: () => ({
-    "label": "without-protected-database-authorship",
-    "icon": "check-lg",
-    "iconStyle": "alright",
-    "iconTitle": "without-protected-database-authorship-comment",
-  }),
+  [PU_PREFIX + "není-chráněna-zvláštním-právem-pořizovatele-databáze/"]:
+    () => ({
+      label: "without-protected-database-authorship",
+      icon: "check-lg",
+      iconStyle: "alright",
+      iconTitle: "without-protected-database-authorship-comment",
+    }),
   "https://creativecommons.org/publicdomain/zero/1.0/": () => ({
-    "label": "cc0-protected-database-authorship",
-    "icon": "check-lg",
-    "iconStyle": "alright",
-    "iconTitle": "cc0-protected-database-authorship-comment",
+    label: "cc0-protected-database-authorship",
+    icon: "check-lg",
+    iconStyle: "alright",
+    iconTitle: "cc0-protected-database-authorship-comment",
   }),
   "https://creativecommons.org/licenses/by/4.0/": () => ({
-    "label": "ccby-database-authorship",
-    "icon": "bookmark-fill",
-    "iconStyle": "warning",
-    "iconTitle": "ccby-database-authorship-comment",
+    label: "ccby-database-authorship",
+    icon: "bookmark-fill",
+    iconStyle: "warning",
+    iconTitle: "ccby-database-authorship-comment",
   }),
   [null]: () => ({
-    "label": "missing-protected-database-authorship",
-    "icon": "exclamation-circle",
-    "iconStyle": "danger",
-    "iconTitle": "missing-protected-database-authorship-comment",
+    label: "missing-protected-database-authorship",
+    icon: "exclamation-circle",
+    iconStyle: "danger",
+    iconTitle: "missing-protected-database-authorship-comment",
   }),
-}
+};
 
 const PROTECTED_DATABASE_AUTHORSHIP_CUSTOM = (authorship) => ({
-  "label": "custom-protected-database",
-  "icon": "question-circle",
-  "iconStyle": "warning",
-  "iconTitle": "custom-protected-database-comment",
-  "href": authorship,
-  "showQuality": true,
+  label: "custom-protected-database",
+  icon: "question-circle",
+  iconStyle: "warning",
+  iconTitle: "custom-protected-database-comment",
+  href: authorship,
+  showQuality: true,
 });
 
 const PERSONAL_DATA_MAP = {
   [PU_PREFIX + "obsahuje-osobní-údaje/"]: () => ({
-    "label": "with-personal-data-label",
-    "icon": "person-fill",
-    "iconStyle": "warning",
-    "iconTitle": "with-personal-data-comment",
+    label: "with-personal-data-label",
+    icon: "person-fill",
+    iconStyle: "warning",
+    iconTitle: "with-personal-data-comment",
   }),
   [PU_PREFIX + "neobsahuje-osobní-údaje/"]: () => ({
-    "label": "without-personal-data-label",
-    "icon": "person-fill",
-    "iconStyle": "alright",
-    "iconTitle": "without-personal-data-comment",
+    label: "without-personal-data-label",
+    icon: "person-fill",
+    iconStyle: "alright",
+    iconTitle: "without-personal-data-comment",
   }),
   [PU_PREFIX + "není-specifikováno-zda-obsahuje-osobní-údaje/"]: () => ({
-    "label": "unspecified-personal-data-label",
-    "icon": "person-fill",
-    "iconStyle": "warning",
-    "iconTitle": "unspecified-personal-data-comment",
+    label: "unspecified-personal-data-label",
+    icon: "person-fill",
+    iconStyle: "warning",
+    iconTitle: "unspecified-personal-data-comment",
   }),
   [null]: () => ({
-    "label": "missing-personal-data-information-label",
-    "icon": "person-fill",
-    "iconStyle": "danger",
-    "iconTitle": "missing-personal-data-information-comment",
+    label: "missing-personal-data-information-label",
+    icon: "person-fill",
+    iconStyle: "danger",
+    iconTitle: "missing-personal-data-information-comment",
   }),
-}
+};
 
 const LEGISLATION_HVD = "http://data.europa.eu/eli/reg_impl/2023/138/oj";
 
-const LEGISLATION_DYNAMIC_DATA = "https://www.e-sbirka.cz/eli/cz/sb/1999/106/2024-01-01/dokument/norma/cast_1/par_3a/odst_6";
+const LEGISLATION_DYNAMIC_DATA =
+  "https://www.e-sbirka.cz/eli/cz/sb/1999/106/2024-01-01/dokument/norma/cast_1/par_3a/odst_6";
 
 export function renderHtml(services, languages, query, data, reply) {
   if (data == null) {
@@ -146,9 +148,14 @@ export function renderHtml(services, languages, query, data, reply) {
     return;
   }
   const templateData = prepareTemplateData(
-    services.configuration, services.translation, services.navigation,
+    services.configuration,
+    services.translation,
+    services.navigation,
     services.link,
-    languages, query, data);
+    languages,
+    query,
+    data,
+  );
   const template = services.template.view(ROUTE.DATASET_DETAIL);
   reply
     .code(200)
@@ -156,120 +163,154 @@ export function renderHtml(services, languages, query, data, reply) {
     .send(template(templateData));
 }
 
-export function prepareTemplateData(configuration, translation, navigation, link, languages, query, data) {
+export function prepareTemplateData(
+  configuration,
+  translation,
+  navigation,
+  link,
+  languages,
+  query,
+  data,
+) {
   return {
-    "head": components.createHeadData(configuration),
-    "navigation": components.createNavigationData(navigation, languages, query),
-    "footer": components.createFooterData(),
-    "dataset": prepareDataset(configuration, translation, navigation, link, data),
-    "distributions": prepareDistributions(configuration, translation, navigation, query, data),
-    "applications": prepareApplications(navigation, data),
-    "datasetSeries": prepareDatasetSeries(navigation, data),
-    "metadataAsString": JSON.stringify(prepareDatasetMetadata(data), null, 2)
+    head: components.createHeadData(configuration),
+    navigation: components.createNavigationData(navigation, languages, query),
+    footer: components.createFooterData(),
+    dataset: prepareDataset(configuration, translation, navigation, link, data),
+    distributions: prepareDistributions(
+      configuration,
+      translation,
+      navigation,
+      query,
+      data,
+    ),
+    applications: prepareApplications(navigation, data),
+    datasetSeries: prepareDatasetSeries(navigation, data),
+    metadataAsString: JSON.stringify(prepareDatasetMetadata(data), null, 2),
   };
 }
 
-function prepareDataset(configuration, translation, navigation, link, { dataset }) {
+function prepareDataset(
+  configuration,
+  translation,
+  navigation,
+  link,
+  { dataset },
+) {
   const datasetDetailNavigation = navigation.changeView(ROUTE.DATASET_DETAIL);
   const datasetListNavigation = navigation.changeView(ROUTE.DATASET_LIST);
   // heading section
   const heading = {
-    "title": dataset.title,
-    "openUrl": link.wrapLink(dataset.iri),
-    "copyUrl": configuration.client.catalogFormUrl
-      + translation.translate("url-copy-dataset")
-      + encodeURIComponent(dataset.iri),
-  }
+    title: dataset.title,
+    openUrl: link.wrapLink(dataset.iri),
+    copyUrl:
+      configuration.client.catalogFormUrl +
+      translation.translate("url-copy-dataset") +
+      encodeURIComponent(dataset.iri),
+  };
   if (dataset.isFromForm) {
-    heading.editUrl = configuration.client.catalogFormUrl
-    + translation.translate("url-edit-dataset")
-    + encodeURIComponent(dataset.iri);
-    heading.deleteDatasetUrl = configuration.client.catalogFormUrl
-      + translation.translate("url-delete-dataset")
-      + encodeURIComponent(dataset.iri);
+    heading.editUrl =
+      configuration.client.catalogFormUrl +
+      translation.translate("url-edit-dataset") +
+      encodeURIComponent(dataset.iri);
+    heading.deleteDatasetUrl =
+      configuration.client.catalogFormUrl +
+      translation.translate("url-delete-dataset") +
+      encodeURIComponent(dataset.iri);
   } else if (dataset.isFromCatalog) {
-    heading.deleteCatalogUrl = configuration.client.catalogFormUrl
-      + translation.translate("url-delete-catalog")
-      + encodeURIComponent(dataset.localCatalog);
+    heading.deleteCatalogUrl =
+      configuration.client.catalogFormUrl +
+      translation.translate("url-delete-catalog") +
+      encodeURIComponent(dataset.localCatalog);
   } else {
     // No actions.
   }
   //
   return {
-    "iri": dataset.iri,
-    "heading": heading,
-    "publisher": {
-      "label": dataset.publisher.label,
-      "href": datasetListNavigation.linkFromServer({
-        "publisher": [dataset.publisher.iri]
+    iri: dataset.iri,
+    heading: heading,
+    publisher: {
+      label: dataset.publisher.label,
+      href: datasetListNavigation.linkFromServer({
+        publisher: [dataset.publisher.iri],
       }),
     },
-    "description": dataset.description,
-    "keywords": dataset.keywords.map(keyword => ({
-      "label": keyword,
-      "href": datasetListNavigation.linkFromServer({ "keyword": [keyword] }),
+    description: dataset.description,
+    keywords: dataset.keywords.map((keyword) => ({
+      label: keyword,
+      href: datasetListNavigation.linkFromServer({ keyword: [keyword] }),
     })),
-    "themesVisible": dataset.themes.length > 0,
-    "themes": dataset.themes.map(item => ({
-      "iri": item.iri,
-      "label": item.label,
-      "href": datasetListNavigation.linkFromServer({ "theme": [item.iri] }),
+    themesVisible: dataset.themes.length > 0,
+    themes: dataset.themes.map((item) => ({
+      iri: item.iri,
+      label: item.label,
+      href: datasetListNavigation.linkFromServer({ theme: [item.iri] }),
     })),
-    "euroVocThemesVisible": dataset.euroVocThemes.length > 0,
-    "euroVocThemes": dataset.euroVocThemes.map(item => ({
-      "iri": item.iri,
-      "label": item.label,
-      "href": datasetListNavigation.linkFromServer({ "theme": [item.iri] }),
+    euroVocThemesVisible: dataset.euroVocThemes.length > 0,
+    euroVocThemes: dataset.euroVocThemes.map((item) => ({
+      iri: item.iri,
+      label: item.label,
+      href: datasetListNavigation.linkFromServer({ theme: [item.iri] }),
     })),
     // [Vztahy ze sémantického slovníku]( configuration.semanticVisualisation + encodeURIComponent(dataset.iri))
     // [Pojmy ze sémantického slovníku](datasetSearchUrl = theme) [](configuration.semanticBrowser + encodeURIComponent(iri))
     // "semanticThemesVisible": dataset.semanticThemes.length > 0,
     // "semanticThemes": dataset.semanticThemes, // TODO ? semanticThemes
-    "spatialVisible": dataset.spatial.length > 0,
-    "spatial": dataset.spatial,
+    spatialVisible: dataset.spatial.length > 0,
+    spatial: dataset.spatial,
     //
-    "spatialResolutionInMetersVisible": dataset.spatialResolutionInMeters !== null,
-    "spatialResolutionInMeters": dataset.spatialResolutionInMeters,
+    spatialResolutionInMetersVisible:
+      dataset.spatialResolutionInMeters !== null,
+    spatialResolutionInMeters: dataset.spatialResolutionInMeters,
     //
-    "temporalResolutionVisible": dataset.temporalResolution !== null,
-    "temporalResolution": xsdDurationToString(translation, dataset.temporalResolution),
+    temporalResolutionVisible: dataset.temporalResolution !== null,
+    temporalResolution: xsdDurationToString(
+      translation,
+      dataset.temporalResolution,
+    ),
     //
-    "temporalVisible": dataset.temporal !== null,
-    "temporal": dataset.temporal === null ? null : temporalAsString(dataset.temporal),
+    temporalVisible: dataset.temporal !== null,
+    temporal:
+      dataset.temporal === null ? null : temporalAsString(dataset.temporal),
     //
-    "documentationVisible": dataset.documentation.length > 0,
-    "documentation": dataset.documentation,
+    documentationVisible: dataset.documentation.length > 0,
+    documentation: dataset.documentation,
     //
-    "contactVisible": dataset.contactPoints.length > 0,
-    "contact": prepareContactPoints(dataset.contactPoints),
+    contactVisible: dataset.contactPoints.length > 0,
+    contact: prepareContactPoints(dataset.contactPoints),
     //
-    "conformsToVisible": dataset.conformsTo.length > 0,
-    "conformsTo": dataset.conformsTo.map(item => ({
-      "href": item.iri,
-      "label": item.label ?? translation.translate("show-specification"),
+    conformsToVisible: dataset.conformsTo.length > 0,
+    conformsTo: dataset.conformsTo.map((item) => ({
+      href: item.iri,
+      label: item.label ?? translation.translate("show-specification"),
     })),
     //
-    "frequencyVisible": dataset.frequency !== null,
-    "frequency": {
-      "iri": dataset.frequency?.iri,
-      "label": dataset.frequency?.label,
+    frequencyVisible: dataset.frequency !== null,
+    frequency: {
+      iri: dataset.frequency?.iri,
+      label: dataset.frequency?.label,
     },
     //
-    "parentDataset": dataset.parentDataset === null ? null : {
-      "href": datasetDetailNavigation.linkFromServer({
-        "iri": dataset.parentDataset.iri
-      }),
-      "label": dataset.parentDataset.title,
-    },
+    parentDataset:
+      dataset.parentDataset === null
+        ? null
+        : {
+            href: datasetDetailNavigation.linkFromServer({
+              iri: dataset.parentDataset.iri,
+            }),
+            label: dataset.parentDataset.title,
+          },
     //
-    "hvdCategoryVisible": dataset.hvdCategory.length > 0,
-    "hvdCategory": dataset.hvdCategory.map(item => ({
-      "iri": item.iri,
-      "href": datasetListNavigation.linkFromServer({ "hvdCategory": [item.iri] }),
-      "label": item.label,
+    hvdCategoryVisible: dataset.hvdCategory.length > 0,
+    hvdCategory: dataset.hvdCategory.map((item) => ({
+      iri: item.iri,
+      href: datasetListNavigation.linkFromServer({ hvdCategory: [item.iri] }),
+      label: item.label,
     })),
-    "applicableLegislationVisible": dataset.applicableLegislation.length > 0,
-    "applicableLegislation": prepareApplicableLegislation(dataset.applicableLegislation),
+    applicableLegislationVisible: dataset.applicableLegislation.length > 0,
+    applicableLegislation: prepareApplicableLegislation(
+      dataset.applicableLegislation,
+    ),
   };
 }
 
@@ -277,7 +318,8 @@ function xsdDurationToString(translation, durationAsStr) {
   if (durationAsStr === null) {
     return null;
   }
-  const { year, month, day, hour, minute, second, negative } = parseXsdDuration(durationAsStr);
+  const { year, month, day, hour, minute, second, negative } =
+    parseXsdDuration(durationAsStr);
   let result = "";
   let head = true;
   if (negative) {
@@ -320,13 +362,13 @@ function xsdDurationToString(translation, durationAsStr) {
 function parseXsdDuration(value) {
   // https://www.w3schools.com/xml/schema_dtypes_date.asp
   const result = {
-    "year": null,
-    "month": null,
-    "day": null,
-    "hour": null,
-    "minute": null,
-    "second": null,
-    "negative": value.startsWith("-"),
+    year: null,
+    month: null,
+    day: null,
+    hour: null,
+    minute: null,
+    second: null,
+    negative: value.startsWith("-"),
   };
   // Upper case and remove starting 'P'.
   value = value.toLocaleUpperCase();
@@ -365,7 +407,7 @@ function parseXsdDuration(value) {
 function temporalAsString({ iri, startDate, endDate }) {
   if (startDate === null) {
     if (endDate === null) {
-      result = iri;
+      return iri;
     } else {
       return " - " + removeTimeZone(endDate);
     }
@@ -391,14 +433,14 @@ function removeTimeZone(dateAsStr) {
 }
 
 function prepareContactPoints(contactPoints) {
-  return contactPoints.map(contactPoint => ({
-    "label": contactPoint.title ?? contactPoint.email,
-    "href": "mailto:" + contactPoint.email,
+  return contactPoints.map((contactPoint) => ({
+    label: contactPoint.title ?? contactPoint.email,
+    href: "mailto:" + contactPoint.email,
   }));
 }
 
 function prepareApplicableLegislation(applicableLegislation) {
-  const result = applicableLegislation.map(url => ({
+  const result = applicableLegislation.map((url) => ({
     url: url,
     label: url,
     chip: createChipForApplicableLegislation(url),
@@ -410,7 +452,7 @@ function prepareApplicableLegislation(applicableLegislation) {
     if (left.chip === null && right.chip !== null) {
       return 1;
     }
-    return left.url.localeCompare(right.url, 'en');
+    return left.url.localeCompare(right.url, "en");
   });
   return result;
 }
@@ -432,35 +474,45 @@ function createChipForApplicableLegislation(url) {
   }
 }
 
-function prepareDistributions(configuration, translation, navigation, query, data) {
+function prepareDistributions(
+  configuration,
+  translation,
+  navigation,
+  query,
+  data,
+) {
   if (data.distributions.items.length === 0) {
     return {
-      "visible": false,
+      visible: false,
     };
   }
   return {
-    "visible": true,
-    "pagination": {
-      "visible": data.distributions.total > query.distributionPageSize,
-      "total": data.distributions.total,
-      "pageSize": query.distributionPageSize,
-      "currentPage": query.distributionPage + 1,
-      "linkTemplate": navigation.linkFromServer({
-        ...query,
-        "distributionPage": "_PAGE_"
-      }).replace("_PAGE_", "{PAGE}") // We need '{PAGE}' in link template.
+    visible: true,
+    pagination: {
+      visible: data.distributions.total > query.distributionPageSize,
+      total: data.distributions.total,
+      pageSize: query.distributionPageSize,
+      currentPage: query.distributionPage + 1,
+      linkTemplate: navigation
+        .linkFromServer({
+          ...query,
+          distributionPage: "_PAGE_",
+        })
+        .replace("_PAGE_", "{PAGE}"), // We need '{PAGE}' in link template.
     },
-    "items": data.distributions.items.map(item => ({
-      "iri": item.iri,
-      "title": item.title,
-      "format": item.format?.label ?? null,
+    items: data.distributions.items.map((item) => ({
+      iri: item.iri,
+      title: item.title,
+      format: item.format?.label ?? null,
       // We have one on level of a distribution, another on a level of data service.
-      "applicableLegislationVisible": item.applicableLegislation.length > 0,
-      "applicableLegislation": prepareApplicableLegislation(item.applicableLegislation),
+      applicableLegislationVisible: item.applicableLegislation.length > 0,
+      applicableLegislation: prepareApplicableLegislation(
+        item.applicableLegislation,
+      ),
       //
       ...prepareLegal(translation, item),
       ...prepareDistribution(item),
-      ...prepareDataService(configuration, item, item.dataService)
+      ...prepareDataService(configuration, item, item.dataService),
     })),
   };
 }
@@ -470,39 +522,48 @@ function prepareLegal(translation, distribution) {
   if (legal === null) {
     if (distribution.license === null) {
       return {
-        "missingLegal": true,
+        missingLegal: true,
       };
     } else {
       return {
-        "dcatApLegal": {
-          "license": distribution.license
+        dcatApLegal: {
+          license: distribution.license,
         },
       };
     }
   }
 
   // Authorship can have a custom value.
-  const authorship = AUTHORSHIP_MAP[legal.authorship]?.(legal.author)
-    ?? AUTHORSHIP_CUSTOM(legal.authorship);
+  const authorship =
+    AUTHORSHIP_MAP[legal.authorship]?.(legal.author) ??
+    AUTHORSHIP_CUSTOM(legal.authorship);
   if (authorship !== null) {
     authorship.label = translation.translate(authorship.label);
     authorship.iconTitle = translation.translate(authorship.iconTitle);
   }
 
   // Database authorship can have a custom value.
-  const databaseAuthorship = DATABASE_AUTHORSHIP_MAP[legal.databaseAuthorship]?.(legal.databaseAuthor)
-    ?? DATABASE_AUTHORSHIP_CUSTOM(legal.databaseAuthorship);
+  const databaseAuthorship =
+    DATABASE_AUTHORSHIP_MAP[legal.databaseAuthorship]?.(legal.databaseAuthor) ??
+    DATABASE_AUTHORSHIP_CUSTOM(legal.databaseAuthorship);
   if (databaseAuthorship !== null) {
     databaseAuthorship.label = translation.translate(databaseAuthorship.label);
-    databaseAuthorship.iconTitle = translation.translate(databaseAuthorship.iconTitle);
+    databaseAuthorship.iconTitle = translation.translate(
+      databaseAuthorship.iconTitle,
+    );
   }
 
   // Protected database authorship can have a custom value.
-  const protectedDatabaseAuthorship = PROTECTED_DATABASE_AUTHORSHIP_MAP[legal.protectedDatabase]?.()
-    ?? PROTECTED_DATABASE_AUTHORSHIP_CUSTOM(legal.protectedDatabase);
+  const protectedDatabaseAuthorship =
+    PROTECTED_DATABASE_AUTHORSHIP_MAP[legal.protectedDatabase]?.() ??
+    PROTECTED_DATABASE_AUTHORSHIP_CUSTOM(legal.protectedDatabase);
   if (protectedDatabaseAuthorship !== null) {
-    protectedDatabaseAuthorship.label = translation.translate(protectedDatabaseAuthorship.label);
-    protectedDatabaseAuthorship.iconTitle = translation.translate(protectedDatabaseAuthorship.iconTitle);
+    protectedDatabaseAuthorship.label = translation.translate(
+      protectedDatabaseAuthorship.label,
+    );
+    protectedDatabaseAuthorship.iconTitle = translation.translate(
+      protectedDatabaseAuthorship.iconTitle,
+    );
   }
 
   // Information about personal information can be missing.
@@ -513,11 +574,11 @@ function prepareLegal(translation, distribution) {
   }
 
   return {
-    "dcatApCzLegal": {
+    dcatApCzLegal: {
       authorship,
       databaseAuthorship,
       protectedDatabaseAuthorship,
-      personalData
+      personalData,
     },
   };
 }
@@ -525,7 +586,7 @@ function prepareLegal(translation, distribution) {
 function prepareDistribution(distribution) {
   if (distribution.type !== "Distribution") {
     return {
-      "distribution": null,
+      distribution: null,
     };
   }
   let downloadArray = distribution.downloadURL;
@@ -535,19 +596,19 @@ function prepareDistribution(distribution) {
   let mediaType;
   if (distribution.mediaType !== null) {
     mediaType = {
-      "iri": distribution.mediaType.iri,
-      "label": distribution.mediaType.label,
-    }
+      iri: distribution.mediaType.iri,
+      label: distribution.mediaType.label,
+    };
   }
   return {
-    "distribution": {
-      "downloadArrayVisible": downloadArray.length > 0,
-      "downloadArray": downloadArray,
-      "schemaArrayVisible": distribution.conformsTo.length > 0,
-      "schemaArray": distribution.conformsTo,
-      "mediaType": mediaType,
-      "compressFormat": distribution.compressFormat,
-      "packageFormat": distribution.packageFormat,
+    distribution: {
+      downloadArrayVisible: downloadArray.length > 0,
+      downloadArray: downloadArray,
+      schemaArrayVisible: distribution.conformsTo.length > 0,
+      schemaArray: distribution.conformsTo,
+      mediaType: mediaType,
+      compressFormat: distribution.compressFormat,
+      packageFormat: distribution.packageFormat,
     },
   };
 }
@@ -555,48 +616,58 @@ function prepareDistribution(distribution) {
 function prepareDataService(configuration, distribution, dataService) {
   if (distribution.type !== "DataService" && dataService !== null) {
     return {
-      "dataService": null,
+      dataService: null,
     };
   }
   let mediaType;
   if (distribution.mediaType !== null) {
     mediaType = {
-      "iri": distribution.mediaType.iri,
-      "label": distribution.mediaType.label,
-    }
+      iri: distribution.mediaType.iri,
+      label: distribution.mediaType.label,
+    };
   }
   const client = configuration.client;
   const sparqlCompliant = dataService.conformsTo?.includes(SPARQL_SCHEMA);
-  const showSparqlEditor = sparqlCompliant && dataService.endpointURL && client.sparqlEditorUrl;
+  const showSparqlEditor =
+    sparqlCompliant && dataService.endpointURL && client.sparqlEditorUrl;
   return {
-    "dataService": {
-      "iri": dataService.iri,
-      "endpointDescription": dataService.endpointDescription,
-      "endpointUrl": dataService.endpointURL,
-      "sparqlEditor": showSparqlEditor
+    dataService: {
+      iri: dataService.iri,
+      endpointDescription: dataService.endpointDescription,
+      endpointUrl: dataService.endpointURL,
+      sparqlEditor: showSparqlEditor
         ? `${client.sparqlEditorUrl}#query=${client.sparqlDefaultQuery}&endpoint=${dataService.endpointURL}`
         : null,
-      "classesAndProperties": showSparqlEditor && client.sparqlClassAndPropertiesTemplate
-        ? client.sparqlClassAndPropertiesTemplate.replace("{}", encodeURIComponent(dataService.endpointURL))
-        : null,
-      "schemaArrayVisible": dataService.conformsTo.length > 0,
-      "schemaArray": dataService.conformsTo,
-      "mediaType": mediaType,
-      "compressFormat": distribution.compressFormat,
-      "packageFormat": distribution.packageFormat,
-      "applicableLegislationVisible": dataService.applicableLegislation.length > 0,
+      classesAndProperties:
+        showSparqlEditor && client.sparqlClassAndPropertiesTemplate
+          ? client.sparqlClassAndPropertiesTemplate.replace(
+              "{}",
+              encodeURIComponent(dataService.endpointURL),
+            )
+          : null,
+      schemaArrayVisible: dataService.conformsTo.length > 0,
+      schemaArray: dataService.conformsTo,
+      mediaType: mediaType,
+      compressFormat: distribution.compressFormat,
+      packageFormat: distribution.packageFormat,
+      applicableLegislationVisible:
+        dataService.applicableLegislation.length > 0,
     },
   };
 }
 
 function prepareApplications(navigation, { applications }) {
-  const applicationDetailNavigation = navigation.changeView(ROUTE.APPLICATION_DETAIL);
+  const applicationDetailNavigation = navigation.changeView(
+    ROUTE.APPLICATION_DETAIL,
+  );
   return {
-    "visible": applications.length > 0,
-    "items": applications.map(application => ({
-      "title": application.title,
-      "description": application.description,
-      "href": applicationDetailNavigation.linkFromServer({ "iri": application.iri }),
+    visible: applications.length > 0,
+    items: applications.map((application) => ({
+      title: application.title,
+      description: application.description,
+      href: applicationDetailNavigation.linkFromServer({
+        iri: application.iri,
+      }),
     })),
   };
 }
@@ -605,16 +676,16 @@ function prepareDatasetSeries(navigation, { dataset, series }) {
   const datasetDetailNavigation = navigation.changeView(ROUTE.DATASET_DETAIL);
   const datasetListNavigation = navigation.changeView(ROUTE.DATASET_LIST);
   return {
-    "visible": series.total > 0,
-    "total": series.total,
-    "items": series.items.map(dataset => ({
-      "title": dataset.title,
-      "description": dataset.description,
-      "href": datasetDetailNavigation.linkFromServer({ "iri": dataset.iri }),
+    visible: series.total > 0,
+    total: series.total,
+    items: series.items.map((dataset) => ({
+      title: dataset.title,
+      description: dataset.description,
+      href: datasetDetailNavigation.linkFromServer({ iri: dataset.iri }),
     })),
-    "showAllHref": datasetListNavigation.linkFromServer({
-      "isPartOf": dataset.iri,
-    })
+    showAllHref: datasetListNavigation.linkFromServer({
+      isPartOf: dataset.iri,
+    }),
   };
 }
 
@@ -622,24 +693,24 @@ function prepareDatasetMetadata({ dataset, distributions }) {
   return {
     "@context": "http://schema.org/",
     "@type": "Dataset",
-    "name": dataset.title,
-    "description": dataset.description,
-    "url": dataset.iri,
-    "keywords": dataset.keywords,
+    name: dataset.title,
+    description: dataset.description,
+    url: dataset.iri,
+    keywords: dataset.keywords,
     // "includedInDataCatalog"
     // "spatialCoverage": dataset["spatial"]["@id"]
     // context["temporalCoverage"]: dataset["temporal"]["startDate"] + "/" + dataset["temporal"]["endDate"] + "\"\n"
-    "creator": {
+    creator: {
       "@type": "Organization",
-      "url": dataset.publisher.iri,
-      "name": dataset.publisher.label,
+      url: dataset.publisher.iri,
+      name: dataset.publisher.label,
     },
-    "distribution": distributions.items
-      .filter(distribution => distribution.type === "Distribution")
-      .map(distribution => ({
+    distribution: distributions.items
+      .filter((distribution) => distribution.type === "Distribution")
+      .map((distribution) => ({
         "@type": "DataDownload",
-        "contentUrl": distribution.downloadURL?.[0] ?? distribution.accessURL,
-        "encodingFormat": distribution.format.label,
+        contentUrl: distribution.downloadURL?.[0] ?? distribution.accessURL,
+        encodingFormat: distribution.format.label,
       })),
-  }
+  };
 }

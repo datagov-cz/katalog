@@ -2,7 +2,6 @@
  * We use custom response class to allow for easy testing.
  */
 export interface HttpResponse {
-
   /**
    * HTTP status code.
    */
@@ -12,7 +11,6 @@ export interface HttpResponse {
 }
 
 export interface HttpConnector {
-
   /**
    * Fetch and return content from given URL.
    * @param url

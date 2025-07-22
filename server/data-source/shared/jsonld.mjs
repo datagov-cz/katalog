@@ -1,4 +1,3 @@
-
 /**
  * @param {object} entity
  * @returns Resource identifier.
@@ -14,7 +13,7 @@ export function getId(entity) {
 export function getTypes(entity) {
   const types = entity["@type"];
   if (types === undefined) {
-    return []
+    return [];
   } else if (Array.isArray(types)) {
     return types;
   } else {
@@ -41,7 +40,7 @@ export function getString(entity, predicate) {
   if (strings.length === 0) {
     return null;
   }
-  let result = {}
+  let result = {};
   strings.forEach((string) => {
     result = { ...result, ...string };
   });
@@ -91,7 +90,7 @@ export function getResource(entity, predicate) {
  * @returns {string[]}
  */
 export function getResources(entity, predicate) {
-  return asArray(entity[predicate]).map(item => item["@id"]);
+  return asArray(entity[predicate]).map((item) => item["@id"]);
 }
 
 /**

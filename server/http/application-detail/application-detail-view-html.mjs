@@ -20,13 +20,17 @@ export function prepareTemplateData(services, languages, query, data) {
   prepareDatasetsInPlace(services.navigation, data["datasets"]);
   const application = prepareApplication(services.navigation, language, data);
   return {
-    "head": components.createHeadData(services.configuration),
-    "navigation": components.createNavigationData(services.navigation, languages, query),
-    "footer": components.createFooterData(),
-    "application": application,
-    "datasets": {
-      "visible": datasets.length > 0,
-      "items": datasets,
+    head: components.createHeadData(services.configuration),
+    navigation: components.createNavigationData(
+      services.navigation,
+      languages,
+      query,
+    ),
+    footer: components.createFooterData(),
+    application: application,
+    datasets: {
+      visible: datasets.length > 0,
+      items: datasets,
     },
   };
 }
@@ -34,7 +38,7 @@ export function prepareTemplateData(services, languages, query, data) {
 function prepareDatasetsInPlace(navigation, datasets) {
   const listNavigation = navigation.changeView(ROUTE.DATASET_DETAIL);
   for (const dataset of datasets) {
-    dataset["href"] = listNavigation.linkFromServer({ "iri": dataset["iri"] });
+    dataset["href"] = listNavigation.linkFromServer({ iri: dataset["iri"] });
   }
 }
 
@@ -48,22 +52,22 @@ function prepareApplication(navigation, language, application) {
   updateCodelistInPlace(navigation, application["types"], "type");
 
   return {
-    "author": {
-      "title": authorTitle,
-      "titleVisible": authorTitle !== null,
-      "iri": authorIri,
-      "iriVisible": authorIri !== null,
+    author: {
+      title: authorTitle,
+      titleVisible: authorTitle !== null,
+      iri: authorIri,
+      iriVisible: authorIri !== null,
     },
-    "title": application["title"],
-    "description": application["description"],
-    "states": application["states"],
-    "themes": application["themes"],
-    "platforms": application["platforms"],
-    "types": application["types"],
-    "published": formatDate(language, application["published"]),
-    "modified": formatDate(language, application["modified"]),
-    "link": application["link"],
-  }
+    title: application["title"],
+    description: application["description"],
+    states: application["states"],
+    themes: application["themes"],
+    platforms: application["platforms"],
+    types: application["types"],
+    published: formatDate(language, application["published"]),
+    modified: formatDate(language, application["modified"]),
+    link: application["link"],
+  };
 }
 
 function formatDate(language, value) {

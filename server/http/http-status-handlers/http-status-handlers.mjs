@@ -1,11 +1,8 @@
-
-export default function createHandlers(templates) {
+export default function createHandlers() {
   return {
-    "handlerError": (reply) =>
-      handler(reply),
-    "handlePathNotFound": (reply) =>
-      pathNotFound(reply),
-    "handleNotFound": (viewServices, reply) =>
+    handlerError: (reply) => handler(reply),
+    handlePathNotFound: (reply) => pathNotFound(reply),
+    handleNotFound: (viewServices, reply) =>
       notFoundHandler(viewServices, reply),
   };
 }

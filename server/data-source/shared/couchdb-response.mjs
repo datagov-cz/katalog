@@ -38,7 +38,7 @@ export function parseLabelResponse(languages, response, predicate) {
  * @returns {string | null} Null only for null and undefined.
  */
 export function selectForLanguages(languages, values) {
-  if (values === null | values === undefined) {
+  if ((values === null) | (values === undefined)) {
     return null;
   }
   for (const language of languages) {

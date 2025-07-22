@@ -1,22 +1,18 @@
 export default {
-  "cs": {
-    "path": "detail-aplikace",
-    "query": {
-      "iri": "iri",
+  cs: {
+    path: "detail-aplikace",
+    query: {
+      iri: "iri",
     },
-    "argument": {
-    },
-    "translation": {
-    },
+    argument: {},
+    translation: {},
   },
-  "en": {
-    "path": "application-detail",
-    "query": {
-      "iri": "iri",
+  en: {
+    path: "application-detail",
+    query: {
+      iri: "iri",
     },
-    "argument": {
-    },
-    "translation": {
-    },
+    argument: {},
+    translation: {},
   },
 };

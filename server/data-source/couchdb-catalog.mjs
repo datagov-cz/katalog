@@ -5,8 +5,7 @@ import logger from "../logger";
 
 export function createCouchDbCatalog(couchDbConnector) {
   return {
-    "fetchCatalogs": (languages) =>
-      fetchCatalogs(couchDbConnector, languages),
+    fetchCatalogs: (languages) => fetchCatalogs(couchDbConnector, languages),
   };
 }
 
@@ -14,7 +13,10 @@ async function fetchCatalogs(couchDbConnector, languages) {
   const response = await couchDbConnector.fetch("static", "local_catalogs");
   if (response["error"] !== undefined) {
     // We assume it is missing.
-    logger.error("Can't fetch local catalogs for error '%s'.", JSON.stringify(response));
+    logger.error(
+      "Can't fetch local catalogs for error '%s'.",
+      JSON.stringify(response),
+    );
     return null;
   }
   const jsonld = response["jsonld"] ?? [];
@@ -52,16 +54,17 @@ function jsonldToCatalogs(languages, jsonld) {
 function jsonldToPublisher(languages, entity) {
   const contactPoint = entity[DCAT.contactPoint] ?? {};
   return {
-    "iri": entity["@id"],
-    "publisher": { //
-      "iri": getResource(entity, DCTERMS.publisher),
+    iri: entity["@id"],
+    publisher: {
+      //
+      iri: getResource(entity, DCTERMS.publisher),
     },
-    "title": selectForLanguages(languages, getString(entity, DCTERMS.title)),
-    "contactPoint": {
-      "email": getValue(contactPoint, FOAF.email),
-      "name": selectForLanguages(languages, getString(contactPoint, FOAF.name)),
+    title: selectForLanguages(languages, getString(entity, DCTERMS.title)),
+    contactPoint: {
+      email: getValue(contactPoint, FOAF.email),
+      name: selectForLanguages(languages, getString(contactPoint, FOAF.name)),
     },
-    "endpointURL": getResource(entity, DCAT.endpointURL),
-    "homepage": getResource(entity, FOAF.homepage),
+    endpointURL: getResource(entity, DCAT.endpointURL),
+    homepage: getResource(entity, FOAF.homepage),
   };
 }

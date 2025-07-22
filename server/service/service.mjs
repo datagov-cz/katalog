@@ -23,7 +23,10 @@ import { createLinkService } from "./link-service.mjs";
 
 export async function createServices(configuration, http) {
   const solr = createDefaultSolrConnector(http, configuration.services.solrUrl);
-  const couchdb = createCouchDbConnector(configuration.services.couchDbUrl, http);
+  const couchdb = createCouchDbConnector(
+    configuration.services.couchDbUrl,
+    http,
+  );
 
   const couchDbDataset = createCouchDbDataset(couchdb);
   const couchDbLabel = createCouchDbLabel(couchdb);
@@ -38,12 +41,14 @@ export async function createServices(configuration, http) {
   const solrDataset = createSolrDataset(solr);
 
   const sparqlQuality = createSparqlQuality(
-    createSparqlConnector(configuration.services.qualitySparqlUrl, http));
+    createSparqlConnector(configuration.services.qualitySparqlUrl, http),
+  );
 
   const navigation = createNavigationService();
   const label = createLabelService(
     [couchDbLabel, couchDbSuggestions],
-    [couchDbStatic, couchDbSuggestions]);
+    [couchDbStatic, couchDbSuggestions],
+  );
   const facet = createFacetService(label);
   const dataset = createDatasetService(couchDbDataset);
   const link = createLinkService(configuration);
@@ -56,24 +61,24 @@ export async function createServices(configuration, http) {
 
   return {
     // Data sources
-    "couchDbDataset": couchDbDataset,
-    "couchDbLabel": couchDbDataset,
-    "couchDbStatic": couchDbStatic,
-    "couchDbSuggestions": couchDbSuggestions,
-    "couchDbLocalCatalog": couchDbLocalCatalog,
-    "couchDbVdf": couchDbVdf,
-    "solrApplication": solrApplication,
-    "solrSuggestion": solrSuggestion,
-    "solrPublisher": solrPublisher,
-    "solrDataset": solrDataset,
-    "sparqlQuality": sparqlQuality,
+    couchDbDataset: couchDbDataset,
+    couchDbLabel: couchDbDataset,
+    couchDbStatic: couchDbStatic,
+    couchDbSuggestions: couchDbSuggestions,
+    couchDbLocalCatalog: couchDbLocalCatalog,
+    couchDbVdf: couchDbVdf,
+    solrApplication: solrApplication,
+    solrSuggestion: solrSuggestion,
+    solrPublisher: solrPublisher,
+    solrDataset: solrDataset,
+    sparqlQuality: sparqlQuality,
     // Services
-    "navigation": navigation,
-    "label": label,
-    "facet": facet,
-    "dataset": dataset,
-    "link": link,
+    navigation: navigation,
+    label: label,
+    facet: facet,
+    dataset: dataset,
+    link: link,
     // Configuration
-    "configuration": configuration,
+    configuration: configuration,
   };
 }

@@ -1,11 +1,9 @@
 export default {
-  "cs": {
-    "path": "lokální-katalogy",
-    "query": {
-    },
-    "argument": {
-    },
-    "translation": {
+  cs: {
+    path: "lokální-katalogy",
+    query: {},
+    argument: {},
+    translation: {
       "url-remove-link": "odstranění-lokálního-katalogu?catalog=",
       "items-found": [
         [0, "Nebyla nalezen žádný lokální katalog."],
@@ -15,13 +13,11 @@ export default {
       ],
     },
   },
-  "en": {
-    "path": "local-catalogs",
-    "query": {
-    },
-    "argument": {
-    },
-    "translation": {
+  en: {
+    path: "local-catalogs",
+    query: {},
+    argument: {},
+    translation: {
       "url-remove-link": "local-catalog-withdrawn?catalog=",
       "items-found": [
         [0, "No local catalog found."],

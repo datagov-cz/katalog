@@ -4,15 +4,22 @@ export async function prepareData(services, languages, query) {
   if (data === null) {
     return null;
   }
-  data["themes"] = await irisToResources(labelService, languages, data["themes"]);
+  data["themes"] = await irisToResources(
+    labelService,
+    languages,
+    data["themes"],
+  );
   data["state"] = await iriToResource(labelService, languages, data["state"]);
-  data["datasets"] = await services.dataset.fetchDatasetPreviews(languages, data["datasets"]);
+  data["datasets"] = await services.dataset.fetchDatasetPreviews(
+    languages,
+    data["datasets"],
+  );
   return data;
-};
+}
 
 async function irisToResources(labelService, languages, iris) {
   const result = [];
-  for (const iri of (iris ?? [])) {
+  for (const iri of iris ?? []) {
     result.push(await iriToResource(labelService, languages, iri));
   }
   return result;
@@ -21,7 +28,7 @@ async function irisToResources(labelService, languages, iris) {
 async function iriToResource(labelService, languages, iri) {
   const labels = await labelService.fetchLabel(languages, iri);
   return {
-    "iri": iri,
-    "label": labels ?? iri,
-  }
+    iri: iri,
+    label: labels ?? iri,
+  };
 }

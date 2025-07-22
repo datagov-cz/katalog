@@ -1,22 +1,44 @@
-import { getId, getTypes, getEntityByIri, getString, getStrings, getResource, getResources, getPlainStrings, getPlainString, getEntityByType, getValue } from "./shared/jsonld.mjs";
+import {
+  getId,
+  getTypes,
+  getEntityByIri,
+  getString,
+  getStrings,
+  getResource,
+  getResources,
+  getPlainStrings,
+  getPlainString,
+  getEntityByType,
+  getValue,
+} from "./shared/jsonld.mjs";
 import { selectForLanguages } from "./shared/couchdb-response.mjs";
-import { DCTERMS, DCAT, VCARD, SKOS, SGOV, EUA, ADMS, FOAF, OWL, NKOD, PU, SPDX , EUROPE} from "./shared/vocabulary.ts";
+import {
+  DCTERMS,
+  DCAT,
+  VCARD,
+  SKOS,
+  SGOV,
+  EUA,
+  ADMS,
+  FOAF,
+  OWL,
+  NKOD,
+  PU,
+  SPDX,
+  EUROPE,
+} from "./shared/vocabulary.ts";
 
 export function createCouchDbDataset(couchDbConnector) {
   return {
-    "fetchDataset": (languages, query) =>
+    fetchDataset: (languages, query) =>
       fetchDataset(couchDbConnector, languages, query),
-    "fetchDatasetPreview": (languages, iri) =>
+    fetchDatasetPreview: (languages, iri) =>
       fetchDatasetPreview(couchDbConnector, languages, iri),
   };
 }
 
 async function fetchDataset(couchDbConnector, languages, query) {
-  const {
-    iri,
-    distributionOffset,
-    distributionLimit,
-  } = query;
+  const { iri, distributionOffset, distributionLimit } = query;
 
   const response = await couchDbConnector.fetch("datasets", iri);
   if (response["error"] !== undefined) {
@@ -29,32 +51,43 @@ async function fetchDataset(couchDbConnector, languages, query) {
   dataset.title = selectForLanguages(languages, dataset.title);
   dataset.description = selectForLanguages(languages, dataset.description);
   dataset.keywords = dataset.keywords
-    .map(keyword => keyword.cs)
-    .filter(value => value !== undefined);
-  dataset.contactPoints.forEach(contactPoint => {
+    .map((keyword) => keyword.cs)
+    .filter((value) => value !== undefined);
+  dataset.contactPoints.forEach((contactPoint) => {
     contactPoint.title = selectForLanguages(languages, contactPoint.title);
   });
 
   dataset.distributions.sort();
   dataset.distributionsFound = dataset.distributions.length;
   dataset.distributions = dataset.distributions.slice(
-    distributionOffset, distributionOffset + distributionLimit);
+    distributionOffset,
+    distributionOffset + distributionLimit,
+  );
 
   dataset.distributions = dataset.distributions
-    .map(iri => jsonldToDistribution(response["jsonld"], iri))
+    .map((iri) => jsonldToDistribution(response["jsonld"], iri))
     // TODO Perhaps we should not ignore?
-    .filter(distribution => distribution != null);
+    .filter((distribution) => distribution != null);
 
-  dataset.distributions.forEach(distribution => {
+  dataset.distributions.forEach((distribution) => {
     distribution.title = selectForLanguages(languages, distribution.title);
-    distribution.description = selectForLanguages(languages, distribution.description);
+    distribution.description = selectForLanguages(
+      languages,
+      distribution.description,
+    );
     if (distribution.dataService) {
-      distribution.dataService.title = selectForLanguages(languages, distribution.dataService.title);
+      distribution.dataService.title = selectForLanguages(
+        languages,
+        distribution.dataService.title,
+      );
     }
     const legal = distribution.legal;
     if (legal !== null) {
       legal.author = selectForLanguages(languages, legal.author);
-      legal.databaseAuthor = selectForLanguages(languages, legal.databaseAuthor);
+      legal.databaseAuthor = selectForLanguages(
+        languages,
+        legal.databaseAuthor,
+      );
     }
   });
 
@@ -80,53 +113,53 @@ function jsonldToDataset(jsonld, iri) {
 
 function createEmptyDataset(iri) {
   return {
-    "iri": iri,
-    "title": null,
-    "description": null,
-    "contactPoints": [],
-    "distributions": [],
-    "distributionsFound": 0,
-    "keywords": [],
-    "publisher": null,
-    "themes": [],
-    "euroVocThemes": [],
-    "accessRights": [],
-    "conformsTo": [],
-    "documentation": [],
-    "frequency": null,
-    "hasVersion": [],
-    "identifier": [],
-    "isVersionOf": [],
-    "landingPage": [],
-    "language": [],
-    "otherIdentifier": [],
-    "provenance": [],
-    "relation": [],
-    "issued": [],
-    "sample": [],
-    "source": [],
-    "spatial": [],
-    "spatialResolutionInMeters": null,
-    "temporal": null,
-    "temporalResolution": null,
-    "type": [],
-    "modified": [],
-    "version": [],
-    "versionNotes": [],
-    "datasets": [],
-    "parentDataset": null,
-    "catalog": null,
-    "catalogSource": null,
-    "localCatalog": null,
-    "isFromForm": false,
-    "isFromCatalog": false,
-    "semanticThemes": [],
-    "isFromVdf": false,
-    "isCodelist": false,
-    "vdfOriginator": null,
-    "applicableLegislation": [],
-    "hvdCategory": [],
-  }
+    iri: iri,
+    title: null,
+    description: null,
+    contactPoints: [],
+    distributions: [],
+    distributionsFound: 0,
+    keywords: [],
+    publisher: null,
+    themes: [],
+    euroVocThemes: [],
+    accessRights: [],
+    conformsTo: [],
+    documentation: [],
+    frequency: null,
+    hasVersion: [],
+    identifier: [],
+    isVersionOf: [],
+    landingPage: [],
+    language: [],
+    otherIdentifier: [],
+    provenance: [],
+    relation: [],
+    issued: [],
+    sample: [],
+    source: [],
+    spatial: [],
+    spatialResolutionInMeters: null,
+    temporal: null,
+    temporalResolution: null,
+    type: [],
+    modified: [],
+    version: [],
+    versionNotes: [],
+    datasets: [],
+    parentDataset: null,
+    catalog: null,
+    catalogSource: null,
+    localCatalog: null,
+    isFromForm: false,
+    isFromCatalog: false,
+    semanticThemes: [],
+    isFromVdf: false,
+    isCodelist: false,
+    vdfOriginator: null,
+    applicableLegislation: [],
+    hvdCategory: [],
+  };
 }
 
 function loadDatasetMandatory(entity, dataset) {
@@ -143,20 +176,19 @@ function loadDatasetRecommended(jsonld, entity, dataset) {
 
 function loadContactPoints(jsonld, entity) {
   return getResources(entity, DCAT.contactPoint)
-    .map(iri => getEntityByIri(jsonld, iri))
-    .filter(value => value !== null)
-    .map(contactEntity => {
+    .map((iri) => getEntityByIri(jsonld, iri))
+    .filter((value) => value !== null)
+    .map((contactEntity) => {
       let email = getResource(contactEntity, VCARD.hasEmail);
       if (email && email.startsWith("mailto:")) {
         email = email.substring("mailto:".length);
       }
       return {
-        "iri": getId(contactEntity),
-        "title": getString(contactEntity, VCARD.fn),
-        "email": email,
-      }
-    }
-    );
+        iri: getId(contactEntity),
+        title: getString(contactEntity, VCARD.fn),
+        email: email,
+      };
+    });
 }
 
 function loadDatasetThemes(jsonld, entity, dataset) {
@@ -188,9 +220,9 @@ function loadDatasetTemporal(jsonld, entity, dataset) {
     return;
   }
   dataset.temporal = {
-    "iri": iri,
-    "startDate": getValue(temporal, DCAT.startDate),
-    "endDate": getValue(temporal, DCAT.endDate),
+    iri: iri,
+    startDate: getValue(temporal, DCAT.startDate),
+    endDate: getValue(temporal, DCAT.endDate),
   };
 }
 
@@ -217,7 +249,8 @@ function loadDatasetOptional(entity, dataset) {
   dataset.versionNotes = getPlainStrings(entity, ADMS.versionNotes);
   dataset.temporalResolution = getPlainString(entity, DCAT.temporalResolution);
   const resolution = getPlainString(entity, DCAT.spatialResolutionInMeters);
-  dataset.spatialResolutionInMeters = resolution === null ? null : Number(resolution);
+  dataset.spatialResolutionInMeters =
+    resolution === null ? null : Number(resolution);
 }
 
 function loadDatasetNationalCatalog(jsonld, entity, dataset) {
@@ -241,7 +274,10 @@ function loadDatasetNationalCatalog(jsonld, entity, dataset) {
 }
 
 function loadDatasetHighValueDatasets(entity, dataset) {
-  dataset.applicableLegislation = getResources(entity, EUROPE.applicableLegislation);
+  dataset.applicableLegislation = getResources(
+    entity,
+    EUROPE.applicableLegislation,
+  );
   dataset.hvdCategory = getResources(entity, EUROPE.hvdCategory);
 }
 
@@ -252,28 +288,28 @@ function jsonldToDistribution(jsonld, iri) {
   }
 
   const distribution = {
-    "iri": getId(entity),
-    "title": getString(entity, DCTERMS.title),
-    "accessURL": getResource(entity, DCAT.accessURL),
-    "description": getString(entity, DCTERMS.description),
-    "format": getResource(entity, DCTERMS.format),
-    "license": getResource(entity, DCTERMS.license),
-    "byteSize": getPlainString(entity, DCAT.byteSize),
-    "checksum": getPlainStrings(entity, SPDX.checksum),
-    "documentation": getResources(entity, FOAF.page),
-    "downloadURL": getResources(entity, DCAT.downloadURL),
-    "language": getResources(entity, DCTERMS.language),
-    "conformsTo": getResources(entity, DCTERMS.conformsTo),
-    "mediaType": getResource(entity, DCAT.mediaType),
-    "issued": getPlainString(entity, DCTERMS.issued),
-    "rights": getResource(entity, DCTERMS.rights),
-    "status": getResource(entity, ADMS.status),
-    "modified": getResource(entity, DCTERMS.modified),
-    "packageFormat": getResource(entity, DCAT.packageFormat),
-    "compressFormat": getResource(entity, DCAT.compressFormat),
-    "type": "Distribution",
-    "legal": loadDistributionLegal(jsonld, entity),
-    "applicableLegislation": getResources(entity, EUROPE.applicableLegislation),
+    iri: getId(entity),
+    title: getString(entity, DCTERMS.title),
+    accessURL: getResource(entity, DCAT.accessURL),
+    description: getString(entity, DCTERMS.description),
+    format: getResource(entity, DCTERMS.format),
+    license: getResource(entity, DCTERMS.license),
+    byteSize: getPlainString(entity, DCAT.byteSize),
+    checksum: getPlainStrings(entity, SPDX.checksum),
+    documentation: getResources(entity, FOAF.page),
+    downloadURL: getResources(entity, DCAT.downloadURL),
+    language: getResources(entity, DCTERMS.language),
+    conformsTo: getResources(entity, DCTERMS.conformsTo),
+    mediaType: getResource(entity, DCAT.mediaType),
+    issued: getPlainString(entity, DCTERMS.issued),
+    rights: getResource(entity, DCTERMS.rights),
+    status: getResource(entity, ADMS.status),
+    modified: getResource(entity, DCTERMS.modified),
+    packageFormat: getResource(entity, DCAT.packageFormat),
+    compressFormat: getResource(entity, DCAT.compressFormat),
+    type: "Distribution",
+    legal: loadDistributionLegal(jsonld, entity),
+    applicableLegislation: getResources(entity, EUROPE.applicableLegislation),
   };
 
   const accessServiceIri = getResource(entity, DCAT.accessService);
@@ -283,8 +319,8 @@ function jsonldToDistribution(jsonld, iri) {
 
   return {
     ...distribution,
-    "type": "DataService",
-    "dataService": loadDistributionDataService(jsonld, accessServiceIri),
+    type: "DataService",
+    dataService: loadDistributionDataService(jsonld, accessServiceIri),
   };
 }
 
@@ -295,38 +331,38 @@ function loadDistributionLegal(jsonld, distribution) {
     return null;
   }
   return {
-    "personalData": getResource(entity, PU.personalData),
-    "author": getString(entity, PU.author),
-    "authorship": getResource(entity, PU.authorship),
-    "databaseAuthor": getString(entity, PU.databaseAuthor),
-    "databaseAuthorship": getResource(entity, PU.databaseAuthorship),
-    "protectedDatabase": getResource(entity, PU.protectedDatabase),
+    personalData: getResource(entity, PU.personalData),
+    author: getString(entity, PU.author),
+    authorship: getResource(entity, PU.authorship),
+    databaseAuthor: getString(entity, PU.databaseAuthor),
+    databaseAuthorship: getResource(entity, PU.databaseAuthorship),
+    protectedDatabase: getResource(entity, PU.protectedDatabase),
   };
 }
 
 function loadDistributionDataService(jsonld, iri) {
   const entity = getEntityByIri(jsonld, iri);
   if (entity === null) {
-    return createEmptyDataService();
+    return createEmptyDataService(iri);
   }
   return {
-    "iri": getId(entity),
-    "title": getString(entity, DCTERMS.title),
-    "endpointDescription": getResource(entity, DCAT.endpointDescription),
-    "endpointURL": getResource(entity, DCAT.endpointURL),
-    "conformsTo": getResources(entity, DCTERMS.conformsTo),
-    "applicableLegislation": getResources(entity, EUROPE.applicableLegislation),
-  }
+    iri: getId(entity),
+    title: getString(entity, DCTERMS.title),
+    endpointDescription: getResource(entity, DCAT.endpointDescription),
+    endpointURL: getResource(entity, DCAT.endpointURL),
+    conformsTo: getResources(entity, DCTERMS.conformsTo),
+    applicableLegislation: getResources(entity, EUROPE.applicableLegislation),
+  };
 }
 
-function createEmptyDataService() {
+function createEmptyDataService(accessServiceIri) {
   return {
-    "iri": accessServiceIri,
-    "title": null,
-    "endpointDescription": null,
-    "endpointURL": null,
-    "conformsTo": [],
-    "applicableLegislation": [],
+    iri: accessServiceIri,
+    title: null,
+    endpointDescription: null,
+    endpointURL: null,
+    conformsTo: [],
+    applicableLegislation: [],
   };
 }
 
@@ -338,8 +374,8 @@ async function fetchDatasetPreview(couchDbConnector, languages, iri) {
   }
   const dataset = jsonldToDataset(response["jsonld"], iri);
   return {
-    "iri": iri,
-    "title": selectForLanguages(languages, dataset.title),
-    "description": selectForLanguages(languages, dataset.description),
+    iri: iri,
+    title: selectForLanguages(languages, dataset.title),
+    description: selectForLanguages(languages, dataset.description),
   };
 }

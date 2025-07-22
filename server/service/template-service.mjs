@@ -11,7 +11,6 @@ export function createTemplateService(basePath) {
 }
 
 class BoundTemplateService {
-
   constructor(basePath) {
     this.view_map = {};
     this.handlebars = createHandlebars();
@@ -27,7 +26,9 @@ class BoundTemplateService {
    */
   syncAddComponent(name, path) {
     const content = fileSystem.readFileSync(
-      this.basePath + "/component/" + path, "utf8");
+      this.basePath + "/component/" + path,
+      "utf8",
+    );
     this.handlebars.partials[name] = this.handlebars.compile(content);
   }
 
@@ -36,17 +37,17 @@ class BoundTemplateService {
    */
   syncAddView(name, path) {
     const content = fileSystem.readFileSync(
-      this.basePath + "/http/" + path, "utf8");
+      this.basePath + "/http/" + path,
+      "utf8",
+    );
     this.view_map[name] = this.handlebars.compile(content);
   }
-
 }
 
 /**
  * Reload content with every request.
  */
 class ReloadingTemplateService extends BoundTemplateService {
-
   constructor(basePath) {
     super(basePath);
     this.partials = {};
@@ -68,5 +69,4 @@ class ReloadingTemplateService extends BoundTemplateService {
   syncAddView(name, path) {
     this.view_map[name] = this.basePath + "/http/" + path;
   }
-
 }

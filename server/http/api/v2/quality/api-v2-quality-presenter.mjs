@@ -5,15 +5,15 @@ export default function createHandler(services) {
   // Handler services.
   const handlerServices = {
     ...services,
-    "translation": {
-      "cs": createTranslationService(local.cs.translation),
-      "en": createTranslationService(local.en.translation)
+    translation: {
+      cs: createTranslationService(local.cs.translation),
+      en: createTranslationService(local.en.translation),
     },
   };
   // Create handler.
   return {
-    "path": "api/v2/quality",
-    "handler": (request, reply) => handleRequest(handlerServices, request, reply),
+    path: "api/v2/quality",
+    handler: (request, reply) => handleRequest(handlerServices, request, reply),
   };
 }
 
@@ -44,21 +44,30 @@ function createResponse(translation, language, quality) {
   return result;
 }
 
-function prepareQualityItem(translation, language, quality, collector, measureName) {
+function prepareQualityItem(
+  translation,
+  language,
+  quality,
+  collector,
+  measureName,
+) {
   const measure = quality[measureName];
   if (measure === null) {
     return;
   }
   const translationArgs = {
-    "date": measure.lastCheck === null ? "" : new Date(measure.lastCheck).toLocaleString(language),
-    "note": measure.note,
+    date:
+      measure.lastCheck === null
+        ? ""
+        : new Date(measure.lastCheck).toLocaleString(language),
+    note: measure.note,
   };
 
   collector[measureName] = {
     value: measure.value,
     message: translation.translate(
       measureName + (measure.value ? "True" : "False"),
-      translationArgs
+      translationArgs,
     ),
   };
 }

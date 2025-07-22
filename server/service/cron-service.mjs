@@ -7,13 +7,13 @@ export function createCronService(configuration, labelService) {
     /**
      * Setup all time-based actions.
      */
-    "initialize": () => initialize(configuration, labelService),
+    initialize: () => initialize(configuration, labelService),
   };
 }
 
 function initialize(configuration, labelService) {
   if (isNotEmpty(configuration.server.labelReloadCron)) {
-    logger.info("Cache reload registered.")
+    logger.info("Cache reload registered.");
     cron.schedule(configuration.server.labelReloadCron, () => {
       labelService.reloadCache();
     });

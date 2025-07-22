@@ -1,4 +1,3 @@
-
 export function createDatasetService(couchDbDataset) {
   return {
     /**
@@ -7,9 +6,9 @@ export function createDatasetService(couchDbDataset) {
      * @param {string[]} iris
      * @returns {object[]}
      */
-    "fetchDatasetPreviews": async (languages, iris) =>
+    fetchDatasetPreviews: async (languages, iris) =>
       fetchDatasetPreviews(couchDbDataset, languages, iris),
-  }
+  };
 }
 
 async function fetchDatasetPreviews(couchDbDataset, languages, iris) {
@@ -17,9 +16,9 @@ async function fetchDatasetPreviews(couchDbDataset, languages, iris) {
   for (const iri of iris) {
     const dataset = await couchDbDataset.fetchDatasetPreview(languages, iri);
     result.push({
-      "iri": iri,
-      "title": dataset?.title ?? iri,
-      "description": dataset?.description ?? "",
+      iri: iri,
+      title: dataset?.title ?? iri,
+      description: dataset?.description ?? "",
     });
   }
   return result;

@@ -2,7 +2,7 @@ import { FOAF } from "./shared/vocabulary.ts";
 
 export function createCouchDbStatic(couchDbConnector) {
   return {
-    "fetchInitialCache": (languages) =>
+    fetchInitialCache: (languages) =>
       fetchInitialCache(couchDbConnector, languages),
   };
 }
@@ -20,14 +20,14 @@ function parseInitialDataCacheResponse(response, languages) {
       continue;
     }
     const labels = (item[FOAF.name] ?? [])
-      .map(item => ({
-        "value": item["@value"],
-        "language": item["@language"],
+      .map((item) => ({
+        value: item["@value"],
+        language: item["@language"],
       }))
-      .filter(item => languages.includes(item.language));
+      .filter((item) => languages.includes(item.language));
     result.push({
-      "iri": iri,
-      "labels": labels,
+      iri: iri,
+      labels: labels,
     });
   }
   return result;

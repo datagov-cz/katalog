@@ -90,7 +90,7 @@ function renderQualityMeasure(
   }
   // As the icon may change size to fit the content we force
   // it to have a fixed size.
-  icon.style.width="1.25rem";
+  icon.style.width = "1.25rem";
   element.appendChild(icon);
 }
 

@@ -1,4 +1,3 @@
-
 export async function prepareData(services, languages) {
   let publishers = null;
   let vdf = null;
@@ -9,16 +8,16 @@ export async function prepareData(services, languages) {
     })(),
     (async () => {
       vdf = await services.couchDbVdf.fetchPublishersVdf();
-    })()
+    })(),
   ]);
   //
   addVdfToPublishersInPlace(publishers, vdf);
   await services.label.addLabelToResources(languages, publishers);
 
   return {
-    "publishers": publishers,
+    publishers: publishers,
   };
-};
+}
 
 function addVdfToPublishersInPlace(publishers, vdf) {
   // Collect publishers and originators.

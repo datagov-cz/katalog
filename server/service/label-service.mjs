@@ -1,6 +1,6 @@
 import logger from "../logger";
 
-const DEFAULT_IRI = resource => resource["iri"];
+const DEFAULT_IRI = (resource) => resource["iri"];
 
 /**
  * Takes array of objects with fetchLabel functionality.
@@ -16,7 +16,7 @@ export function createLabelService(sources, cacheSources) {
      * @param {String} iri IRI.
      * @returns {String | Undefined}
      */
-    "fetchLabel": fetchLabel,
+    fetchLabel: fetchLabel,
     /**
      * Add label to given object.
      * @param {String[]} languages Language preferences.
@@ -24,12 +24,12 @@ export function createLabelService(sources, cacheSources) {
      * @param {Function} defaultValue Select default label, where none is found.
      * @returns {}
      */
-    "addLabelToResources": (languages, resources, defaultValue = DEFAULT_IRI) =>
+    addLabelToResources: (languages, resources, defaultValue = DEFAULT_IRI) =>
       addLabelToResources(fetchLabel, languages, resources, defaultValue),
     /**
      * Asynchronous function re-load content of the cache.
      */
-    "reloadCache": () => reloadCache(cache, cacheSources),
+    reloadCache: () => reloadCache(cache, cacheSources),
   };
 }
 
@@ -37,7 +37,6 @@ export function createLabelService(sources, cacheSources) {
  * TODO Make sure cache is not growing too large.
  */
 class MemoryCache {
-
   constructor() {
     this.cache = new Map();
   }
@@ -69,7 +68,6 @@ class MemoryCache {
     this.cache = other.cache;
     other.cache = swap;
   }
-
 }
 
 async function fetchLabelFromCouchDb(labelSources, cache, languages, iri) {
@@ -140,8 +138,12 @@ async function reloadCache(cache, cacheSources) {
   } catch (exception) {
     logger.error("Can't load label cache.", exception);
   }
-  logger.info("Replacing old cache of size %d with new of size %d took %d ms",
-    nextCache.size(), cache.size(), new Date() - start);
+  logger.info(
+    "Replacing old cache of size %d with new of size %d took %d ms",
+    nextCache.size(),
+    cache.size(),
+    new Date() - start,
+  );
 }
 
 async function initializeCacheFromSources(cache, cacheSources) {
@@ -155,7 +157,12 @@ async function initializeCacheFromSources(cache, cacheSources) {
   }
 }
 
-async function addLabelToResources(fetchLabel, languages, resources, defaultValue) {
+async function addLabelToResources(
+  fetchLabel,
+  languages,
+  resources,
+  defaultValue,
+) {
   for (const resource of resources) {
     if (resource === null) {
       continue;
