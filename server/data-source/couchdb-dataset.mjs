@@ -135,7 +135,6 @@ function createEmptyDataset(iri) {
     otherIdentifier: [],
     provenance: [],
     relation: [],
-    issued: [],
     sample: [],
     source: [],
     spatial: [],
@@ -239,7 +238,6 @@ function loadDatasetOptional(entity, dataset) {
   dataset.otherIdentifier = getResources(entity, ADMS.identifier);
   dataset.provenance = getResources(entity, DCTERMS.provenance);
   dataset.relation = getResources(entity, DCTERMS.relation);
-  dataset.issued = getPlainStrings(entity, DCTERMS.issued);
   dataset.sample = getResources(entity, ADMS.sample);
   dataset.source = getResources(entity, DCTERMS.source);
   dataset.spatial = getResources(entity, DCTERMS.spatial);
@@ -301,7 +299,6 @@ function jsonldToDistribution(jsonld, iri) {
     language: getResources(entity, DCTERMS.language),
     conformsTo: getResources(entity, DCTERMS.conformsTo),
     mediaType: getResource(entity, DCAT.mediaType),
-    issued: getPlainString(entity, DCTERMS.issued),
     rights: getResource(entity, DCTERMS.rights),
     status: getResource(entity, ADMS.status),
     modified: getResource(entity, DCTERMS.modified),
