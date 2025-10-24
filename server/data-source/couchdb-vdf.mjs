@@ -13,8 +13,11 @@ export function createCouchDbVdf(couchDbConnector) {
   };
 }
 
+const COUCHDB_DATABASE_NAME = "static";
+
 async function fetchPublishersVdf(couchDbConnector) {
-  const response = await couchDbConnector.fetch("static", "publishers_vdf");
+  const response = await couchDbConnector.fetch(
+    COUCHDB_DATABASE_NAME, "publishers_vdf");
   if (response["error"] !== undefined) {
     // We assume it is missing.
     logger.error(

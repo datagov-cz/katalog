@@ -10,7 +10,7 @@ import {
   parseDate,
 } from "./shared/solr-response";
 
-const CORE = "applications";
+const SOLR_CORE_NAME = "application";
 
 export function createSolrApplication(solrConnector) {
   return {
@@ -30,13 +30,13 @@ async function fetchApplicationsCount(solrConnector) {
     rows: 0,
     q: "*:*",
   };
-  const response = await solrConnector.query(CORE, solrQuery);
+  const response = await solrConnector.query(SOLR_CORE_NAME, solrQuery);
   return response["response"]["numFound"];
 }
 
 async function fetchApplication(solrConnector, languages, iri) {
   const solrQuery = buildApplicationQuery(iri);
-  const response = await solrConnector.query(CORE, solrQuery);
+  const response = await solrConnector.query(SOLR_CORE_NAME, solrQuery);
   return parseApplicationResponse(languages, response);
 }
 
@@ -93,7 +93,7 @@ function parseApplicationResponse(languages, response) {
 async function fetchApplications(solrConnector, languages, query) {
   const primaryLanguage = languages[0];
   const solrQuery = buildApplicationsQuery(primaryLanguage, query);
-  const response = await solrConnector.query(CORE, solrQuery);
+  const response = await solrConnector.query(SOLR_CORE_NAME, solrQuery);
   return parseApplicationsResponse(languages, response);
 }
 
@@ -164,7 +164,7 @@ async function fetchApplicationsWithDatasets(
   datasets,
 ) {
   const solrQuery = buildApplicationsWithDatasetsQuery(datasets);
-  const response = await solrConnector.query(CORE, solrQuery);
+  const response = await solrConnector.query(SOLR_CORE_NAME, solrQuery);
   return parseApplicationsWithDatasetsResponse(languages, response);
 }
 

@@ -5,7 +5,7 @@ import {
 } from "./shared/solr-query";
 import { emptyAsNull, parseFacet, parseDate } from "./shared/solr-response";
 
-const CORE = "suggestions";
+const SOLR_CORE_NAME = "suggestion";
 
 export function createSolrSuggestion(solrConnector) {
   return {
@@ -16,7 +16,7 @@ export function createSolrSuggestion(solrConnector) {
 
 async function fetchSuggestion(solrConnector, iri) {
   const solrQuery = buildSuggestionQuery(iri);
-  const response = await solrConnector.query(CORE, solrQuery);
+  const response = await solrConnector.query(SOLR_CORE_NAME, solrQuery);
   return parseSuggestionResponse(response);
 }
 
@@ -70,7 +70,7 @@ function parseSuggestionResponse(response) {
 async function fetchSuggestions(solrConnector, query) {
   // We have only one language.
   const solrQuery = buildSuggestionsQuery(query);
-  const response = await solrConnector.query(CORE, solrQuery);
+  const response = await solrConnector.query(SOLR_CORE_NAME, solrQuery);
   return parseSuggestionsResponse(response);
 }
 

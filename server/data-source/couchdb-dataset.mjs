@@ -37,10 +37,12 @@ export function createCouchDbDataset(couchDbConnector) {
   };
 }
 
+const COUCHDB_DATABASE_NAME = "dataset";
+
 async function fetchDataset(couchDbConnector, languages, query) {
   const { iri, distributionOffset, distributionLimit } = query;
 
-  const response = await couchDbConnector.fetch("datasets", iri);
+  const response = await couchDbConnector.fetch(COUCHDB_DATABASE_NAME, iri);
   if (response["error"] !== undefined) {
     // We assume it is missing.
     return null;
@@ -364,7 +366,7 @@ function createEmptyDataService(accessServiceIri) {
 }
 
 async function fetchDatasetPreview(couchDbConnector, languages, iri) {
-  const response = await couchDbConnector.fetch("datasets", iri);
+  const response = await couchDbConnector.fetch(COUCHDB_DATABASE_NAME, iri);
   if (response["error"] !== undefined) {
     // We assume it is missing.
     return null;
