@@ -27,11 +27,6 @@ const ConfigurationZod = z.object({
      * Cron expression for cache reloading.
      */
     labelReloadCron: z.string(),
-    /**
-     * Path to design system directory.
-     * Effective only with 'serverAssets' set to true.
-     */
-    designSystemFolder: z.string(),
   }),
   services: z.object({
     solrUrl: z.string().url(),
@@ -40,6 +35,17 @@ const ConfigurationZod = z.object({
      * URL of SPARQL endpoint with quality measures.
      */
     qualitySparqlUrl: z.string().url(),
+  }),
+  designSystem: z.object({
+    /**
+     * URL of the design system assets root.
+     */
+    url: z.string(),
+    /**
+     * Path to design system directory.
+     * Effective only with 'serverAssets' set to true.
+     */
+    path: z.string().optional(),
   }),
   client: z.object({
     catalogFormUrl: z.string().url(),
@@ -98,12 +104,15 @@ const createConfiguration = (): Configuration => {
         process.env.HTTP_SERVE_STATIC === "1",
       reloadTemplates: process.env.NODE_ENV === "development",
       labelReloadCron: process.env.LABEL_CACHE_RELOAD_CRON ?? "0/15 * * * *",
-      designSystemFolder: stripTrailingSlash(process.env.DESIGN_SYSTEM_FOLDER),
     },
     services: {
       solrUrl: stripTrailingSlash(process.env.SOLR_URL),
       couchDbUrl: stripTrailingSlash(process.env.COUCHDB_URL),
       qualitySparqlUrl: process.env.QUALITY_SPARQL_URL,
+    },
+    designSystem: {
+      url: stripTrailingSlash(process.env.DESIGN_SYSTEM_URL) ?? "./",
+      path: stripTrailingSlash(process.env.DESIGN_SYSTEM_FOLDER),
     },
     client: {
       catalogFormUrl: process.env.CLIENT_CATALOG_FORM_URL ?? "",

@@ -28,10 +28,10 @@ function registerAssetsRoutes(configuration, server) {
     prefix: "/assets/catalog/",
     decorateReply: false,
   });
-  if (configuration.server.designSystemFolder) {
+  if (configuration.designSystem.path) {
     logger.info("Serving design system assets from the given directory.");
     server.register(import("@fastify/static"), {
-      root: configuration.server.designSystemFolder,
+      root: configuration.designSystem.path,
       prefix: "/assets/design-system/",
       decorateReply: false,
     });
