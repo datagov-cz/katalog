@@ -66,7 +66,7 @@ async function fetchAndRenderDatasetQuality(language, element, iri) {
 
 function fetchQuality(language, iri) {
   const url =
-    "/api/v2/quality?iri=" +
+    "/api/v2/catalog/v1/quality?iri=" +
     encodeURIComponent(iri) +
     "&language=" +
     encodeURIComponent(language);

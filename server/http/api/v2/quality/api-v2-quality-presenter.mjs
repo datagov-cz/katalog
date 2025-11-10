@@ -12,7 +12,7 @@ export default function createHandler(services) {
   };
   // Create handler.
   return {
-    path: "api/v2/quality",
+    path: "api/v2/catalog/v1/quality",
     handler: (request, reply) => handleRequest(handlerServices, request, reply),
   };
 }
