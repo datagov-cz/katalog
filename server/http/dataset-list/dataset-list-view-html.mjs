@@ -39,7 +39,7 @@ const FACETS = [
   { "name": "dataServiceType", "tooltip": "dataServiceTypeTooltip" },
   { "name": "format", "tooltip": "formatTooltip" },
   { "name": "keyword", "tooltip": "keywordTooltip" },
-  { "name": "isvs", "tooltip": "isvsTooltip"}
+  { "name": "isvs", "tooltip": "isvsTooltip" }
 ];
 
 const SORT_OPTIONS = [
@@ -77,6 +77,86 @@ export function prepareTemplateData(configuration, translation, navigation, lang
   const documents = data["documents"];
   prepareDocumentsInPlace(navigation, documents);
   const count = data["found"]["documents"];
+  const facets = prepareFacets(translation, navigation, query, data["facets"], data["found"]);
+
+  //
+  //
+  //
+
+  /** @type {import('../../component/query-section/query-section.ts').QuerySectionState} */
+  const querySection = {
+    temporalStart: null,
+    temporalEnd: null,
+    publishers: [],
+    dataServiceTypes: [],
+    themes: [],
+    hvdCategories: [],
+    datasetTypes: [],
+    formats: [],
+    keywords: [],
+    isvs: []
+  };
+
+  {
+
+    if (query.temporalStart) {
+      querySection.temporalStart = {
+        label: query.temporalStart,
+        href: navigation.linkFromServer({ ...query, temporalStart: undefined }),
+      }
+    }
+
+    if (query.temporalEnd) {
+      querySection.temporalEnd = {
+        label: query.temporalEnd,
+        href: navigation.linkFromServer({ ...query, temporalEnd: undefined }),
+      }
+    }
+
+    // We know the facets ordering is the same as in the array.
+    const [
+      publishers, datasetTypes, themes, hvdCategories, dataServiceTypes,
+      formats, keywords, isvs,
+    ] = facets;
+
+    querySection.publishers = publishers.items
+      .filter(item => item.active)
+      .map(item => ({ label: item.label, href: item.href }));
+
+    querySection.datasetTypes = datasetTypes.items
+      .filter(item => item.active)
+      .map(item => ({ label: item.label, href: item.href }));
+
+    querySection.themes = themes.items
+      .filter(item => item.active)
+      .map(item => ({ label: item.label, href: item.href }));
+
+    querySection.hvdCategories = hvdCategories.items
+      .filter(item => item.active)
+      .map(item => ({ label: item.label, href: item.href }));
+
+    querySection.dataServiceTypes = dataServiceTypes.items
+      .filter(item => item.active)
+      .map(item => ({ label: item.label, href: item.href }));
+
+    querySection.formats = formats.items
+      .filter(item => item.active)
+      .map(item => ({ label: item.label, href: item.href }));
+
+    querySection.keywords = keywords.items
+      .filter(item => item.active)
+      .map(item => ({ label: item.label, href: item.href }));
+
+    querySection.isvs = isvs.items
+      .filter(item => item.active)
+      .map(item => ({ label: item.label, href: item.href }));
+
+  }
+
+  //
+  //
+  //
+
   return {
     "head": components.createHeadData(configuration),
     "navigation": components.createNavigationData(navigation, languages, query, { datasetsActive: true }),
@@ -117,10 +197,11 @@ export function prepareTemplateData(configuration, translation, navigation, lang
         "isvs": query.isvs,
       })
     },
+    "query-section": components.prepareStateForHandlebars(querySection, languages[0]),
     "result-bar": components.createResultBarData(translation, navigation, query, SORT_OPTIONS, count),
     "pagination": components.createPaginationData(navigation, query, count),
     "documents": documents,
-    "facets": prepareFacets(translation, navigation, query, data["facets"], data["found"]),
+    "facets": facets,
   };
 }
 

@@ -138,6 +138,18 @@ a {
   padding: .5rem;
 }
 
+.pr-2 {
+  padding-right: .5rem;
+}
+
+.pt-1 {
+  padding-top: .5rem;
+}
+
 .h-full {
   height: 100%;
+}
+
+.gap-2 {
+  gap: .5rem;
 }
