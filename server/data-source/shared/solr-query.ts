@@ -5,7 +5,17 @@ export function prepareFieldQuery(
   fieldName: string,
   values: undefined | null | string[],
 ): string[] {
-  return (values ?? []).map((value) => `${fieldName}:"${value}"`);
+  return (values ?? []).map(
+    (value) => `${fieldName}:"${escapeSolrPhraseValue(value)}"`,
+  );
+}
+
+/**
+ * Escape a value to be safely embedded inside a Solr quoted phrase, i.e.
+ * `field:"{value}"`.
+ */
+function escapeSolrPhraseValue(value: string): string {
+  return value.replace(/([\\"])/g, "\\$1");
 }
 
 /**
@@ -35,7 +45,7 @@ export function prepareTextQuery(language: string, text: string): string {
   );
 }
 
-const SOLR_TEXT_TO_ESCAPE = /([!*+=<>&|{}^~?[\]:"])/g;
+const SOLR_TEXT_TO_ESCAPE = /([!*+=<>&|{}^~?[\]:"()\-/\\])/g;
 
 /**
  * @returns Text with escaped control sequences.
@@ -43,10 +53,6 @@ const SOLR_TEXT_TO_ESCAPE = /([!*+=<>&|{}^~?[\]:"])/g;
 function escapeSolrTextQuery(query: string): string {
   query = query.toLocaleLowerCase();
   query = query.replace(SOLR_TEXT_TO_ESCAPE, "\\$1");
-  // Escape control words: "and", "or", "not".
-  query = query.replace("and", "\\and");
-  query = query.replace("or", "\\or");
-  query = query.replace("not", "\\not");
   return query;
 }
 
