@@ -60,7 +60,7 @@ function solrQueryToUrlQuery(query: SolrQuery): string {
     .join("&");
 }
 
-export function createDefaultSolrConnector(
+export function createSolrConnector(
   http: HttpConnector,
   solrUrl: string,
 ) {

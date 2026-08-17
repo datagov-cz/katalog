@@ -20,7 +20,7 @@
  * }} Services
  */
 
-import { createDefaultSolrConnector } from "../connector/solr-connector.ts";
+import { createSolrConnector } from "../connector/solr-connector.ts";
 import { createCouchDbConnector } from "../connector/couchdb-connector.ts";
 import { createSparqlConnector } from "../connector/sparql.mjs";
 
@@ -47,7 +47,7 @@ import { createLinkService } from "./link-service.ts";
  * @returns {Promise<Services>}
  */
 export async function createServices(configuration, http) {
-  const solr = createDefaultSolrConnector(http, configuration.services.solrUrl);
+  const solr = createSolrConnector(http, configuration.services.solrUrl);
   const couchdb = createCouchDbConnector(http, configuration.services.couchDbUrl);
 
   const couchDbDataset = createCouchDbDatasetSource(couchdb);
