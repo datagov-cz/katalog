@@ -161,7 +161,7 @@ export function prepareTemplateData(configuration, translation, navigation, lang
 
   return {
     "head": components.createHeadData(configuration),
-    "headerHtml": headerHtml(languages[0]),
+    "headerHtml": headerHtml(navigation, languages[0], query),
     "footerHtml": footerHtml(languages[0]),
     "search": {
       "clear-href": navigation.linkFromServer({}),

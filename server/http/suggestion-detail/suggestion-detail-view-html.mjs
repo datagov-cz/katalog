@@ -67,7 +67,7 @@ export function prepareTemplateData(services, languages, query, data) {
   const suggestion = prepareSuggestion(services.navigation, language, data);
   return {
     "head": components.createHeadData(services.configuration),
-    "headerHtml": headerHtml(language),
+    "headerHtml": headerHtml(services.navigation, language, query),
     "footerHtml": footerHtml(language),
     "suggestion": suggestion,
     "datasets": {

@@ -65,7 +65,7 @@ export function prepareTemplateData(services, languages, query, data) {
   const application = prepareApplication(services.navigation, language, data);
   return {
     "head": components.createHeadData(services.configuration),
-    "headerHtml": headerHtml(language),
+    "headerHtml": headerHtml(services.navigation, language, query),
     "footerHtml": footerHtml(language),
     "application": application,
     "datasets": {

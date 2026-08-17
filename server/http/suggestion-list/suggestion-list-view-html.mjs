@@ -68,7 +68,7 @@ export function prepareTemplateData(configuration, translation, navigation, lang
   const applicationCount = data["found"]["documents"];
   return {
     "head": components.createHeadData(configuration),
-    "headerHtml": headerHtml(languages[0]),
+    "headerHtml": headerHtml(navigation, languages[0], query),
     "footerHtml": footerHtml(languages[0]),
     "search": {
       "value": query.searchQuery,

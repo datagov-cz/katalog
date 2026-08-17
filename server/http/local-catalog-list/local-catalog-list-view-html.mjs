@@ -57,7 +57,7 @@ export function prepareTemplateData(services, languages, query, data) {
   prepareCatalogsInPlace(services.configuration, services.link, services.translation, data["catalogs"])
   return {
     "head": components.createHeadData(services.configuration),
-    "headerHtml": headerHtml(languages[0]),
+    "headerHtml": headerHtml(services.navigation, languages[0], query),
     "footerHtml": footerHtml(languages[0]),
     "message": services.translation.translate("items-found", data["catalogs"].length),
     "catalogs": data["catalogs"],

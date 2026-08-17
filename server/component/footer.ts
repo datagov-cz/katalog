@@ -10,7 +10,7 @@ export async function initializeFooter(baseUrl: string): Promise<void> {
   cron.schedule("*/5 * * * *", () => updateFooter(baseUrl));
 }
 
-async function updateFooter(baseUrl: string) : Promise<void> {
+async function updateFooter(baseUrl: string): Promise<void> {
   FOOTER.cs = await (await fetch(baseUrl + "footer.cs.html")).text();
   FOOTER.en = await (await fetch(baseUrl + "footer.en.html")).text();
 }

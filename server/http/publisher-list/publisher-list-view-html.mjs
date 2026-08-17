@@ -60,7 +60,7 @@ export function prepareTemplateData(configuration, navigation, translation, lang
   preparePublishersInPlace(configuration, navigation, translation, data["publishers"])
   return {
     "head": components.createHeadData(configuration),
-    "headerHtml": headerHtml(languages[0]),
+    "headerHtml": headerHtml(navigation, languages[0], query),
     "footerHtml": footerHtml(languages[0]),
     "message": translation.translate("items-found", data["publishers"].length),
     "publishers": data["publishers"],

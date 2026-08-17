@@ -111,7 +111,7 @@ export function prepareTemplateData(
   return {
     head: createHeadData(configuration),
     labelEndpoint: configuration.client.conceptSparql,
-    headerHtml: headerHtml(languages[0]),
+    headerHtml: headerHtml(navigation, languages[0], query),
     footerHtml: footerHtml(languages[0]),
     dataset: {
       iri: dataset.iri,
