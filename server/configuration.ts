@@ -26,11 +26,6 @@ const ConfigurationZod = z.object({
      * Cron expression for cache reloading.
      */
     labelReloadCron: z.string(),
-    /**
-     * Path to design system directory.
-     * Effective only with 'serverAssets' set to true.
-     */
-    designSystemFolder: z.string(),
   }),
   services: z.object({
     solrUrl: z.string().url(),
@@ -86,6 +81,10 @@ const ConfigurationZod = z.object({
      * URL of SPARQL endpoint with concepts.
      */
     conceptSparql: z.string(),
+    /**
+     * URL of the design system.
+     */
+    govDesignSystem: z.url(),
   }),
 });
 
@@ -105,7 +104,6 @@ const createConfiguration = (): Configuration => {
         process.env.HTTP_SERVE_STATIC === "1",
       reloadTemplates: process.env.NODE_ENV === "development",
       labelReloadCron: process.env.LABEL_CACHE_RELOAD_CRON ?? "0/15 * * * *",
-      designSystemFolder: stripTrailingSlash(process.env.DESIGN_SYSTEM_FOLDER),
     },
     services: {
       solrUrl: stripTrailingSlash(process.env.SOLR_URL),
@@ -131,6 +129,7 @@ const createConfiguration = (): Configuration => {
       catalogValidatorTemplate : process.env.CLIENT_CATALOG_VALIDATOR_RUN_VALIDATION ?? null,
       conceptTemplate: process.env.CONCEPT_VIEWER_URL_TEMPLATE ?? null,
       conceptSparql: process.env.CONCEPT_SPARQL,
+      govDesignSystem: stripTrailingSlash(process.env.GOV_DESIGN_SYSTEM_BASE) + "/",
     },
   });
 };

@@ -32,12 +32,12 @@ export async function createHttpServer(configuration) {
  */
 export function registerRoutes(configuration, server, services) {
   if (configuration.server.serverAssets) {
-    registerAssetsRoutes(configuration, server);
+    registerAssetsRoutes(server);
   }
   registerHttpRoutes(server, services);
 }
 
-function registerAssetsRoutes(configuration, server) {
+function registerAssetsRoutes(server) {
   const directory = path.join(import.meta.dirname, "../../assets");
   logger.info("Serving assets from '%s' directory.", directory);
   server.register(import("@fastify/static"), {
@@ -45,20 +45,6 @@ function registerAssetsRoutes(configuration, server) {
     prefix: "/assets/catalog/",
     decorateReply: false
   });
-  //
-  if (configuration.server.designSystemFolder) {
-    const directory = path.join(
-      import.meta.dirname,
-      "/../../",
-      configuration.server.designSystemFolder);
-    logger.info("Serving design system assets from '%s' directory.", directory);
-    server.register(import("@fastify/static"), {
-      // root: new URL("file://" + configuration.server.designSystemFolder),
-      root: directory,
-      prefix: "/assets/design-system/",
-      decorateReply: false
-    });
-  }
 }
 
 /**

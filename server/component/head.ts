@@ -1,11 +1,15 @@
 import { Configuration } from "../configuration.ts";
 
 export interface HeadData {
+
   matomoIsActive: boolean;
 
   matomoUrl: string | null;
 
   matomoSiteId: string | null;
+
+  designSystem: string;
+
 }
 
 export function registerHead(templateService: any) {
@@ -21,5 +25,6 @@ export function createHeadData({ client }: Configuration): HeadData {
     matomoIsActive,
     matomoUrl,
     matomoSiteId,
+    designSystem: client.govDesignSystem,
   };
 }
