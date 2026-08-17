@@ -1,5 +1,7 @@
 import { ROUTE } from "../route-name.mjs";
 import * as components from "../../component/index.mjs";
+import {headerHtml} from "../../component/header.ts";
+import {footerHtml} from "../../component/footer.ts";
 
 /**
  * @typedef {{
@@ -11,8 +13,8 @@ import * as components from "../../component/index.mjs";
  *
  * @typedef {{
  *   head: import('../../component/head.ts').HeadData,
- *   navigation: import('../../component/navigation.mjs').NavigationData,
- *   footer: import('../../component/footer.mjs').FooterData,
+ *   navigation: import('../../component/header.ts').NavigationData,
+ *   footer: import('../../component/footer.ts').FooterData,
  *   search: { value: string | null, "clear-href": string, "search-href": string },
  *   "result-bar": import('../../component/result-bar.mjs').ResultBarData,
  *   pagination: import('../../component/pagination.mjs').PaginationData,
@@ -67,8 +69,8 @@ export function prepareTemplateData(configuration, translation, navigation, lang
   const applicationCount = data["found"]["documents"];
   return {
     "head": components.createHeadData(configuration),
-    "navigation": components.createNavigationData(navigation, languages, query, { applicationsActive: true }),
-    "footer": components.createFooterData(),
+    "headerHtml": headerHtml(languages[0]),
+    "footerHtml": footerHtml(languages[0]),
     "search": {
       "value": query.searchQuery,
       "clear-href": navigation.linkFromServer({}),

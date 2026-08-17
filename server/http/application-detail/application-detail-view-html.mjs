@@ -1,5 +1,7 @@
 import { ROUTE } from "../route-name.mjs";
 import * as components from "../../component/index.mjs";
+import { footerHtml } from "../../component/footer.ts";
+import { headerHtml } from "../../component/header.ts";
 
 /**
  * @typedef {{
@@ -11,8 +13,8 @@ import * as components from "../../component/index.mjs";
  *
  * @typedef {{
  *   head: import('../../component/head.ts').HeadData,
- *   navigation: import('../../component/navigation.mjs').NavigationData,
- *   footer: import('../../component/footer.mjs').FooterData,
+ *   navigation: import('../../component/header.ts').NavigationData,
+ *   footer: import('../../component/footer.ts').FooterData,
  *   application: {
  *     author: { title: string | null, titleVisible: boolean, iri: string | null, iriVisible: boolean },
  *     title: string,
@@ -63,8 +65,8 @@ export function prepareTemplateData(services, languages, query, data) {
   const application = prepareApplication(services.navigation, language, data);
   return {
     "head": components.createHeadData(services.configuration),
-    "navigation": components.createNavigationData(services.navigation, languages, query),
-    "footer": components.createFooterData(),
+    "headerHtml": headerHtml(language),
+    "footerHtml": footerHtml(language),
     "application": application,
     "datasets": {
       "visible": datasets.length > 0,

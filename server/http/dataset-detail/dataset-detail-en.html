@@ -14,7 +14,7 @@
 </head>
 
 <body class="dataset-detail" data-sparql-endpoint="{{labelEndpoint}}">
-  {{#with navigation}} {{> navigation }} {{/with}}
+  {{{headerHtml}}}
   {{#with dataset}}
   <gov-container class="dataset-container" data-iri="{{iri}}">
     {{#with heading}}
@@ -647,7 +647,7 @@
   </gov-container>
   {{/if}}
   {{/with}}
-  {{#with footer}} {{> footer }} {{/with}}
+  {{{footerHtml}}}
   <script type="application/ld+json">{{{metadataAsString}}}</script>
   <!--  -->
   <gov-modal id="legislation-list-modal" label="Relevant legislation"></gov-modal>

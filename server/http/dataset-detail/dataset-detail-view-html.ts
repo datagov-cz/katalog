@@ -1,5 +1,4 @@
 import { FastifyReply } from "fastify";
-import { Language } from "../../localization/index.ts";
 import {
   DatasetDetailViewModel,
   Distributable,
@@ -9,8 +8,6 @@ import {
 } from "./dataset-detail-model.ts";
 import {
   createHeadData,
-  createFooterData,
-  createNavigationData,
 } from "../../component/index.mjs";
 import configuration, { Configuration } from "../../configuration.ts";
 import { NavigationEntry } from "../../service/navigation-service.ts";
@@ -19,6 +16,10 @@ import { TranslationService } from "../../service/translation-service.ts";
 import { NKOD } from "../../data-source/shared/vocabulary.ts";
 import { ROUTE } from "../route-name.mjs";
 import { HandlebarsService } from "../../handlebars/index.ts";
+import { headerHtml } from "../../component/header.ts";
+import { footerHtml } from "../../component/footer.ts";
+
+type Language = "cs" | "en";
 
 export function renderHtml(
   services: {
@@ -110,8 +111,8 @@ export function prepareTemplateData(
   return {
     head: createHeadData(configuration),
     labelEndpoint: configuration.client.conceptSparql,
-    navigation: createNavigationData(navigation, languages, query) as any,
-    footer: createFooterData(),
+    headerHtml: headerHtml(languages[0]),
+    footerHtml: footerHtml(languages[0]),
     dataset: {
       iri: dataset.iri,
       heading,
@@ -274,21 +275,9 @@ export interface DatasetDetailTemplateModel {
     matomoSiteId: string;
   };
 
-  navigation: {
-    datasetsActive: boolean;
-    applicationsActive: boolean;
-    localCatalogsActive: boolean;
-    suggestionsActive: boolean;
-    publishersActive: boolean;
-    cs: string;
-    en: string;
-  };
+  headerHtml: string;
 
-  footer: {
-    applicationRegistrationFormUrl: string;
-    suggestionRegistrationFormUrl: string;
-    catalogValidator: string;
-  };
+  footerHtml: string;
 
   labelEndpoint: string;
 

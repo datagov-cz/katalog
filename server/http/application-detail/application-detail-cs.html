@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  {{#with navigation}} {{> navigation }} {{/with}}
+  {{{headerHtml}}}
   <gov-container class="application-container">
     {{#with application}}
     <div>
@@ -141,7 +141,7 @@
     {{/if}}
     {{/with}}
   </gov-container>
-  {{#with footer}} {{> footer }} {{/with}}
+  {{{footerHtml}}}
 </body>
 
 </html>

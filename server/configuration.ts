@@ -26,6 +26,10 @@ const ConfigurationZod = z.object({
      * Cron expression for cache reloading.
      */
     labelReloadCron: z.string(),
+    /**
+     * URL to partials for header and footer.
+     */
+    partialsUrl: z.url(),
   }),
   services: z.object({
     solrUrl: z.string().url(),
@@ -104,6 +108,7 @@ const createConfiguration = (): Configuration => {
         process.env.HTTP_SERVE_STATIC === "1",
       reloadTemplates: process.env.NODE_ENV === "development",
       labelReloadCron: process.env.LABEL_CACHE_RELOAD_CRON ?? "0/15 * * * *",
+      partialsUrl: process.env.PARTIALS_URL,
     },
     services: {
       solrUrl: stripTrailingSlash(process.env.SOLR_URL),

@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  {{#with navigation}} {{> navigation }} {{/with}}
+  {{{headerHtml}}}
   <gov-container class="suggestion-container">
     {{#with suggestion}}
     <div>
@@ -108,7 +108,7 @@
     {{/if}}
     {{/with}}
   </gov-container>
-  {{#with footer}} {{> footer }} {{/with}}
+  {{{footerHtml}}}
 </body>
 
 </html>
