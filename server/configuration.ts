@@ -88,7 +88,7 @@ const ConfigurationZod = z.object({
     /**
      * URL of the design system.
      */
-    govDesignSystem: z.url(),
+    govDesignSystem: z.string(),
   }),
 });
 
